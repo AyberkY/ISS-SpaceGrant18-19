@@ -1,2 +1,2 @@
-def funktion
+def funktion():
 	print('printing')
