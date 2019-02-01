@@ -1,1 +1,1 @@
-print ('sicko mode')
+print ('super sicko mode')
