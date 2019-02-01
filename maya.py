@@ -2,4 +2,4 @@ def funktion():
 	print('printing')
 	
 funktion()
-print('we're done here')
+print('we are done here')
