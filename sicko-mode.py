@@ -1,1 +1,0 @@
-print ('super sicko mode')
