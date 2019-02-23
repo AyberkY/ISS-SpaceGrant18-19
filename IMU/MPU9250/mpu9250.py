@@ -1,5 +1,2 @@
-print('hello world')
-print('geoff gay')
-#geoff mega gay
-print('geoff ultra gay')
-print("tru")
+# Dedicated to my beloved Professor
+# May he rest gayly
