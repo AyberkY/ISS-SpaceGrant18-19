@@ -7,9 +7,11 @@ IMU1 = mpu9250.MPU9250()
 try:
 
     IMU1.calGyro()
+    time.sleep(3)
     while True:
         accel = IMU1.readAccel()
-        print (" ax = " , ( accel['x'] ))
+        print('')
+        print ("ax = " , ( accel['x'] ))
         print " ay = " , ( accel['y'] )
         print " az = " , ( accel['z'] )
 
