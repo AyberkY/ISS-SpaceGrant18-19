@@ -5,6 +5,8 @@ import sys
 IMU1 = mpu9250.MPU9250()
 
 try:
+
+    IMU1.calGyro()
     while True:
         accel = IMU1.readAccel()
         print (" ax = " , ( accel['x'] ))
