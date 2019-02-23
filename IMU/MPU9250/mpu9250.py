@@ -8,17 +8,16 @@ import math
 
 ## MPU9250 Default I2C slave address
 SLAVE_ADDRESS        = 0x68
-## AK8963 I2C slave address
+## Magnetometer: AK8963 I2C slave address
 AK8963_SLAVE_ADDRESS = 0x0C
 ## Device id
 DEVICE_ID            = 0x71
 
 ''' MPU-9250 Register Addresses '''
-## sample rate driver
-SMPLRT_DIV     = 0x19
-CONFIG         = 0x1A
-GYRO_CONFIG    = 0x1B
-ACCEL_CONFIG   = 0x1C
+SMPLRT_DIV     = 0x19 #sample rate driver
+CONFIG         = 0x1A #configuration
+GYRO_CONFIG    = 0x1B #gyroscope configuration
+ACCEL_CONFIG   = 0x1C #
 ACCEL_CONFIG_2 = 0x1D
 LP_ACCEL_ODR   = 0x1E
 WOM_THR        = 0x1F
@@ -61,11 +60,122 @@ AFS_16G  = 0x03
 ## smbus
 bus = smbus.SMBus(1)
 
-
-def MPU9250:
-    def __init__(self, address, accelRangeIn, gyroRangeIn):
+class MPU9250:
+    
+    def __init__(self, address, accelRangeIn=AFS_16G, gyroRangeIn=GFS_2000):
         self.accelRange = accelRangeIn
         self.gyroRange = gyroRangeIn
         self.address = address
         self.configMPU9250(GFS_250, AFS_2G)
-        self.configAK8963(AK8963_MODE_C8HZ, AK8963_BIT_16)
+
+    ##  Makes sure the device is the correct device by reading the value stored in the WHO_AM_I register.
+    def searchDevice(self):
+
+        who_am_i = bis.read_byte_data(self.address, WHO_AM_I)
+
+        if(who_am_i == DEVICE_ID):
+            return True
+        else:
+            return False
+
+    ## Configure MPU-9250
+    #  @param [in] self The object pointer.
+    #  @param [in] gfs Gyro Full Scale Select(default:GFS_250[+250dps])
+    #  @param [in] afs Accel Full Scale Select(default:AFS_2G[2g])
+    def configMPU9250(self, gfs, afs):
+        if gfs == GFS_250:
+            self.gres = 250.0/32768.0
+        elif gfs == GFS_500:
+            self.gres = 500.0/32768.0
+        elif gfs == GFS_1000:
+            self.gres = 1000.0/32768.0
+        else:  # gfs == GFS_2000
+            self.gres = 2000.0/32768.0
+
+        if afs == AFS_2G:
+            self.ares = 2.0/32768.0
+        elif afs == AFS_4G:
+            self.ares = 4.0/32768.0
+        elif afs == AFS_8G:
+            self.ares = 8.0/32768.0
+        else: # afs == AFS_16G:
+            self.ares = 16.0/32768.0
+
+        # sleep off
+        bus.write_byte_data(self.address, PWR_MGMT_1, 0x00)
+        time.sleep(0.1)
+        # auto select clock source
+        bus.write_byte_data(self.address, PWR_MGMT_1, 0x01)
+        time.sleep(0.1)
+        # DLPF_CFG
+        bus.write_byte_data(self.address, CONFIG, 0x03)
+        # sample rate divider
+        bus.write_byte_data(self.address, SMPLRT_DIV, 0x04)
+        # gyro full scale select
+        bus.write_byte_data(self.address, GYRO_CONFIG, gfs << 3)
+        # accel full scale select
+        bus.write_byte_data(self.address, ACCEL_CONFIG, afs << 3)
+        # A_DLPFCFG
+        bus.write_byte_data(self.address, ACCEL_CONFIG_2, 0x03)
+        # BYPASS_EN
+        bus.write_byte_data(self.address, INT_PIN_CFG, 0x02)
+        time.sleep(0.1)
+
+
+    ## brief Check data ready
+    #  @param [in] self The object pointer.
+    #  @retval true data is ready
+    #  @retval false data is not ready
+    def checkDataReady(self):
+        drdy = bus.read_byte_data(self.address, INT_STATUS)
+        if drdy & 0x01:
+            return True
+        else:
+            return False
+
+    ## Read accelerometer
+    #  @param [in] self The object pointer.
+    #  @retval x : x-axis data
+    #  @retval y : y-axis data
+    #  @retval z : z-axis data
+    def readAccel(self):
+        data = bus.read_i2c_block_data(self.address, ACCEL_OUT, 6)
+        x = self.dataConv(data[1], data[0])
+        y = self.dataConv(data[3], data[2])
+        z = self.dataConv(data[5], data[4])
+
+        x = round(x*self.ares, 3)
+        y = round(y*self.ares, 3)
+        z = round(z*self.ares, 3)
+
+        return {"x":x, "y":y, "z":z}
+
+    ## Read gyro
+    #  @param [in] self The object pointer.
+    #  @retval x : x-gyro data
+    #  @retval y : y-gyro data
+    #  @retval z : z-gyro data
+    def readGyro(self):
+        data = bus.read_i2c_block_data(self.address, GYRO_OUT, 6)
+
+        x = self.dataConv(data[1], data[0])
+        y = self.dataConv(data[3], data[2])
+        z = self.dataConv(data[5], data[4])
+
+        x = round(x*self.gres, 3)
+        y = round(y*self.gres, 3)
+        z = round(z*self.gres, 3)
+
+        return {"x":x, "y":y, "z":z}
+
+    ## Data Convert
+    # @param [in] self The object pointer.
+    # @param [in] data1 LSB
+    # @param [in] data2 MSB
+    # @retval Value MSB+LSB(int 16bit)
+    def dataConv(self, data1, data2):
+        value = data1 | (data2 << 8)
+
+        if(value & (1 << 16 - 1)):
+            value -= (1<<16)
+        return value
