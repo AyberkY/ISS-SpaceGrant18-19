@@ -62,6 +62,10 @@ bus = smbus.SMBus(1)
 
 class MPU9250:
 
+    self.GX_OFFSET = 0
+    self.GY_OFFSET = 0
+    self.GZ_OFFSET = 0
+
     def __init__(self, address=SLAVE_ADDRESS, accelRangeIn=AFS_16G, gyroRangeIn=GFS_2000):
         self.accelRange = accelRangeIn
         self.gyroRange = gyroRangeIn
@@ -162,9 +166,9 @@ class MPU9250:
         y = self.dataConv(data[3], data[2])
         z = self.dataConv(data[5], data[4])
 
-        x = round(x*self.gres, 3)
-        y = round(y*self.gres, 3)
-        z = round(z*self.gres, 3)
+        x = round(x*self.gres, 3) - self.GX_OFFSET
+        y = round(y*self.gres, 3) - self.GY_OFFSET
+        z = round(z*self.gres, 3) - self.GZ_OFFSET
 
         return {"x":x, "y":y, "z":z}
 
@@ -179,3 +183,16 @@ class MPU9250:
         if(value & (1 << 16 - 1)):
             value -= (1<<16)
         return value
+
+    def calGyro(self):
+        for x in range(1000):
+            if x % 50 == 0
+                print('.')
+            data = readGyro(self)
+            self.GX_OFFSET += data["x"]
+            self.GY_OFFSET += data["y"]
+            self.GZ_OFFSET += data["z"]
+
+        self.GX_OFFSET /= 1000
+        self.GY_OFFSET /= 1000
+        self.GZ_OFFSET /= 1000
