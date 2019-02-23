@@ -189,7 +189,7 @@ class MPU9250:
         for x in range(1000):
             if x % 50 == 0:
                 print('.')
-            data = readGyro(self)
+            data = self.readGyro()
             self.GX_OFFSET += data["x"]
             self.GY_OFFSET += data["y"]
             self.GZ_OFFSET += data["z"]
