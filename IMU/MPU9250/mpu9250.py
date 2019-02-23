@@ -186,13 +186,14 @@ class MPU9250:
         return value
 
     def calGyro(self):
-        for x in range(1000):
-            if x % 50 == 0:
-                print('x')
+        for x in range(100):
+            if x % 10 == 0:
+                print('PLEASE WAIT. YOUR DATA IS IMPORTANT TO US')
             data = self.readGyro()
             self.GX_OFFSET += data["x"]
             self.GY_OFFSET += data["y"]
             self.GZ_OFFSET += data["z"]
+            time.sleep(0.1)
 
         self.GX_OFFSET = self.GX_OFFSET / 1000
         print('GX OFFSET: ' + str(self.GX_OFFSET))
@@ -200,5 +201,3 @@ class MPU9250:
         print('GY OFFSET: ' + str(self.GY_OFFSET))
         self.GZ_OFFSET = self.GZ_OFFSET / 1000
         print('GZ OFFSET: ' + str(self.GZ_OFFSET))
-
-        
