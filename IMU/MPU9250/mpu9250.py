@@ -60,3 +60,12 @@ AFS_16G  = 0x03
 
 ## smbus
 bus = smbus.SMBus(1)
+
+
+def MPU9250:
+    def __init__(self, address, accelRangeIn, gyroRangeIn):
+        self.accelRange = accelRangeIn
+        self.gyroRange = gyroRangeIn
+        self.address = address
+        self.configMPU9250(GFS_250, AFS_2G)
+        self.configAK8963(AK8963_MODE_C8HZ, AK8963_BIT_16)
