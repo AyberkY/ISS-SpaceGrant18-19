@@ -62,7 +62,7 @@ bus = smbus.SMBus(1)
 
 class MPU9250:
 
-    def __init__(self, address, accelRangeIn=AFS_16G, gyroRangeIn=GFS_2000):
+    def __init__(self, address=SLAVE_ADDRESS, accelRangeIn=AFS_16G, gyroRangeIn=GFS_2000):
         self.accelRange = accelRangeIn
         self.gyroRange = gyroRangeIn
         self.address = address

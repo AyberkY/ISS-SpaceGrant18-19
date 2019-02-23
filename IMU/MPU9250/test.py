@@ -2,7 +2,7 @@ import mpu9250
 import time
 import sys
 
-IMU1 = mpu9250.MPU9250(SLAVE_ADDRESS)
+IMU1 = mpu9250.MPU9250()
 
 try:
     while True:
