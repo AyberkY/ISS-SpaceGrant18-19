@@ -6,6 +6,7 @@ import SMBus
 import time
 import math
 
+<<<<<<< HEAD
 ## MPU9250 Default I2C slave address
 SLAVE_ADDRESS        = 0x68
 ## AK8963 I2C slave address
@@ -84,3 +85,16 @@ AK8963_BIT_16 = 0x01
 
 ## smbus
 bus = smbus.SMBus(1)
+=======
+
+
+
+
+
+class MPU9250
+
+    #Constructor
+    #I2C slave address 0x68
+
+    
+>>>>>>> bfa779ab11d25a67087b25f59d32bb6c51d2b9f4
