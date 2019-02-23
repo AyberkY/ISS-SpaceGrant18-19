@@ -62,15 +62,16 @@ bus = smbus.SMBus(1)
 
 class MPU9250:
 
-    self.GX_OFFSET = 0
-    self.GY_OFFSET = 0
-    self.GZ_OFFSET = 0
+
 
     def __init__(self, address=SLAVE_ADDRESS, accelRangeIn=AFS_16G, gyroRangeIn=GFS_2000):
         self.accelRange = accelRangeIn
         self.gyroRange = gyroRangeIn
         self.address = address
         self.configMPU9250(GFS_250, AFS_2G)
+        self.GX_OFFSET = 0
+        self.GY_OFFSET = 0
+        self.GZ_OFFSET = 0
 
     ##  Makes sure the device is the correct device by reading the value stored in the WHO_AM_I register.
     def searchDevice(self):
