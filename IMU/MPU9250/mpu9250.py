@@ -195,9 +195,9 @@ class MPU9250:
             self.GZ_OFFSET += data["z"]
             time.sleep(0.1)
 
-        self.GX_OFFSET = self.GX_OFFSET / 1000
+        self.GX_OFFSET = self.GX_OFFSET / 100
         print('GX OFFSET: ' + str(self.GX_OFFSET))
-        self.GY_OFFSET = self.GY_OFFSET / 1000
+        self.GY_OFFSET = self.GY_OFFSET / 100
         print('GY OFFSET: ' + str(self.GY_OFFSET))
-        self.GZ_OFFSET = self.GZ_OFFSET / 1000
+        self.GZ_OFFSET = self.GZ_OFFSET / 100
         print('GZ OFFSET: ' + str(self.GZ_OFFSET))
