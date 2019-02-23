@@ -58,29 +58,5 @@ AFS_8G   = 0x02
 ## Accel Full Scale Select 16G
 AFS_16G  = 0x03
 
-# AK8963 Register Addresses
-AK8963_ST1        = 0x02
-AK8963_MAGNET_OUT = 0x03
-AK8963_CNTL1      = 0x0A
-AK8963_CNTL2      = 0x0B
-AK8963_ASAX       = 0x10
-
-# CNTL1 Mode select
-## Power down mode
-AK8963_MODE_DOWN   = 0x00
-## One shot data output
-AK8963_MODE_ONE    = 0x01
-
-## Continous data output 8Hz
-AK8963_MODE_C8HZ   = 0x02
-## Continous data output 100Hz
-AK8963_MODE_C100HZ = 0x06
-
-# Magneto Scale Select
-## 14bit output
-AK8963_BIT_14 = 0x00
-## 16bit output
-AK8963_BIT_16 = 0x01
-
 ## smbus
 bus = smbus.SMBus(1)
