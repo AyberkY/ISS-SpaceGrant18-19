@@ -2,7 +2,7 @@
 # May he rest gayly
 #02/22/2019
 
-import SMBus
+import smbus
 import time
 import math
 
@@ -61,7 +61,7 @@ AFS_16G  = 0x03
 bus = smbus.SMBus(1)
 
 class MPU9250:
-    
+
     def __init__(self, address, accelRangeIn=AFS_16G, gyroRangeIn=GFS_2000):
         self.accelRange = accelRangeIn
         self.gyroRange = gyroRangeIn
