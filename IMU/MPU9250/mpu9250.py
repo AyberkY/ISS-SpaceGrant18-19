@@ -169,7 +169,7 @@ class MPU9250:
 
         x = round(x*self.gres, 3) - self.GX_OFFSET
         y = round(y*self.gres, 3) - self.GY_OFFSET
-        z = round(z*self.gres, 3) - slef.GZ_OFFSET
+        z = round(z*self.gres, 3) - self.GZ_OFFSET
 
         return {"x":x, "y":y, "z":z}
 
