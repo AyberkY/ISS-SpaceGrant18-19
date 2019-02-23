@@ -186,7 +186,7 @@ class MPU9250:
 
     def calGyro(self):
         for x in range(1000):
-            if x % 50 == 0
+            if x % 50 == 0:
                 print('.')
             data = readGyro(self)
             self.GX_OFFSET += data["x"]
