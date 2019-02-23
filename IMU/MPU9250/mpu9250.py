@@ -194,6 +194,6 @@ class MPU9250:
             self.GY_OFFSET += data["y"]
             self.GZ_OFFSET += data["z"]
 
-        self.GX_OFFSET /= 1000
-        self.GY_OFFSET /= 1000
-        self.GZ_OFFSET /= 1000
+        self.GX_OFFSET = self.GX_OFFSET / 1000
+        self.GY_OFFSET = self.GY_OFFSET / 1000
+        self.GZ_OFFSET = self.GZ_OFFSET / 1000
