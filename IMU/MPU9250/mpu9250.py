@@ -17,7 +17,7 @@ DEVICE_ID            = 0x71
 SMPLRT_DIV     = 0x19 #sample rate driver
 CONFIG         = 0x1A #configuration
 GYRO_CONFIG    = 0x1B #gyroscope configuration
-ACCEL_CONFIG   = 0x1C #
+ACCEL_CONFIG   = 0x1C #acceleration configuration
 ACCEL_CONFIG_2 = 0x1D
 LP_ACCEL_ODR   = 0x1E
 WOM_THR        = 0x1F
@@ -72,6 +72,7 @@ class MPU9250:
         self.GX_OFFSET = 0
         self.GY_OFFSET = 0
         self.GZ_OFFSET = 0
+        self.calibrated = False
 
     ##  Makes sure the device is the correct device by reading the value stored in the WHO_AM_I register.
     def searchDevice(self):
@@ -167,15 +168,20 @@ class MPU9250:
         y = self.dataConv(data[3], data[2])
         z = self.dataConv(data[5], data[4])
 
-        x = round(x*self.gres, 3)
-        y = round(y*self.gres, 3)
-        z = round(z*self.gres, 3)
+        xPre = round(x*self.gres, 3)
+        yPre = round(y*self.gres, 3)
+        zPre = round(z*self.gres, 3)
 
-        x = x - self.GX_OFFSET
-        y = y - self.GY_OFFSET
-        z = z - self.GZ_OFFSET
+        if self.calibrated:
+            x = xPre - self.GX_OFFSET
+            y = yPre - self.GY_OFFSET
+            z = zPre - self.GZ_OFFSET
+        else:
+            x = xPre
+            y = yPre
+            z = zPre
 
-        return {"x":x, "y":y, "z":z}
+        return {"x":x, "y":y, "z":z, 'xPre':xPre, "yPre":yPre, "zPre":zPre}
 
     ## Data Convert
     # @param [in] self The object pointer.
@@ -189,6 +195,8 @@ class MPU9250:
             value -= (1<<16)
         return value
 
+    ## Calibrate gyro initial error
+    # @param [in] self The object pointer.
     def calGyro(self):
         for x in range(100):
             if x % 10 == 0:
@@ -197,7 +205,8 @@ class MPU9250:
             self.GX_OFFSET += data["x"]
             self.GY_OFFSET += data["y"]
             self.GZ_OFFSET += data["z"]
-            time.sleep(0.1)
+            time.sleep(0.05)
+        self.calibrated = True
 
         self.GX_OFFSET = self.GX_OFFSET / 100
         print('GX OFFSET: ' + str(self.GX_OFFSET))
