@@ -181,7 +181,7 @@ class MPU9250:
             y = yPre
             z = zPre
 
-        return {"x":x, "y":y, "z":z, 'xPre':xPre, "yPre":yPre, "zPre":zPre}
+        return {"x":x, "y":y, "z":z, "xPre":xPre, "yPre":yPre, "zPre":zPre}
 
     ## Data Convert
     # @param [in] self The object pointer.
