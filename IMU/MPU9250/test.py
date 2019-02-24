@@ -11,14 +11,20 @@ try:
     while True:
         accel = IMU1.readAccel()
         print('')
-        print ("ax = " , ( accel['x'] ))
-        print " ay = " , ( accel['y'] )
-        print " az = " , ( accel['z'] )
+        #print ("ax = " , ( accel['x'] ))
+        #print " ay = " , ( accel['y'] )
+        #print " az = " , ( accel['z'] )
 
         gyro = IMU1.readGyro()
-        print " gx = " , ( gyro['x'] )
-        print " gy = " , ( gyro['y'] )
-        print " gz = " , ( gyro['z'] )
+        print('')
+        print " [PRE] gx = " , ( gyro['xPre'] )
+        print " [PST] gx = " , ( gyro['x'] )
+        print('')
+        print " [PRE] gy = " , ( gyro['yPre'] )
+        print " [PST] gy = " , ( gyro['y'] )
+        print('')
+        print " [PRE] gz = " , ( gyro['zPre'] )
+        print " [PST] gz = " , ( gyro['z'] )
 
         time.sleep(0.5)
 
