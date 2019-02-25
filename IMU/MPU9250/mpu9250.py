@@ -226,9 +226,10 @@ class MPU9250:
     ## Calculates time elapsed since entered timeElapsed
     # @param [in] timeStart starting frame for time calculation
     # WARNING: returns in milliseconds. I think?
-    def timeElapsed(self, timeStart):
+    def timeElapsed(self, timeNow):
+        temp = timeFloat
         timeFloat = time.time()
-        return (timeFloat - timeStart - timeAtZero)
+        return (timeNow - temp)
 
 
     def curHeading(self):
