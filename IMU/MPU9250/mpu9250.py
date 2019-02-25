@@ -60,6 +60,7 @@ AFS_16G  = 0x03
 ## smbus
 bus = smbus.SMBus(1)
 timeFloat = 0
+timeAtZero = 0
 
 class MPU9250:
 
@@ -74,7 +75,7 @@ class MPU9250:
         self.GY_OFFSET = 0
         self.GZ_OFFSET = 0
         self.calibrated = False
-
+        mpu9250.timeAtZero = time.time()
         self.roll = 0
         self.pitch = 0
         self.yaw = 0
@@ -227,7 +228,7 @@ class MPU9250:
     # WARNING: returns in milliseconds. I think?
     def timeElapsed(self, timeStart):
         timeFloat = time.time()
-        return (timeFloat - timeStart)
+        return (timeFloat - timeStart - mpu9250.timeAtZero)
 
 
     def curHeading(self):
