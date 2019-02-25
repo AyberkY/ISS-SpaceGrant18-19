@@ -13,7 +13,7 @@ def testIMU(window):
     while True:
         gyro = IMU1.readGyro()
 
-        window.addstr("GX: " + gyro['x'])
+        window.addstr("GX: " + str(gyro['x']))
 
 
 def main():
