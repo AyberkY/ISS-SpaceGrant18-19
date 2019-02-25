@@ -224,7 +224,7 @@ class MPU9250:
 
     ## Calculates time elapsed since entered timeElapsed
     # @param [in] timeStart starting frame for time calculation
-    def timeElapsed(timeStart):
+    def timeElapsed(self, timeStart):
         timeFloat = time.time()
         return (timeStart - timeFloat)
 
