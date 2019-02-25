@@ -75,7 +75,7 @@ class MPU9250:
         self.GY_OFFSET = 0
         self.GZ_OFFSET = 0
         self.calibrated = False
-        mpu9250.timeAtZero = time.time()
+        timeAtZero = time.time()
         self.roll = 0
         self.pitch = 0
         self.yaw = 0
