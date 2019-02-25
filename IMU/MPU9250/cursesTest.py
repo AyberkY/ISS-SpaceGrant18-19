@@ -10,6 +10,11 @@ def testIMU(stdscr):
     IMU1.calGyro()
     time.sleep(2)
 
+    curses.init_pair(1, curses.COLOR_RED, curses.COLOR_WHITE)
+    curses.init_pair(2, curses.COLOR_BLUE, curses.COLOR_WHITE)
+    curses.init_pair(3, curses.COLOR_GREEN, curses.COLOR_WHITE)
+    curses.init_pair(4, curses.COLOR_PINK, curses.COLOR_WHITE)
+
     while True:
         gyro = IMU1.readGyro()
         heading = IMU1.curHeading()
@@ -20,8 +25,8 @@ def testIMU(stdscr):
         stdscr.addstr(2,0,"GZ: " + str(gyro['z']))
         stdscr.addstr(3,0,"ROLL: " + str(heading['roll']))
         stdscr.addstr(4,0,"PITCH: " + str(heading['pitch']))
-        stdscr.addstr(5,0,"YAW: " + str(heading['yaw']))
-        stdscr.addstr(3,20,"geoff gay")
+        stdscr.addstr(5,0,"YAW: " + str(heading['yaw']), curses.color_pair(1))
+        stdscr.addstr(3,50,"geoff gay")
         stdscr.refresh()
         time.sleep(0.1)
 
