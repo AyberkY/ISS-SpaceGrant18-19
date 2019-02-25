@@ -12,10 +12,15 @@ def testIMU(stdscr):
 
     while True:
         gyro = IMU1.readGyro()
+        heading = IMU1.curHeading()
+
         stdscr.erase()
         stdscr.addstr(0,0,"GX: " + str(gyro['x']))
         stdscr.addstr(1,0,"GY: " + str(gyro['y']))
         stdscr.addstr(2,0,"GZ: " + str(gyro['z']))
+        stdscr.addstr(3,0,"ROLL: " + str(heading['roll']))
+        stdscr.addstr(4,0,"PITCH: " + str(heading['pitch']))
+        stdscr.addstr(5,0,"YAW: " + str(heading['yaw']))
         stdscr.refresh()
 
 def main():
