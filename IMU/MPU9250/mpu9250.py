@@ -59,6 +59,7 @@ AFS_16G  = 0x03
 
 ## smbus
 bus = smbus.SMBus(1)
+timeFloat = 0
 
 class MPU9250:
 
@@ -78,8 +79,6 @@ class MPU9250:
         self.pitch = 0
         self.yaw = 0
 
-        self.time1
-        self.time2
 
 
     ##  Makes sure the device is the correct device by reading the value stored in the WHO_AM_I register.
