@@ -222,8 +222,11 @@ class MPU9250:
         self.GZ_OFFSET = self.GZ_OFFSET / 100
         print('GZ OFFSET: ' + str(self.GZ_OFFSET))
 
+    ## Calculates time elapsed since entered timeElapsed
+    # @param [in] timeStart starting frame for time calculation
     def timeElapsed(self, timeStart):
-        return (timeStart - time.time())
+        timeFloat = time.time()
+        return (timeStart - timeFloat)
 
 
     def curHeading(self):
