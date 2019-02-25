@@ -237,3 +237,4 @@ class MPU9250:
 
     def curHeading(self):
         data = self.readGyro()
+        roll = 
