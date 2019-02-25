@@ -22,6 +22,7 @@ def testIMU(stdscr):
         stdscr.addstr(4,0,"PITCH: " + str(heading['pitch']))
         stdscr.addstr(5,0,"YAW: " + str(heading['yaw']))
         stdscr.refresh()
+        time.sleep(0.1)
 
 def main():
     curses.wrapper(testIMU)
