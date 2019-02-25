@@ -59,6 +59,7 @@ AFS_16G  = 0x03
 
 ## smbus
 bus = smbus.SMBus(1)
+time = new time()
 
 class MPU9250:
 
@@ -73,6 +74,14 @@ class MPU9250:
         self.GY_OFFSET = 0
         self.GZ_OFFSET = 0
         self.calibrated = False
+
+        self.roll = 0
+        self.pitch = 0
+        self.yaw = 0
+
+        self.time1
+        self.time2
+
 
     ##  Makes sure the device is the correct device by reading the value stored in the WHO_AM_I register.
     def searchDevice(self):
@@ -214,3 +223,10 @@ class MPU9250:
         print('GY OFFSET: ' + str(self.GY_OFFSET))
         self.GZ_OFFSET = self.GZ_OFFSET / 100
         print('GZ OFFSET: ' + str(self.GZ_OFFSET))
+
+    def timeElapsed(self, timeStart):
+        return (timeStart - self.time.time())
+
+
+    def curHeading(self):
+        data = self.readGyro()
