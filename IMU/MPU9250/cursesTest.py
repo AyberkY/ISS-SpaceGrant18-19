@@ -16,7 +16,7 @@ def testIMU(stdscr):
         stdscr.addstr(0,2,"GX: " + str(gyro['x']))
         stdscr.addstr(0,1,"GY: " + str(gyro['y']))
         stdscr.addstr(0,0,"GZ: " + str(gyro['z']))
-
+        stdscr.refresh()
 
 def main():
     curses.wrapper(testIMU)
