@@ -60,7 +60,7 @@ AFS_16G  = 0x03
 ## smbus
 bus = smbus.SMBus(1)
 timeFloat = 0
-timeAtZero = 0
+timeAtStart = 0
 
 class MPU9250:
 
@@ -229,7 +229,7 @@ class MPU9250:
     def timeElapsed(self, timeNow):
         temp = timeFloat
         timeFloat = time.time()
-        return (timeNow - temp)
+        return (timeNow - temp - timeAtZero)
 
 
     def curHeading(self):
