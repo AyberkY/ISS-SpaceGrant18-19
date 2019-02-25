@@ -13,9 +13,9 @@ def testIMU(stdscr):
     while True:
         gyro = IMU1.readGyro()
         stdscr.erase()
-        stdscr.addstr(0,2,"GX: " + str(gyro['x']))
-        stdscr.addstr(0,1,"GY: " + str(gyro['y']))
-        stdscr.addstr(0,0,"GZ: " + str(gyro['z']))
+        stdscr.addstr(0,0,"GX: " + str(gyro['x']))
+        stdscr.addstr(1,0,"GY: " + str(gyro['y']))
+        stdscr.addstr(2,0,"GZ: " + str(gyro['z']))
         stdscr.refresh()
 
 def main():
