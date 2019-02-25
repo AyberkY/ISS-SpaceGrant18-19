@@ -17,6 +17,7 @@ try:
 
         print('TIME ELAPSED: ' + str(IMU1.timeElapsed(time.time())))
         gyro = IMU1.readGyro()
+        heading = IMU1.curHeading()
         print('')
         #print " [PRE] gx = " , ( gyro['xPre'] )
         print " [PST] gx = " , ( gyro['x'] )
@@ -26,6 +27,8 @@ try:
         print('')
         #print " [PRE] gz = " , ( gyro['zPre'] )
         print " [PST] gz = " , ( gyro['z'] )
+
+        print "ROLL IS: ", (heading['roll'])
         time.sleep(1)
 
 except KeyboardInterrupt:

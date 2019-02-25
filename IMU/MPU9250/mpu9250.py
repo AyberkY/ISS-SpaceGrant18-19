@@ -192,7 +192,10 @@ class MPU9250:
             y = yPre
             z = zPre
 
-        return {"x":x, "y":y, "z":z, "xPre":xPre, "yPre":yPre, "zPre":zPre}
+        if self.calibrated:
+            roll += x * timeElapsed(time.time())
+
+        return {"x":x, "y":y, "z":z}
 
     ## Data Convert
     # @param [in] self The object pointer.
@@ -216,7 +219,7 @@ class MPU9250:
             self.GX_OFFSET += data["x"]
             self.GY_OFFSET += data["y"]
             self.GZ_OFFSET += data["z"]
-            time.sleep(0.01)
+            time.sleep(0.001)
         self.calibrated = True
 
         self.GX_OFFSET = self.GX_OFFSET / 100
@@ -236,5 +239,4 @@ class MPU9250:
 
 
     def curHeading(self):
-        data = self.readGyro()
-        #roll = 
+        return {"roll": self.roll}
