@@ -10,8 +10,6 @@ def testIMU(stdscr):
     IMU1.calGyro()
     time.sleep(2)
 
-    stdscr.addstr(10,10,"geoff gay")
-
     while True:
         gyro = IMU1.readGyro()
         heading = IMU1.curHeading()
@@ -23,6 +21,7 @@ def testIMU(stdscr):
         stdscr.addstr(3,0,"ROLL: " + str(heading['roll']))
         stdscr.addstr(4,0,"PITCH: " + str(heading['pitch']))
         stdscr.addstr(5,0,"YAW: " + str(heading['yaw']))
+        stdscr.addstr(10,10,"geoff gay")
         stdscr.refresh()
         time.sleep(0.1)
 
