@@ -32,7 +32,7 @@ def testIMU(stdscr):
         stdscr.addstr(5,0,"YAW: " + str(heading['yaw']))
         stdscr.addstr(3,50,"geoff gay", curses.color_pair(color))
         stdscr.refresh()
-        time.sleep(0.3)
+        time.sleep(0.1)
 
 def main():
     curses.wrapper(testIMU)
