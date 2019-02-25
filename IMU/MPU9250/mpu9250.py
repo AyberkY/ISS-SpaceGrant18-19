@@ -194,8 +194,8 @@ class MPU9250:
 
         if self.calibrated:
             self.roll += x * self.timeElapsed(time.time())
-            self.roll += y * self.timeElapsed(time.time())
-            self.roll += z * self.timeElapsed(time.time())
+            self.pitch += y * self.timeElapsed(time.time())
+            self.yaw += z * self.timeElapsed(time.time())
 
         return {"x":x, "y":y, "z":z}
 
