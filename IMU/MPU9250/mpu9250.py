@@ -59,7 +59,7 @@ AFS_16G  = 0x03
 
 ## smbus
 bus = smbus.SMBus(1)
-time = new time()
+time = time.time()
 
 class MPU9250:
 
