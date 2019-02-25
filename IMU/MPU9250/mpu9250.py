@@ -227,7 +227,7 @@ class MPU9250:
     # @param [in] timeStart starting frame for time calculation
     # WARNING: returns in milliseconds. I think?
     def timeElapsed(self, timeNow):
-        temp = timeFloat
+        temp = mpu9250.timeFloat
         timeFloat = time.time()
         return (timeNow - temp - timeAtZero)
 
