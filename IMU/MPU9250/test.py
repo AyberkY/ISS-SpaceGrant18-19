@@ -15,7 +15,7 @@ try:
         #print " ay = " , ( accel['y'] )
         #print " az = " , ( accel['z'] )
 
-        print(str(timeElapsed(IMU1.timeFloat)))
+        print(str(IMU1.timeElapsed(IMU1.timeFloat)))
         gyro = IMU1.readGyro()
         print('')
         print " [PRE] gx = " , ( gyro['xPre'] )
