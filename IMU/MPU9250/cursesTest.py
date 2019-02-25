@@ -1,22 +1,7 @@
-import mpu9250
-import time
-import sys
-import curses
+from time import sleep
 
+N=12
 
-def testIMU(window):
-
-    IMU1 = mpu9250.MPU9250()
-    IMU1.calGyro()
-    time.sleep(2)
-
-    while True:
-
-        window.addstr("GX: ")
-
-
-def main():
-    curses.wrapper(testIMU)
-
-if __name__ == "__main__":
-    main()
+for i in range(N):
+   sleep(0.5)
+   print(f"{i/N*100:.1f} %", end="\r")
