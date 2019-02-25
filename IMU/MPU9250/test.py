@@ -29,6 +29,8 @@ try:
         print " [PST] gz = " , ( gyro['z'] )
 
         print "ROLL IS: ", (heading['roll'])
+        print "PITCH IS: ", (heading['pitch'])
+        print "YAW IS: ", (heading['yaw'])
         time.sleep(1)
 
 except KeyboardInterrupt:

@@ -194,6 +194,8 @@ class MPU9250:
 
         if self.calibrated:
             self.roll += x * self.timeElapsed(time.time())
+            self.roll += y * self.timeElapsed(time.time())
+            self.roll += z * self.timeElapsed(time.time())
 
         return {"x":x, "y":y, "z":z}
 
@@ -239,4 +241,4 @@ class MPU9250:
 
 
     def curHeading(self):
-        return {"roll": self.roll}
+        return {"roll": self.roll, "pitch", self.pitch, "yaw", self.yaw}
