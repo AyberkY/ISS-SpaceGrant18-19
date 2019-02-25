@@ -228,7 +228,7 @@ class MPU9250:
     # WARNING: returns in milliseconds. I think?
     def timeElapsed(self, timeStart):
         timeFloat = time.time()
-        return (timeFloat - timeStart - mpu9250.timeAtZero)
+        return (timeFloat - timeStart - timeAtZero)
 
 
     def curHeading(self):
