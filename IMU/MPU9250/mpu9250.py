@@ -241,4 +241,4 @@ class MPU9250:
 
 
     def curHeading(self):
-        return {"roll": self.roll, "pitch", self.pitch, "yaw", self.yaw}
+        return {"roll": self.roll, "pitch": self.pitch, "yaw": self.yaw}
