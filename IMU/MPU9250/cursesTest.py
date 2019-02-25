@@ -10,6 +10,8 @@ def testIMU(stdscr):
     IMU1.calGyro()
     time.sleep(2)
 
+    stdscr.addstr(10,10,"geoff gay")
+
     while True:
         gyro = IMU1.readGyro()
         heading = IMU1.curHeading()
