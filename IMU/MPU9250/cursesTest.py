@@ -4,7 +4,7 @@ import sys
 import curses
 
 
-def testIMU(window):
+def testIMU(stdscr):
 
     IMU1 = mpu9250.MPU9250()
     IMU1.calGyro()
@@ -12,8 +12,8 @@ def testIMU(window):
 
     while True:
         gyro = IMU1.readGyro()
-
-        window.addstr("GX: " + str(gyro['x']))
+        stdscr.erase()
+        stdscr.addstr(0,2,"GX: " + str(gyro['x']))
 
 
 def main():
