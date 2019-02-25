@@ -81,7 +81,7 @@ class MPU9250:
         self.yaw = 0
         self.timeFloat = 0
         self.timeAtStart = 0
-        self.timeAtZero = time.timme()
+        self.timeAtZero = time.time()
 
 
 
