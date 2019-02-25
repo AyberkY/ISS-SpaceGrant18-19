@@ -193,7 +193,7 @@ class MPU9250:
             z = zPre
 
         if self.calibrated:
-            self.roll += x * timeElapsed(time.time())
+            self.roll += x * self.timeElapsed(time.time())
 
         return {"x":x, "y":y, "z":z}
 
