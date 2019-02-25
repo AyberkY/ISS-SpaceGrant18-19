@@ -59,7 +59,6 @@ AFS_16G  = 0x03
 
 ## smbus
 bus = smbus.SMBus(1)
-time = time.time()
 
 class MPU9250:
 
@@ -225,7 +224,7 @@ class MPU9250:
         print('GZ OFFSET: ' + str(self.GZ_OFFSET))
 
     def timeElapsed(self, timeStart):
-        return (timeStart - self.time.time())
+        return (timeStart - time.time())
 
 
     def curHeading(self):
