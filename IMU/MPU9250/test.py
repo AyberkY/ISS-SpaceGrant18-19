@@ -26,7 +26,7 @@ try:
         print('')
         print " [PRE] gz = " , ( gyro['zPre'] )
         print " [PST] gz = " , ( gyro['z'] )
-        time.sleep(0.5)
+        time.sleep(0.1)
 
 except KeyboardInterrupt:
     sys.exit()
