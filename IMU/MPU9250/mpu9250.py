@@ -213,7 +213,7 @@ class MPU9250:
             self.GX_OFFSET += data["x"]
             self.GY_OFFSET += data["y"]
             self.GZ_OFFSET += data["z"]
-            time.sleep(0.05)
+            time.sleep(0.01)
         self.calibrated = True
 
         self.GX_OFFSET = self.GX_OFFSET / 100
@@ -227,7 +227,7 @@ class MPU9250:
     # @param [in] timeStart starting frame for time calculation
     # WARNING: returns in milliseconds. I think?
     def timeElapsed(self, timeNow):
-        temp = mpu9250.timeFloat
+        temp = timeFloat
         timeFloat = time.time()
         return (timeNow - temp - timeAtZero)
 
