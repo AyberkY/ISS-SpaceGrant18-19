@@ -3,7 +3,6 @@ import time
 import sys
 import curses
 
-
 def testIMU(stdscr):
 
     IMU1 = mpu9250.MPU9250()
@@ -31,6 +30,7 @@ def testIMU(stdscr):
         stdscr.addstr(4,0,"PITCH: " + str(heading['pitch']))
         stdscr.addstr(5,0,"YAW: " + str(heading['yaw']))
         stdscr.addstr(3,50,"geoff gay", curses.color_pair(color))
+        stdscr.addstr(6,0,'TIME ELAPSED: ' + str(IMU1.timeElapsed(time.time())))
         stdscr.refresh()
         time.sleep(0.1)
 
