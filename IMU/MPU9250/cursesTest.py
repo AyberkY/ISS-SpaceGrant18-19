@@ -32,7 +32,7 @@ def testIMU(stdscr):
         stdscr.addstr(3,50,"geoff gay", curses.color_pair(color))
         stdscr.addstr(6,0,'TIME ELAPSED: ' + str(IMU1.timeElapsed(time.time())))
         stdscr.refresh()
-        time.sleep(0.5)
+        time.sleep(0.01)
 
 def main():
     curses.wrapper(testIMU)
