@@ -28,6 +28,7 @@ try:
         #print " [PRE] gz = " , ( gyro['zPre'] )
         print " [PST] gz = " , ( gyro['z'] )
 
+        print('')
         print "ROLL IS: ", (heading['roll'])
         print "PITCH IS: ", (heading['pitch'])
         print "YAW IS: ", (heading['yaw'])
