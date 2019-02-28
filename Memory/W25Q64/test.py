@@ -14,6 +14,6 @@ time.sleep(1)
 
 print("sending data now...")
 time.sleep(0.5)
-spi.xfer([0x9F, 0x00, 0x00, 0x00])
-data = spi.readbytes(3)
+spi.xfer([0x9F])
+data = spi.xfer([0x00])
 print(data)
