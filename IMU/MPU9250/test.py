@@ -20,8 +20,8 @@ try:
         heading = IMU1.curHeading()
 
         counter = 0
-        
-        if counter % 10 == 0:
+
+        if counter % 100 == 0:
             print('')
             #print " [PRE] gx = " , ( gyro['xPre'] )
             print " [PST] gx = " , ( gyro['x'] )
