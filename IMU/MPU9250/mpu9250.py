@@ -193,9 +193,9 @@ class MPU9250:
             z = zPre
 
         if self.calibrated:
-            self.roll += x * self.timeElapsed(time.time()) * 100
-            self.pitch += y * self.timeElapsed(time.time()) * 100
-            self.yaw += z * self.timeElapsed(time.time()) * 100
+            self.roll += x * self.timeElapsed(time.time()) * 50
+            self.pitch += y * self.timeElapsed(time.time()) * 50
+            self.yaw += z * self.timeElapsed(time.time()) * 50
 
         return {"x":x, "y":y, "z":z}
 
@@ -221,7 +221,7 @@ class MPU9250:
             self.GX_OFFSET += data["x"]
             self.GY_OFFSET += data["y"]
             self.GZ_OFFSET += data["z"]
-            time.sleep(0.1)
+            time.sleep(0.05)
         self.calibrated = True
 
         self.GX_OFFSET = self.GX_OFFSET / 100
