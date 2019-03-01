@@ -1,5 +1,6 @@
-#Test code for W25Q64FV SPI Flash chipself.
-#02/26/2019
+# Test code for W25Q64FV SPI Flash chipself.
+# 02/26/2019
+# 172.16.108.161
 import spidev
 import time
 
@@ -13,6 +14,6 @@ time.sleep(1)
 
 print("sending data now...")
 time.sleep(0.5)
-spi.writebytes([0x90, 0x00, 0x00, 0x00])
-data = spi.readbytes(3)
+spi.xfer2([0x9F])
+data = spi.xfer2([0x00])
 print(data)
