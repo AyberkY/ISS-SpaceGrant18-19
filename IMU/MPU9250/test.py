@@ -37,7 +37,7 @@ try:
             print "PITCH IS: ", (heading['pitch'])
             print "YAW IS: ", (heading['yaw'])
         counter = counter + 1
-        time.sleep(0.01)
+        time.sleep(0.05)
 
 except KeyboardInterrupt:
     sys.exit()
