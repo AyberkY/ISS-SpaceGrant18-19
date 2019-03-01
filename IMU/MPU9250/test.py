@@ -18,20 +18,24 @@ try:
         print('TIME ELAPSED: ' + str(IMU1.timeElapsed(time.time())))
         gyro = IMU1.readGyro()
         heading = IMU1.curHeading()
-        print('')
-        #print " [PRE] gx = " , ( gyro['xPre'] )
-        print " [PST] gx = " , ( gyro['x'] )
-        print('')
-        #print " [PRE] gy = " , ( gyro['yPre'] )
-        print " [PST] gy = " , ( gyro['y'] )
-        print('')
-        #print " [PRE] gz = " , ( gyro['zPre'] )
-        print " [PST] gz = " , ( gyro['z'] )
 
-        print('')
-        print "ROLL IS: ", (heading['roll'])
-        print "PITCH IS: ", (heading['pitch'])
-        print "YAW IS: ", (heading['yaw'])
+        counter = 0
+        
+        if counter % 10 == 0:
+            print('')
+            #print " [PRE] gx = " , ( gyro['xPre'] )
+            print " [PST] gx = " , ( gyro['x'] )
+            print('')
+            #print " [PRE] gy = " , ( gyro['yPre'] )
+            print " [PST] gy = " , ( gyro['y'] )
+            print('')
+            #print " [PRE] gz = " , ( gyro['zPre'] )
+            print " [PST] gz = " , ( gyro['z'] )
+
+            print('')
+            print "ROLL IS: ", (heading['roll'])
+            print "PITCH IS: ", (heading['pitch'])
+            print "YAW IS: ", (heading['yaw'])
         time.sleep(0.01)
 
 except KeyboardInterrupt:
