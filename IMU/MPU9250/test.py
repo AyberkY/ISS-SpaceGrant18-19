@@ -36,6 +36,7 @@ try:
             print "ROLL IS: ", (heading['roll'])
             print "PITCH IS: ", (heading['pitch'])
             print "YAW IS: ", (heading['yaw'])
+        counter = counter + 1
         time.sleep(0.01)
 
 except KeyboardInterrupt:
