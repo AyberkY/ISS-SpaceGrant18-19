@@ -3,6 +3,7 @@ import time
 import sys
 
 IMU1 = mpu9250.MPU9250()
+MAG1 = mpu9250.AK8963()
 
 try:
     IMU1.calGyro()
@@ -19,10 +20,14 @@ try:
         #print('TIME ELAPSED: ' + str(t)
         gyro = IMU1.readGyro()
         heading = IMU1.curHeading()
+        magnet = MAG1.readMaget()
 
         counter = 0
 
         if counter % 100 == 0:
+            print("MagnetX: " + str(magnet['x']))
+            print("MagnetY: " + str(magnet['y']))
+            print("MagnetZ: " + str(magnet['z']))
             print('')
             #print " [PRE] gx = " , ( gyro['xPre'] )
             print " [PST] gx = " , ( gyro['x'] )
