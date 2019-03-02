@@ -8,9 +8,8 @@ try:
 
     IMU1.calGyro()
     time.sleep(2)
-    IMU1.timeElapsed(time.time())
     while True:
-        #accel = IMU1.readAccel()
+        accel = IMU1.readAccel()
         print('')
         #print ("ax = " , ( accel['x'] ))
         #print " ay = " , ( accel['y'] )
@@ -39,7 +38,7 @@ try:
             print "PITCH IS: ", (heading['pitch'])
             print "YAW IS: ", (heading['yaw'])
         counter = counter + 1
-        time.sleep(0.05)
+        time.sleep(0.001)
 
 except KeyboardInterrupt:
     sys.exit()
