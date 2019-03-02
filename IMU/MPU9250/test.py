@@ -3,7 +3,6 @@ import time
 import sys
 
 IMU1 = mpu9250.MPU9250()
-MAG1 = mpu9250.AK8963()
 
 try:
     IMU1.calGyro()
