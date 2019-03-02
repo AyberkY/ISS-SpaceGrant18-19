@@ -70,7 +70,7 @@ class MPU9250:
         self.accelRange = accelRangeIn
         self.gyroRange = gyroRangeIn
         self.address = address
-        self.configMPU9250(GFS_250, AFS_2G)
+        self.configMPU9250(gyroRangeIn, AFS_2G)
         self.GX_OFFSET = 0
         self.GY_OFFSET = 0
         self.GZ_OFFSET = 0
@@ -237,7 +237,7 @@ class MPU9250:
     # WARNING: returns in milliseconds. I think?
     def timeElapsed(self, timeNow):
         temp = self.timeFloat
-        self.timeFloat = time.time()
+        self.timeFloat = timeNow
         return (timeNow - temp)
 
 

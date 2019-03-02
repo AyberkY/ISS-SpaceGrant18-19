@@ -15,7 +15,8 @@ try:
         #print " ay = " , ( accel['y'] )
         #print " az = " , ( accel['z'] )
 
-        print('TIME ELAPSED: ' + str(IMU1.timeElapsed(time.time())))
+        #t = IMU1.timeElapsed(time.time())
+        #print('TIME ELAPSED: ' + str(t)
         gyro = IMU1.readGyro()
         heading = IMU1.curHeading()
 
