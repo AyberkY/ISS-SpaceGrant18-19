@@ -19,7 +19,7 @@ try:
         #print('TIME ELAPSED: ' + str(t)
         gyro = IMU1.readGyro()
         heading = IMU1.curHeading()
-        magnet = IMU1.readMaget()
+        magnet = IMU1.readMagnet()
 
         counter = 0
 
