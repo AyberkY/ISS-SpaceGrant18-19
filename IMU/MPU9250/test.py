@@ -5,11 +5,11 @@ import sys
 IMU1 = mpu9250.MPU9250()
 
 try:
-
     IMU1.calGyro()
     time.sleep(2)
+    IMU1.timeElapsed()
     while True:
-        accel = IMU1.readAccel()
+        #accel = IMU1.readAccel()
         print('')
         #print ("ax = " , ( accel['x'] ))
         #print " ay = " , ( accel['y'] )
@@ -37,9 +37,9 @@ try:
             print "ROLL IS: ", (heading['roll'])
             print "PITCH IS: ", (heading['pitch'])
             print "YAW IS: ", (heading['yaw'])
-            print('temp: ', IMU1.readTemperature)
+            print('temp: ', IMU1.readTemperature())
         counter = counter + 1
-        time.sleep(0.001)
+        time.sleep(0.05)
 
 except KeyboardInterrupt:
     sys.exit()
