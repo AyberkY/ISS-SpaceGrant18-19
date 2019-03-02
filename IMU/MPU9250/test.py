@@ -38,6 +38,7 @@ try:
             print "ROLL IS: ", (heading['roll'])
             print "PITCH IS: ", (heading['pitch'])
             print "YAW IS: ", (heading['yaw'])
+            print('temp: ', IMU1.readTemperature)
         counter = counter + 1
         time.sleep(0.05)
 

@@ -57,10 +57,31 @@ AFS_8G   = 0x02
 ## Accel Full Scale Select 16G
 AFS_16G  = 0x03
 
-## smbus
+# AK8963 Register Addresses
+AK8963_ST1        = 0x02
+AK8963_MAGNET_OUT = 0x03
+AK8963_CNTL1      = 0x0A
+AK8963_CNTL2      = 0x0B
+AK8963_ASAX       = 0x10
+
+# CNTL1 Mode select
+## Power down mode
+AK8963_MODE_DOWN   = 0x00
+## One shot data output
+AK8963_MODE_ONE    = 0x01
+
+## Continous data output 8Hz
+AK8963_MODE_C8HZ   = 0x02
+## Continous data output 100Hz
+AK8963_MODE_C100HZ = 0x06
+
+# Magneto Scale Select
+## 14bit output
+AK8963_BIT_14 = 0x00
+## 16bit output
+AK8963_BIT_16 = 0x01
+
 bus = smbus.SMBus(1)
-#timeFloat = 0
-#timeAtStart = 0
 
 class MPU9250:
 
@@ -71,10 +92,15 @@ class MPU9250:
         self.gyroRange = gyroRangeIn
         self.address = address
         self.configMPU9250(gyroRangeIn, AFS_2G)
+        self.configAK8963(AK8963_MODE_C8HZ, AK8963_BIT_16)
+
+        #Calibration Values
         self.GX_OFFSET = 0
         self.GY_OFFSET = 0
         self.GZ_OFFSET = 0
         self.calibrated = False
+
+        #Integration Values
         timeAtZero = time.time()
         self.roll = 0
         self.pitch = 0
@@ -139,6 +165,38 @@ class MPU9250:
         time.sleep(0.1)
 
 
+    ## Configure AK8963
+    #  @param [in] self The object pointer.
+    #  @param [in] mode Magneto Mode Select(default:AK8963_MODE_C8HZ[Continous 8Hz])
+    #  @param [in] mfs Magneto Scale Select(default:AK8963_BIT_16[16bit])
+    def configAK8963(self, mode, mfs):
+        if mfs == AK8963_BIT_14:
+            self.mres = 4912.0/8190.0
+        else: #  mfs == AK8963_BIT_16:
+            self.mres = 4912.0/32760.0
+
+        bus.write_byte_data(AK8963_SLAVE_ADDRESS, AK8963_CNTL1, 0x00)
+        time.sleep(0.01)
+
+        # set read FuseROM mode
+        bus.write_byte_data(AK8963_SLAVE_ADDRESS, AK8963_CNTL1, 0x0F)
+        time.sleep(0.01)
+
+        # read coef data
+        data = bus.read_i2c_block_data(AK8963_SLAVE_ADDRESS, AK8963_ASAX, 3)
+
+        self.magXcoef = (data[0] - 128) / 256.0 + 1.0
+        self.magYcoef = (data[1] - 128) / 256.0 + 1.0
+        self.magZcoef = (data[2] - 128) / 256.0 + 1.0
+
+        # set power down mode
+        bus.write_byte_data(AK8963_SLAVE_ADDRESS, AK8963_CNTL1, 0x00)
+        time.sleep(0.01)
+
+        # set scale&continous mode
+        bus.write_byte_data(AK8963_SLAVE_ADDRESS, AK8963_CNTL1, (mfs<<4|mode))
+        time.sleep(0.01)
+
     ## brief Check data ready
     #  @param [in] self The object pointer.
     #  @retval true data is ready
@@ -200,6 +258,34 @@ class MPU9250:
 
         return {"x":x, "y":y, "z":z}
 
+    ## Read magneto
+    #  @param [in] self The object pointer.
+    #  @retval x : X-magneto data
+    #  @retval y : y-magneto data
+    #  @retval z : Z-magneto data
+    def readMagnet(self):
+        x=0
+        y=0
+        z=0
+
+        # check data ready
+        drdy = bus.read_byte_data(AK8963_SLAVE_ADDRESS, AK8963_ST1)
+        if drdy & 0x01 :
+            data = bus.read_i2c_block_data(AK8963_SLAVE_ADDRESS, AK8963_MAGNET_OUT, 7)
+
+            # check overflow
+            if (data[6] & 0x08)!=0x08:
+                x = self.dataConv(data[0], data[1])
+                y = self.dataConv(data[2], data[3])
+                z = self.dataConv(data[4], data[5])
+
+                x = round(x * self.mres * self.magXcoef, 3)
+                y = round(y * self.mres * self.magYcoef, 3)
+                z = round(z * self.mres * self.magZcoef, 3)
+
+        return {"x":x, "y":y, "z":z}
+
+
     ## Data Convert
     # @param [in] self The object pointer.
     # @param [in] data1 LSB
@@ -241,6 +327,15 @@ class MPU9250:
         print ('TIME ELAPSED' + str(timeNow - temp))
         return (timeNow - temp)
 
-
     def curHeading(self):
         return {"roll": self.roll, "pitch": self.pitch, "yaw": self.yaw}
+
+    # FUN PURPOSES
+    ## Read temperature
+    #  @param [out] temperature temperature(degrees C)
+    def readTemperature(self):
+        data = bus.read_i2c_block_data(self.address, TEMP_OUT, 2)
+        temp = self.dataConv(data[1], data[0])
+
+        temp = round((temp / 333.87 + 21.0), 3)
+        return temp
