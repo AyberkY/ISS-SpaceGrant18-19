@@ -339,3 +339,20 @@ class MPU9250:
 
         temp = round((temp / 333.87 + 21.0), 3)
         return temp
+
+    # Direction (y>0) = 90 - [arcTAN(x/y)]*180/pi
+    # Direction (y<0) = 270 - [arcTAN(x/y)]*180/pi
+    # Direction (y=0, x<0) = 180.0
+    # Direction (y=0, x>0) = 0.0
+    def calcCompass(self):
+        data = self.readMagnet()
+        toRet = 0
+        if (data['y'] > 0):
+            toRet = 90 - (Math.arcTAN(data['x']/data['y'])) * 180 / Math.radians(180)
+        if (data['y'] < 0):
+            toRet = 90 - (Math.arcTAN(data['x']/data['y'])) * 180 / Math.radians(180)
+        if (data['y'] == 0 and data['x'] < 0)
+            toRet = 180.0
+        if (data['y'] == 0 and data['x'] < 0)
+            toRet = 0.0
+        return toRet
