@@ -109,6 +109,11 @@ class MPU9250:
         self.timeAtStart = 0
         self.timeAtZero = time.time()
 
+        #magnometer calibration offsets
+        self.MagXError = 0
+        self.MagYError = 0
+        self.MagZError = 0
+
 
 
     ##  Makes sure the device is the correct device by reading the value stored in the WHO_AM_I register.
@@ -356,3 +361,27 @@ class MPU9250:
         if (data['y'] == 0 and data['x'] < 0)
             toRet = 0.0
         return toRet
+
+    def calMag(self):
+        print("rotate 360 degrees on all axes")
+        for x in range(100):
+            magData = self.readMagnet()
+            self.MagXError += magData["x"]
+            self.MagYError += magData["y"]
+            self.MagZError += magData["z"]
+        self.MagXError = self.MagXError / 100
+        self.MagYError = self.MagYError / 100
+        self.MagZError = self.MagZError / 100
+        print("subtract messured error from raw value")
+
+
+    #error correction: madgwick or kalman
+    def kalman(self, state, angVel, time):
+        x = [ang position, ang velocity, time var]#current
+        preX= [ang position, ang velocity, time var]#previous x Value
+        A = x[2] *x[3] #opperation to calculate next outcome
+        w/v = noise factor
+
+        x = preX A + w
+
+        z = B x + v
