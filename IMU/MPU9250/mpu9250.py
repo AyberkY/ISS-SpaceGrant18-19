@@ -376,12 +376,12 @@ class MPU9250:
 
 
     #error correction: madgwick or kalman
-    def kalman(self, state, angVel, time):
-        x = [ang position, ang velocity, time var]#current
-        preX= [ang position, ang velocity, time var]#previous x Value
-        A = x[2] *x[3] #opperation to calculate next outcome
-        w/v = noise factor
-
-        x = preX A + w
-
-        z = B x + v
+    def kalman(self, axisString, MagError, GyroError):
+        sum = MagError + GyroError
+        a = MagError/sum
+        b = GyroError/sum
+        magComb = self.readMagnet()
+        gyroComb = self.readGyro()
+        outputGiv = magComb[axisString](a) + gyroComb[axisString](b)
+        outputGiv = outputGiv/(a+b)
+        print(outputGiv)
