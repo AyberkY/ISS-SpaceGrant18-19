@@ -7,3 +7,8 @@ Ground
 172.16.108.161
 moresensorsE
 '''
+
+def test():
+    print("test")
+
+test()
