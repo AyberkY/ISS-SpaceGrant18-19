@@ -13,6 +13,6 @@ def searchDATA(data):
     return dataOUT
 
 while True:
-    if ser.in_waiting() > 0:                #checks if there is new data in the input buffer.
+    if ser.in_waiting > 0:                #checks if there is new data in the input buffer.
         data = ser.readline()               #reads fron the input buffer.
         searchDATA(data)
