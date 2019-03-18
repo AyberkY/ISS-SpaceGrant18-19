@@ -1,7 +1,7 @@
 import serial
 import pynmea2
 
-port = '/dev/ttyAMA0'                       #defines the serial port connected to
+port = '/dev/ttyS0'                       #defines the serial port connected to
 ser = serial.Serial(port, baudrate = 9600, timeout = 0.5)    #creates a serial object
 
 def searchDATA(data):
@@ -11,6 +11,6 @@ def searchDATA(data):
     print( dataOUT )
     return dataOUT
 
-while 1==1:                                 #keeps searching the data                            
+while 1==1:                                 #keeps searching the data
     data = ser.readline()
     searchDATA(data)
