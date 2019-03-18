@@ -9,10 +9,11 @@ def searchDATA(data):
     if data.find('GGA') > 0:                #searches for $GPGGA in the GPS information
         dataGPS = pynmea2.parse(data)       #library does this stuff somehow
         dataOUT = [str(dataGPS.timestamp), str(dataGPS.lat) + ' ' + str(dataGPS.lat_dir), str(dataGPS.lon) + ' ' + str(dataGPS.lon_dir), str(dataGPS.altitude) + ' ' + str(dataGPS.altitude_units), str(dataGPS.num_sats) + ' satellites']
-    print( dataOUT )
     return dataOUT
 
 while True:
     if ser.in_waiting > 0:                #checks if there is new data in the input buffer.
         data = ser.readline()               #reads fron the input buffer.
-        searchDATA(data)
+        dataOUT = searchDATA(data)
+        print(dataOUT)
+        ser.reset_input_buffer()           #flushes the input buffer.
