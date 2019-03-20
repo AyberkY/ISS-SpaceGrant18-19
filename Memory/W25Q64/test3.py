@@ -1,2 +1,4 @@
 import spidev
-print(spidev.readlines(2))
+
+spi = spidev.SpiDev()
+spi.open(0, 0)
