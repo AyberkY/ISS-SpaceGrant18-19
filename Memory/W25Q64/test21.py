@@ -130,7 +130,7 @@ except KeyboardInterrupt:
 #Writing Strings UI
 try:
     while True:
-
+        string = raw_input('String: ')
         pageBe = chip.read_page(0x00, 0x00)
 
         page = []
