@@ -135,7 +135,7 @@ try:
         pageN  = hex(input("Page   (0-16): "))
         string = str(input("String: "))
 
-        pageBe4 = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
+        pageBe = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
 
         page = []
         for i in range(256):
@@ -144,9 +144,12 @@ try:
             except:
                 page.append(0x00)
 
+        print(page)
+        print(len(page))
+
         chip.write_page(int(block, 16), int((sector[2:]+pageN[2:]), 16), page)
 
-        pageAft = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
+        pageAf = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
 
         chip.print_page(pageBe4)
         chip.print_page(pageAft)
