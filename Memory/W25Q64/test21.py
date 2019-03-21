@@ -11,6 +11,7 @@ CHIP_ERASE = 0xC7
 from time import sleep
 import spidev
 from datetime import datetime
+import binascii
 
 def sleep_ms(msecs):
     sleep(float(msecs) / 1000.0)
@@ -114,13 +115,33 @@ class spiflash(object):
 
 chip = spiflash(bus = 0, cs = 0)
 
+#Reading UI
 try:
     while True:
         block  = hex(input("Block (0-127): "))
         sector = hex(input("Sector (0-16): "))
         pageN   = hex(input("Page   (0-16): "))
+
         page = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
         chip.print_page(page)
-        print("\n")
+except KeyboardInterrupt:
+    print('interrupted!')
+
+#Writing Strings UI
+try:
+    while True:
+        block  = hex(input("Block (0-127): "))
+        sector = hex(input("Sector (0-16): "))
+        pageN  = hex(input("Page   (0-16): "))
+        string = str(input("String: "))
+
+        page = []
+        for i in range(256):
+            try:
+                page[i] = binascii.hexlify(string[i])
+            except:
+                page[i] = 0x00
+
+        chip.write_page(int(block, 16), int((sector[2:]+pageN[2:]), 16), page)
 except KeyboardInterrupt:
     print('interrupted!')
