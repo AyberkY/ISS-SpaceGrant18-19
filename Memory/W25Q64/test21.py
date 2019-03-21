@@ -137,7 +137,7 @@ try:
         block  = int(hex(input("Block (0-127): ")), 16)
         sector = hex(input("Sector (0-16): "))
         page   = hex(input("Page   (0-16): "))
-        sectPg = int((sector[2:]+pageN[2:]), 16)
+        sectPg = int(sector[2:]+pageN[2:], 16)
 
         string = input('String: ')
 
