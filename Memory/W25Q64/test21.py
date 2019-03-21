@@ -131,22 +131,8 @@ except:
 
 
 #Writing Strings UI
-string = input('String: ')
-pageBe = chip.read_page(0x00, 0x00)
-
-
-
-print(page)
-print(len(page))
-
-print(chip.write_page(0x00, 0x00, page))
-pageAf = chip.read_page(0x00, 0x00)
-
-chip.print_page(pageBe)
-chip.print_page(pageAf)
-
 try:
-    print("Reading Data")
+    print("Writing Data")
     while True:
         block  = int(hex(input("Block (0-127): ")), 16)
         sector = hex(input("Sector (0-16): "))
