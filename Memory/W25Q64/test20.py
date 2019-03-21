@@ -115,8 +115,12 @@ chip = spiflash(bus = 0, cs = 0)
 
 page = chip.read_page(0x00,0x00)
 chip.print_page(page)
-print(page)
 
-chip.erase_sector(0x00, 0x00)
+page = []
+for i in range(256):
+    page[i] = 0
+    
+chip.write_page(0x00, 0x00, page)
+
 page = chip.read_page(0x00,0x00)
 chip.print_page(page)
