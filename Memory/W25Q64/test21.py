@@ -114,14 +114,9 @@ class spiflash(object):
 
 chip = spiflash(bus = 0, cs = 0)
 
-cont = True
-while(cont):
-    try:
-        block  = hex(input("Block (0-127): "))
-        sector = hex(input("Sector (0-16): "))
-        pageN   = hex(input("Page   (0-16): "))
-        page = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
-        chip.print_page(page)
-        print('\033c')
-    except:
-        cont = False
+
+block  = hex(input("Block (0-127): "))
+sector = hex(input("Sector (0-16): "))
+pageN   = hex(input("Page   (0-16): "))
+page = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
+chip.print_page(page)
