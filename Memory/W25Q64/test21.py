@@ -125,18 +125,27 @@ def get_24b_addr():
 chip = spiflash(bus = 0, cs = 0)
 
 
-#Reading UI
+#Reading UI for ASCII
 try:
     print("Reading Data")
     while True:
         addr = get_24b_addr()
         data = chip.read_page(addr[0], addr[1])
         chip.print_page(data)
+
+        result = ''
+        for i in data:
+            try:
+                result += chr(i)
+            except:
+                pass
+        print(result)
+
 except:
     print('\nInterrupted!')
 
 
-#Writing Strings UI
+#Writing ASCII Strings UI
 try:
     print("Writing Data")
     while True:
