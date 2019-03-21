@@ -140,7 +140,7 @@ try:
         page = []
         for i in range(256):
             try:
-                page.append(binascii.hexlify(str.encode(string[i])))
+                page.append(int(binascii.hexlify(str.encode(string[i]))))
             except:
                 page.append(0x00)
 
