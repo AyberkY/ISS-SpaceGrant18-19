@@ -113,18 +113,24 @@ class spiflash(object):
 #TESTS -------------------------------------------------------------------
 #TESTS -------------------------------------------------------------------
 
+def get_24b_addr():
+    block  = int(hex(input("Block (0-127): ")), 16)
+    sector = hex(input("Sector (0-16): "))
+    pageN  = hex(input("Page   (0-16): "))
+    sctPg  = int((sector[2:]+pageN[2:]), 16)
+
+    return [block, sctPg]
+
+
 chip = spiflash(bus = 0, cs = 0)
+
 
 #Reading UI
 try:
     print("Reading Data")
     while True:
-        block  = int(hex(input("Block (0-127): ")), 16)
-        sector = hex(input("Sector (0-16): "))
-        pageN  = hex(input("Page   (0-16): "))
-        sctPg  = int((sector[2:]+pageN[2:]), 16)
-
-        data = chip.read_page(block, sctPg)
+        addr = get_24b_addr()
+        data = chip.read_page(addr[0], addr[1])
         chip.print_page(data)
 except:
     print('\nInterrupted!')
