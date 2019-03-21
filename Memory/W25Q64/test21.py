@@ -127,27 +127,24 @@ try:
 except KeyboardInterrupt:
     print('interrupted!')
 
+
 #Writing Strings UI
-try:
-    while True:
-        string = raw_input('String: ')
-        pageBe = chip.read_page(0x00, 0x00)
 
-        page = []
-        for i in range(256):
-            try:
-                page.append(int('0x' + binascii.hexlify(str.encode(string[i])).decode("utf-8"), 0))
-            except:
-                page.append(0x00)
+string = input('String: ')
+pageBe = chip.read_page(0x00, 0x00)
 
-        print(page)
-        print(len(page))
+page = []
+for i in range(256):
+    try:
+        page.append(int('0x' + binascii.hexlify(str.encode(string[i])).decode("utf-8"), 0))
+    except:
+        page.append(0x00)
 
-        chip.write_page(0x00, 0x00, page)
+print(page)
+print(len(page))
 
-        pageAf = chip.read_page(0x00, 0x00)
+print(chip.write_and_verify_page(0x00, 0x00, page))
+pageAf = chip.read_page(0x00, 0x00)
 
-        chip.print_page(pageBe)
-        chip.print_page(pageAf)
-except KeyboardInterrupt:
-    print('interrupted!')
+chip.print_page(pageBe)
+chip.print_page(pageAf)
