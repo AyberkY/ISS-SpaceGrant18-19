@@ -139,7 +139,7 @@ try:
                 result += chr(i)
             except:
                 pass
-        print(result)
+        print("Result: " + result + "\n")
 
 except:
     print('\nInterrupted!')
