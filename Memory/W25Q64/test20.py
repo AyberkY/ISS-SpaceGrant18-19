@@ -118,7 +118,7 @@ chip.print_page(page)
 
 page = []
 for i in range(256):
-    page.append(0)
+    page.append(1)
 
 chip.write_page(0x00, 0x00, page)
 
