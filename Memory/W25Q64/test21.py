@@ -141,8 +141,8 @@ try:
     print("Writing Data")
     while True:
         addr = get_24b_addr()
-
-        string = input('String: ')
+        print('hi')
+        str = input('String: ')
 
         pageBe = chip.read_page(addr[0], addr[1])
         chip.erase_sector(addr[0], addr[1])
