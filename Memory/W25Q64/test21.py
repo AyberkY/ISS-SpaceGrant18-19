@@ -117,36 +117,58 @@ chip = spiflash(bus = 0, cs = 0)
 
 #Reading UI
 try:
+    print("Reading Data")
     while True:
-        block  = hex(input("Block (0-127): "))
+        block  = int(hex(input("Block (0-127): ")), 16)
         sector = hex(input("Sector (0-16): "))
-        pageN   = hex(input("Page   (0-16): "))
+        page   = hex(input("Page   (0-16): "))
+        sectPg = int((sector[2:]+pageN[2:]), 16)
 
-        page = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
-        chip.print_page(page)
-except KeyboardInterrupt:
-    print('interrupted!')
+        data = chip.read_page(block,  sectPage)
+        chip.print_page(data)
+except:
+    print('\nInterrupted!')
 
 
 #Writing Strings UI
-
 string = input('String: ')
 pageBe = chip.read_page(0x00, 0x00)
 
-chip.erase_sector(0x00, 0x00)
 
-page = []
-for i in range(256):
-    try:
-        page.append(int('0x' + binascii.hexlify(str.encode(string[i])).decode("utf-8"), 0))
-    except:
-        page.append(0x00)
 
 print(page)
 print(len(page))
 
-print(chip.write_and_verify_page(0x00, 0x00, page))
+print(chip.write_page(0x00, 0x00, page))
 pageAf = chip.read_page(0x00, 0x00)
 
 chip.print_page(pageBe)
 chip.print_page(pageAf)
+
+try:
+    print("Reading Data")
+    while True:
+        block  = int(hex(input("Block (0-127): ")), 16)
+        sector = hex(input("Sector (0-16): "))
+        page   = hex(input("Page   (0-16): "))
+        sectPg = int((sector[2:]+pageN[2:]), 16)
+
+        string = input('String: ')
+
+        pageBe = chip.read_page(block, sectPg)
+        chip.erase_sector(block, sectPg)
+
+        page = []
+        for i in range(256):
+            try:
+                page.append(int('0x' + binascii.hexlify(str.encode(string[i])).decode("utf-8"), 0))
+            except:
+                page.append(0x00)
+
+        chip.write_page(block, sectPg, page)
+        pageAf = chip.read_page(block, sectPg)
+
+        chip.print_page(pageBe)
+        chip.print_page(pageAf)
+except:
+    print('\nInterrupted!')
