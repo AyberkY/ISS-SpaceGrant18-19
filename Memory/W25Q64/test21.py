@@ -121,9 +121,10 @@ try:
     while True:
         block  = int(hex(input("Block (0-127): ")), 16)
         sector = hex(input("Sector (0-16): "))
-        pageN   = hex(input("Page   (0-16): "))
+        pageN  = hex(input("Page   (0-16): "))
+        sctPg  = int((sector[2:]+pageN[2:]), 16)
 
-        data = chip.read_page(block, int((sector[2:]+pageN[2:]), 16))
+        data = chip.read_page(block, sctPg)
         chip.print_page(data)
 except:
     print('\nInterrupted!')
