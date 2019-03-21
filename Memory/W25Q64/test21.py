@@ -119,10 +119,10 @@ chip = spiflash(bus = 0, cs = 0)
 try:
     print("Reading Data")
     while True:
-        block  = int(hex(input("Block (0-127): ")), 16)
-        sector = hex(input("Sector (0-16): "))
-        page   = hex(input("Page   (0-16): "))
-        sectPg = int((sector[2:]+pageN[2:]), 16)
+        block  = int(input("Block (00-FF): "), 16)
+        sector = input("Sector (0-F): ")
+        page   = input("Page   (0-F): ")
+        sectPg = int(sector+pageN, 16)
 
         data = chip.read_page(block,  sectPage)
         chip.print_page(data)
