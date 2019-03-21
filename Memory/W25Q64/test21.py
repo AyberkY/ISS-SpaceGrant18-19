@@ -138,9 +138,9 @@ try:
         page = []
         for i in range(256):
             try:
-                page[i] = binascii.hexlify(string[i])
+                page.append(binascii.hexlify(string[i]))
             except:
-                page[i] = 0x00
+                page.append(0x00)
 
         chip.write_page(int(block, 16), int((sector[2:]+pageN[2:]), 16), page)
 except KeyboardInterrupt:
