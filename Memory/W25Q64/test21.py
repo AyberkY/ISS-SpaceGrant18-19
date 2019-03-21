@@ -151,7 +151,7 @@ try:
 
         pageAf = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
 
-        chip.print_page(pageBe4)
-        chip.print_page(pageAft)
+        chip.print_page(pageBe)
+        chip.print_page(pageAf)
 except KeyboardInterrupt:
     print('interrupted!')
