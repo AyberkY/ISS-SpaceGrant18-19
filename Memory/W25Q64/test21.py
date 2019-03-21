@@ -130,12 +130,8 @@ except KeyboardInterrupt:
 #Writing Strings UI
 try:
     while True:
-        block  = hex(input("Block (0-127): "))
-        sector = hex(input("Sector (0-16): "))
-        pageN  = hex(input("Page   (0-16): "))
-        string = str(input("String: "))
 
-        pageBe = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
+        pageBe = chip.read_page(0x00, 0x00)
 
         page = []
         for i in range(256):
@@ -147,9 +143,9 @@ try:
         print(page)
         print(len(page))
 
-        chip.write_page(int(block, 16), int((sector[2:]+pageN[2:]), 16), page)
+        chip.write_page(0x00, 0x00, page)
 
-        pageAf = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
+        pageAf = chip.read_page(0x00, 0x00)
 
         chip.print_page(pageBe)
         chip.print_page(pageAf)
