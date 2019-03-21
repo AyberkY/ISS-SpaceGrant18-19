@@ -123,7 +123,7 @@ try:
         sector = hex(input("Sector (0-16): "))
         pageN   = hex(input("Page   (0-16): "))
 
-        page = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
+        data = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
         chip.print_page(data)
 except:
     print('\nInterrupted!')
