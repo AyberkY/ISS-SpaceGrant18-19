@@ -140,15 +140,12 @@ except:
 try:
     print("Writing Data")
     while True:
-        block  = int(hex(input("Block (0-127): ")), 16)
-        sector = hex(input("Sector (0-16): "))
-        page   = hex(input("Page   (0-16): "))
-        sectPg = int(sector[2:]+pageN[2:], 16)
+        addr = get_24b_addr()
 
         string = input('String: ')
 
-        pageBe = chip.read_page(block, sectPg)
-        chip.erase_sector(block, sectPg)
+        pageBe = chip.read_page(addr[0], addr[1])
+        chip.erase_sector(addr[0], addr[1])
 
         page = []
         for i in range(256):
@@ -157,8 +154,8 @@ try:
             except:
                 page.append(0x00)
 
-        chip.write_page(block, sectPg, page)
-        pageAf = chip.read_page(block, sectPg)
+        chip.write_page(addr[0], addr[1], page)
+        pageAf = chip.read_page(addr[0], addr[1])
 
         chip.print_page(pageBe)
         chip.print_page(pageAf)
