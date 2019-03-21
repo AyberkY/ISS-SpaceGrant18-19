@@ -133,6 +133,8 @@ except KeyboardInterrupt:
 string = input('String: ')
 pageBe = chip.read_page(0x00, 0x00)
 
+chip.erase_sector(0x00, 0x00)
+
 page = []
 for i in range(256):
     try:
@@ -144,9 +146,6 @@ print(page)
 print(len(page))
 
 print(chip.write_and_verify_page(0x00, 0x00, page))
-pageAf = chip.read_page(0x00, 0x00)
-
-chip.erase_sector(0x00, 0x00)
 pageAf = chip.read_page(0x00, 0x00)
 
 chip.print_page(pageBe)
