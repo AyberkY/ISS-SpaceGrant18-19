@@ -135,13 +135,20 @@ try:
         pageN  = hex(input("Page   (0-16): "))
         string = str(input("String: "))
 
+        pageBe4 = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
+
         page = []
         for i in range(256):
             try:
-                page.append(binascii.hexlify(string[i]))
+                page.append(binascii.hexlify(str.encode(string[i])))
             except:
                 page.append(0x00)
 
         chip.write_page(int(block, 16), int((sector[2:]+pageN[2:]), 16), page)
+
+        pageAft = chip.read_page(int(block, 16), int((sector[2:]+pageN[2:]), 16))
+
+        chip.print_page(pageBe4)
+        chip.print_page(pageAft)
 except KeyboardInterrupt:
     print('interrupted!')
