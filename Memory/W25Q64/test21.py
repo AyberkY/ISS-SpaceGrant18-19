@@ -141,7 +141,7 @@ try:
     print("Writing Data")
     while True:
         addr = get_24b_addr()
-        print('hi')
+
         str = input('String: ')
 
         pageBe = chip.read_page(addr[0], addr[1])
@@ -150,7 +150,7 @@ try:
         page = []
         for i in range(256):
             try:
-                page.append(int('0x' + binascii.hexlify(str.encode(string[i])).decode("utf-8"), 0))
+                page.append(int('0x' + binascii.hexlify(str.encode(str[i])).decode("utf-8"), 0))
             except:
                 page.append(0x00)
 
