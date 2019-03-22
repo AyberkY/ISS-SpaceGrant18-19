@@ -1,9 +1,9 @@
 # Simple demo of sending and recieving data with the RFM95 LoRa radio.
-import adafruit_boardtest
+import board
 import busio
-import digitalio
+#import digitalio
 
-import adafruit_rfm9x
+#import adafruit_rfm9x
 
 
 # Define radio parameters.
@@ -11,16 +11,16 @@ RADIO_FREQ_MHZ = 433.0  # Frequency of the radio in Mhz. Must match your
                         # module! Can be a value like 915.0, 433.0, etc.
 
 # Define pins connected to the chip, use these if wiring up the breakout according to the guide:
-CS = digitalio.DigitalInOut(board.D5)
-RESET = digitalio.DigitalInOut(board.D6)
+#CS = digitalio.DigitalInOut(board.D5)
+#RESET = digitalio.DigitalInOut(board.D6)
 # Or uncomment and instead use these if using a Feather M0 RFM9x board and the appropriate
 # CircuitPython build:
 # CS = digitalio.DigitalInOut(board.RFM9X_CS)
 # RESET = digitalio.DigitalInOut(board.RFM9X_RST)
 
 # Define the onboard LED
-LED = digitalio.DigitalInOut(board.D13)
-LED.direction = digitalio.Direction.OUTPUT
+#LED = digitalio.DigitalInOut(board.D13)
+#LED.direction = digitalio.Direction.OUTPUT
 
 # Initialize SPI bus.
 spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
