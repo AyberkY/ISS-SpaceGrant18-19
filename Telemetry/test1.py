@@ -1,5 +1,5 @@
 # Simple demo of sending and recieving data with the RFM95 LoRa radio.
-import board
+import boardtest
 import busio
 import digitalio
 
