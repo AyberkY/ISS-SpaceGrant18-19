@@ -1,10 +1,8 @@
 # Simple demo of sending and recieving data with the RFM95 LoRa radio.
+import adafruit_rfm9x
 import board
 import busio
 import digitalio
-
-import adafruit_rfm9x
-
 
 # Define radio parameters.
 RADIO_FREQ_MHZ = 433.0  # Frequency of the radio in Mhz. Must match your
