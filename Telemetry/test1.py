@@ -18,10 +18,6 @@ RESET = digitalio.DigitalInOut(board.D6)
 # CS = digitalio.DigitalInOut(board.RFM9X_CS)
 # RESET = digitalio.DigitalInOut(board.RFM9X_RST)
 
-# Define the onboard LED
-LED = digitalio.DigitalInOut(board.D13)
-LED.direction = digitalio.Direction.OUTPUT
-
 # Initialize SPI bus.
 spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 
@@ -55,11 +51,9 @@ while True:
     # If no packet was received during the timeout then None is returned.
     if packet is None:
         # Packet has not been received
-        LED.value = False
         print('Received nothing! Listening again...')
     else:
         # Received a packet!
-        LED.value = True
         # Print out the raw bytes of the packet:
         print('Received (raw bytes): {0}'.format(packet))
         # And decode to ASCII text and print it too.  Note that you always
