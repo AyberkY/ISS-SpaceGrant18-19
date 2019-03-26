@@ -1,16 +1,17 @@
-WREN = 6
-WRDI = 4
-RDSR = 5
+WREN  = 0x06
+WRDI  = 0x04
+RDSR1 = 0x05
 RDSR2 = 0x35
-WRSR = 1
-READ = 3
-WRITE = 2
+WRSR  = 0x01
+READ  = 0x03
+WRITE = 0x02
 SECTOR_ERASE = 0x20
 CHIP_ERASE = 0xC7
 
 from time import sleep
 import spidev
 from datetime import datetime
+import binascii
 
 def sleep_ms(msecs):
     sleep(float(msecs) / 1000.0)
@@ -92,7 +93,7 @@ class spiflash(object):
         statreg = 0x1;
         while (statreg & 0x1) == 0x1:
             #Wait for the chip.
-            statreg = self.spi.xfer2([RDSR,RDSR])[1]
+            statreg = self.spi.xfer2([RDSR1, RDSR1])[1]
             #print "%r \tRead %X" % (datetime.now(), statreg)
             sleep_ms(5)
 
@@ -112,28 +113,60 @@ class spiflash(object):
 #TESTS -------------------------------------------------------------------
 #TESTS -------------------------------------------------------------------
 
+def get_24b_addr():
+    block  = int(hex(input("Block (0-127): ")), 16)
+    sector = hex(input("Sector (0-16): "))
+    pageN  = hex(input("Page   (0-16): "))
+    sctPg  = int((sector[2:]+pageN[2:]), 16)
+
+    return [block, sctPg]
+
+
 chip = spiflash(bus = 0, cs = 0)
 
-#print_status(read_status())
-#write_disable()
-#print_status(read_status())
 
-p = chip.read_page(0,0)
+#Reading UI for ASCII
+try:
+    print("Reading Data")
+    while True:
+        addr = get_24b_addr()
+        data = chip.read_page(addr[0], addr[1])
+        chip.print_page(data)
 
-#print "erasing chip"
-#chip.erase_all()
-#print "chip erased"
+        result = ''
+        for i in data:
+            try:
+                result += chr(i)
+            except:
+                pass
+        print("Result: " + result + "\n")
 
-for i in range(256):
-    p[i] = (i + 2) % 256
-chip.print_page(p)
-#write_status(0,0)
-#print_status(read_status())
-print chip.write_and_verify_page(0,0,p)
+except:
+    print('\nInterrupted!')
 
-chip.print_page(chip.read_page(0,0))
 
-#self.wait_until_not_busy()
-#print_status(read_status())
-#write_status(0,0)
-#print_status(read_status())
+#Writing ASCII Strings UI
+try:
+    print("Writing Data")
+    while True:
+        addr = get_24b_addr()
+
+        data = input('String: ')
+
+        pageBe = chip.read_page(addr[0], addr[1])
+        chip.erase_sector(addr[0], addr[1])
+
+        page = []
+        for i in range(256):
+            try:
+                page.append(int('0x' + binascii.hexlify(str.encode(data[i])).decode("utf-8"), 0))
+            except:
+                page.append(0x00)
+
+        chip.write_page(addr[0], addr[1], page)
+        pageAf = chip.read_page(addr[0], addr[1])
+
+        chip.print_page(pageBe)
+        chip.print_page(pageAf)
+except:
+    print('\nInterrupted!')
