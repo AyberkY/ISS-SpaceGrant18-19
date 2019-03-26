@@ -303,7 +303,7 @@ class MPU9250:
     def calGyro(self):
         for x in range(100):
             if x % 10 == 0:
-                print('PLEASE WAIT. YOUR DATA IS IMPORTANT TO US')
+                print('w a i t')
             data = self.readGyro()
             self.GX_OFFSET += data["x"]
             self.GY_OFFSET += data["y"]
@@ -344,7 +344,7 @@ class MPU9250:
     # Direction (y<0) = 270 - [arcTAN(x/y)]*180/pi
     # Direction (y=0, x<0) = 180.0
     # Direction (y=0, x>0) = 0.0
-    def calcCompass(self):
+    def readCompass(self):
         data = self.readMagnet()
         toRet = 0
         if (data['y'] > 0):

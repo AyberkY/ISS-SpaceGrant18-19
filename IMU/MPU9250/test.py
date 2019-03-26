@@ -42,6 +42,7 @@ try:
             print "PITCH IS: ", (heading['pitch'])
             print "YAW IS: ", (heading['yaw'])
             print('temp: ', IMU1.readTemperature())
+            print('compass: ', IMU1.readCompass())
         counter = counter + 1
         time.sleep(0.05)
 
