@@ -1,4 +1,4 @@
-import serial import Serial # Import the Serial class only from the pyserial library.
+from serial import Serial # Import the Serial class only from the pyserial library.
 import pynmea2
 
 port = '/dev/ttyS0'                       #defines the serial port connected to
