@@ -288,7 +288,8 @@ class RFM9x:
         # check from pylint.
         # pylint: disable=protected-access
 
-        def __init__(self, address, *, offset=0, bits=1):
+        #def __init__(self, address, *, offset=0, bits=1): #bare asterisk not supported in Python 2.7
+        def __init__(self, address, offset=0, bits=1):
             assert 0 <= offset <= 7
             assert 1 <= bits <= 8
             assert (offset + bits) <= 8
