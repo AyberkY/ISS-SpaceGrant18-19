@@ -209,7 +209,7 @@ _RH_RF95_PA_DAC_DISABLE                      = const(0x04)
 _RH_RF95_PA_DAC_ENABLE                       = const(0x07)
 
 # The crystal oscillator frequency of the module
-_RH_RF95_FXOSC = 32000000.0 #set to 433 MHz (is probably in Hz)
+_RH_RF95_FXOSC = 4330000000.0 #units of Hz?
 
 # The Frequency Synthesizer step = RH_RF95_FXOSC / 2^^19
 _RH_RF95_FSTEP = (_RH_RF95_FXOSC / 524288)
