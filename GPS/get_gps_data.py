@@ -1,8 +1,8 @@
-import serial
+from serial import Serial # Import the Serial class only from the pyserial library.
 import pynmea2
 
 port = '/dev/ttyS0'                       #defines the serial port connected to
-ser = serial.Serial(port, baudrate = 9600, timeout = 0.5)    #creates a serial object
+ser = Serial(port, baudrate = 9600, timeout = 0.5)    #creates a serial object
 
 def searchDATA(data):
     dataOUT = ''
