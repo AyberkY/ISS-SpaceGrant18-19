@@ -334,7 +334,9 @@ class RFM9x:
 
     rx_done = _RegisterBits(_RH_RF95_REG_12_IRQ_FLAGS, offset=6, bits=1)
 
-    def __init__(self, spi, cs, reset, frequency, *, preamble_length=8,
+    #def __init__(self, spi, cs, reset, frequency, *, preamble_length=8,
+                 #high_power=True, baudrate=5000000): #bare asterisk not supported by Python 2.7
+    def __init__(self, spi, cs, reset, frequency, preamble_length=8,
                  high_power=True, baudrate=5000000):
         self.high_power = high_power
         # Device support SPI mode 0 (polarity & phase = 0) up to a max of 10mhz.
