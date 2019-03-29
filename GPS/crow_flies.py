@@ -2,7 +2,7 @@
 Find distnace as the crow flies
 SSS Sux
 '''
-import serial
+from serial import Serial
 import pynmea2
 import math
 
