@@ -31,7 +31,7 @@ def convert(list):
 
     LAT = float(dmsLATlist[0]) + (float(dmsLATlist[1])+float(dmsLATlist[2])/100000)/60  #puts them into full for Decimal Degrees
     LON = (float(dmsLONlist[0]) + (float(dmsLONlist[1])+float(dmsLONlist[2])/100000)/60)*-1
-
+    print(LAT, LON)
     return LAT,LON
 
 def findDISTANCE(LAT, LON, initLAT = 40.11, initLON = -88.238, R=6371*10**3):     #defines a function that takes an initial lon and an initial lat R=radius of earth
