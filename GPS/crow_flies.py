@@ -48,6 +48,7 @@ while True:
     if ser.in_waiting > 0:
         data = ser.readline()
         dataOUTPUT = searchDATA(data)
+        print (type(dataOUTPUT))
         Latitude, Longitude = convert(dataOUTPUT)
         Distance = findDISTANCE(initLAT, initLON, Latitude, Longitude)
         print(str(Distance)+ ' m')
