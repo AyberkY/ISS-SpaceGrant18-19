@@ -35,6 +35,9 @@ def convert(list):
     return LAT,LON
 
 def findDISTANCE(LAT, LON, R=6371*10**3, initLAT=40.11, initLON=-88.238):     #defines a function that takes an initial lon and an initial lat R=radius of earth
+    initLAT = 40.11
+    initLON = -88.238
+
     deltaLAT = LAT - initLAT
     deltaLON = LON - initLON
 
