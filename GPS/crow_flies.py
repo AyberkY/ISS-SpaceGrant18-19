@@ -45,6 +45,8 @@ def findDISTANCE(LAT, LON, initLAT = 40.11, initLON = -88.238, R=6371*10**3):   
     c = 2*math.atan2(math.sqrt(a),math.sqrt(1-a))
     d = R*c
 
+    print(a,c,d)
+
     return d
 
 while True:
