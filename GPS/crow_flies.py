@@ -38,6 +38,8 @@ def findDISTANCE(LAT, LON, initLAT = 40.11, initLON = -88.238, R=6371*10**3):   
     deltaLAT = LAT - initLAT
     deltaLON = LON - initLON
 
+    print(delatLAT, deltaLON)
+
     radLAT = [LAT*math.pi/180, initLAT*math.pi/180, deltaLAT*math.pi/180]   #switches to RADIANS
     radLON = deltaLON*math.pi/180
 
