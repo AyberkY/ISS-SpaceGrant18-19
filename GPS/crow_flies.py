@@ -19,8 +19,8 @@ def searchDATA(data):
         return dataOUT
 
 def convert(list):
-    dmsLAT = str(list[1])                                   #Makes Strings from input
-    dmsLON = str(list[3])
+    dmsLAT = list[1]                                #Makes Strings from input
+    dmsLON = list[3]
 
     dmsLATlist = [dmsLAT[0:2],dmsLAT[2:4],dmsLAT[5:11]]     #places them into proper lists
     dmsLONlist = [dmsLON[0:3],dmsLON[3:5],dmsLON[6:11]]
