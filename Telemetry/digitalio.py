@@ -143,4 +143,4 @@ class DigitalInOut(ContextManaged):
         if mod is DriveMode.OPEN_DRAIN:
             self._pin.init(mode=Pin.OPEN_DRAIN)
         elif mod is DriveMode.PUSH_PULL:
-self._pin.init(mode=Pin.OUT)
+            self._pin.init(mode=Pin.OUT)
