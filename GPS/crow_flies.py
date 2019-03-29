@@ -53,5 +53,5 @@ while True:
         dataOUTPUT = searchDATA(data)
         print (type(dataOUTPUT))
         Latitude, Longitude = convert(dataOUTPUT)
-        Distance = findDISTANCE(Latitude, Longitude, Latitude, Longitude)
+        Distance = findDISTANCE(Latitude, Longitude)
         print(str(Distance)+ ' m')
