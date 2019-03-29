@@ -46,7 +46,7 @@ def findDISTANCE(LAT, LON, R=6371*10**3, initLAT=40.11, initLON=-88.238):     #d
 while True:
     if ser.in_waiting > 0:
         data = ser.readline()
-        dataOUT = searchDATA(data)
-        Latitude, Longitude = convert(dataOUT)
+        dataOUTPUT = searchDATA(data)
+        Latitude, Longitude = convert(dataOUTPUT)
         Distance = findDISTANCE(initLAT, initLON, Latitude, Longitude)
         print(str(Distance)+ ' m')
