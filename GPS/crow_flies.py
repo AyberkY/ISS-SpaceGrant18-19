@@ -2,7 +2,7 @@
 Find distnace as the crow flies
 SSS Sux
 '''
-import serial
+from serial import Serial
 import pynmea2
 import math
 
@@ -30,7 +30,7 @@ def convert(list):
 
     return LAT,LON
 
-def findDISTANCE(initLAT, initLON, LAT, LON, R=6371*10**3):     #defines a function that takes an initial lon and an initial lat
+def findDISTANCE(initLAT=80, initLON=80, LAT, LON, R=6371*10**3):     #defines a function that takes an initial lon and an initial lat
     deltaLAT = LAT - initLAT
     deltaLON = LON - initLON
 
