@@ -2,7 +2,7 @@
 Find distnace as the crow flies
 SSS Sux
 '''
-from serial import Serial
+import serial
 import pynmea2
 import math
 
@@ -36,3 +36,17 @@ def findDISTANCE(initLAT, initLON, LAT, LON, R=6371*10**3):     #defines a funct
 
     radLAT = [LAT*math.pi/180, initLAT*math.pi/180, deltaLAT*math.pi/180]   #switches to RADIANS
     radLON = deltaLON*math.pi/180
+
+    a = (math.sin(radLAT[2]/2))**2+math.cos(radLAT[1])*math.cos(radLAT[0])*(math.sin(radLON/2))**2     #haversine formula
+    c = 2*math.atan2(math.sqrt(a),math.sqrt(1-a))
+    d = R*c
+
+    return d
+
+while True:
+    if ser.in_waiting > 0:
+        data = ser.readline()
+        dataOUT = searchDATA(data)
+        Latitude, Longitude = convert(dataOUT)
+        Distance = findDISTANCE(initLAT, initLON, Latitude, Longitude)
+        print(str(Distance)+ ' m')
