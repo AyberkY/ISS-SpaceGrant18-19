@@ -9,8 +9,8 @@ RADIO_FREQ_MHZ = 433.0  # Frequency of the radio in Mhz. Must match your
                         # module! Can be a value like 915.0, 433.0, etc.
 
 # Define pins connected to the chip, use these if wiring up the breakout according to the guide:
-CS = digitalio.DigitalInOut(board.D5)
-RESET = digitalio.DigitalInOut(board.D6)
+CS = digitalio.DigitalInOut(board.CE1)
+RESET = digitalio.DigitalInOut(board.D25)
 # Or uncomment and instead use these if using a Feather M0 RFM9x board and the appropriate
 # CircuitPython build:
 # CS = digitalio.DigitalInOut(board.RFM9X_CS)
