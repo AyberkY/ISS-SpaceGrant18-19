@@ -6,7 +6,7 @@ GPIO13 = GREEN
 GPIO19 = BLUE
 """
 
-import RPi.GPIO as GPIO6
+import RPi.GPIO as GPIO
 import time
 
 GPIO.setmode(GPIO.BCM)
