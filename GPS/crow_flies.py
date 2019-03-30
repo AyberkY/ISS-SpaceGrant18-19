@@ -47,7 +47,7 @@ def findDISTANCE(LAT, LON, initLAT = 40.11, initLON = -88.238, R=6371*10**3):   
     a = (math.sin(radLAT[2]/2))**2+math.cos(radLAT[1])*math.cos(radLAT[0])*(math.sin(radLON/2))**2     #haversine formula
     c = 2*math.atan2(math.sqrt(a),math.sqrt(1-a))
     d = R*c
-    if LAT > 0
+    if LAT > 0:
         print(a,c,d)
 
     return d
