@@ -1,1 +1,27 @@
-print("ISS is awesome");
+"""
+LED Test code!
+Pin assignments:
+GPIO6 = ORANGE
+GPIO13 = GREEN
+GPIO19 = BLUE
+"""
+
+import rpi.GPIO as GPIO6
+import time
+
+GPIO.setmode(GPIO.BCM)
+
+GPIO.setup(6, GPIO.OUT)
+GPIO.setup(13, GPIO.OUT)
+GPIO.setup(19, GPIO.OUT)
+
+while True:
+    GPIO.output(6, GPIO.HIGH)
+    GPIO.output(19, GPIO.LOW)
+
+    time.sleep(0.25)
+
+    GPIO.output(6, GPIO.LOW)
+    GPIO.output(19, GPIO.HIGH)
+
+    time.sleep(0.25)
