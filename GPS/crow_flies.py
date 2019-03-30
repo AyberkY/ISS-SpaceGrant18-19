@@ -30,7 +30,7 @@ def convert(list):
     print(dmsLATlist, dmsLONlist)
 
     LAT = float(dmsLATlist[0]) + (float(dmsLATlist[1])+float(dmsLATlist[2])/100000)/60  #puts them into full for Decimal Degrees
-    LON = -1*((float(dmsLONlist[0]) + (float(dmsLONlist[1])+float(dmsLONlist[2])/100000)/60))
+    LON = ((float(dmsLONlist[0]) + (float(dmsLONlist[1])+float(dmsLONlist[2])/100000)/60))
     print(LAT, LON)
     return LAT,LON
 
