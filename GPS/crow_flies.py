@@ -17,7 +17,6 @@ def searchDATA(data):
         dataGPS = pynmea2.parse(data)
         #list of data outputted from the GPS
         dataOUT = [str(dataGPS.timestamp), str(dataGPS.lat),str(dataGPS.lat_dir), str(dataGPS.lon),str(dataGPS.lon_dir), str(dataGPS.altitude),str(dataGPS.altitude_units), str(dataGPS.num_sats) ]
-        print(type(dataOUT), type(dataOUT[1]))
 
     return dataOUT
 
@@ -27,7 +26,8 @@ def convert(list):
 
     dmsLATlist = [dmsLAT[0:2],dmsLAT[2:4],dmsLAT[5:11]]     #places them into proper lists
     dmsLONlist = [dmsLON[0:3],dmsLON[3:5],dmsLON[6:11]]
-    print(dmsLATlist, dmsLONlist)
+    if float(dmsLAT) > 0:
+        print(dmsLATlist, dmsLONlist)
 
     LAT = float(dmsLATlist[0]) + (float(dmsLATlist[1])+float(dmsLATlist[2])/100000)/60  #puts them into full for Decimal Degrees
     LON = ((float(dmsLONlist[0]) + (float(dmsLONlist[1])+float(dmsLONlist[2])/100000)/60))*(-1)
