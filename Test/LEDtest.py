@@ -15,13 +15,18 @@ GPIO.setup(6, GPIO.OUT)
 GPIO.setup(13, GPIO.OUT)
 GPIO.setup(19, GPIO.OUT)
 
-while True:
-    GPIO.output(6, GPIO.HIGH)
-    GPIO.output(19, GPIO.LOW)
+try:
+    while True:
+        GPIO.output(6, GPIO.HIGH)
+        GPIO.output(19, GPIO.LOW)
 
-    time.sleep(0.25)
+        time.sleep(0.25)
 
+        GPIO.output(6, GPIO.LOW)
+        GPIO.output(19, GPIO.HIGH)
+
+        time.sleep(0.25)
+
+except KeyboardInterrupt:
     GPIO.output(6, GPIO.LOW)
-    GPIO.output(19, GPIO.HIGH)
-
-    time.sleep(0.25)
+    GPIO.output(19, GPIO.LOW)
