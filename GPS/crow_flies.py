@@ -38,8 +38,8 @@ def convert(list):
 def findDISTANCE(LAT, LON, initLAT = 40.11, initLON = -88.238, R=6371*10**3):     #defines a function that takes an initial lon and an initial lat R=radius of earth
     deltaLAT = abs(LAT - initLAT)
     deltaLON = abs(LON - initLON)
-
-    print(deltaLAT, deltaLON)
+    if LAT > 0:
+        print(deltaLAT, deltaLON)
 
     radLAT = [LAT*math.pi/180, initLAT*math.pi/180, deltaLAT*math.pi/180]   #switches to RADIANS
     radLON = deltaLON*math.pi/180
@@ -47,8 +47,8 @@ def findDISTANCE(LAT, LON, initLAT = 40.11, initLON = -88.238, R=6371*10**3):   
     a = (math.sin(radLAT[2]/2))**2+math.cos(radLAT[1])*math.cos(radLAT[0])*(math.sin(radLON/2))**2     #haversine formula
     c = 2*math.atan2(math.sqrt(a),math.sqrt(1-a))
     d = R*c
-
-    print(a,c,d)
+    if LAT > 0
+        print(a,c,d)
 
     return d
 
