@@ -60,6 +60,7 @@ while gpsposLOCKER == 0:    #While there has been no position lock, the code can
         Latitude, Longitude = convert(dataOUTPUT)
         if Latitude != 0 and Longitude != 0:    #if the output of the code gives nonzero outputs, then it has found the position
             print('Initial Position locked...')
+            sleep(3)
             gpsposLOCKER = 1
 
             initLAT = Latitude  #sets the current position to initial
