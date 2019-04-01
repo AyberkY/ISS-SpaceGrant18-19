@@ -18,7 +18,6 @@ def searchDATA(data):
         dataGPS = pynmea2.parse(data)
         #list of data outputted from the GPS
         dataOUT = [str(dataGPS.timestamp), str(dataGPS.lat),str(dataGPS.lat_dir), str(dataGPS.lon),str(dataGPS.lon_dir), str(dataGPS.altitude),str(dataGPS.altitude_units), str(dataGPS.num_sats) ]
-        print(dataOUT[7])
     return dataOUT
 
 def convert(list):
@@ -76,4 +75,4 @@ while True:
         Latitude, Longitude = convert(dataOUTPUT)
         Distance = findDISTANCE(Latitude, Longitude, initLAT, initLON)
         if Latitude != 0 and Longitude !=0:
-            print(str(Distance)+ ' m')
+            print(str(Distance)+ ' m' + 'number of satellites = ' + dataOUTPUT[7])
