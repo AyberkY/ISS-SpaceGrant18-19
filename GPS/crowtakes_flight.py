@@ -76,4 +76,4 @@ while True:
         Latitude, Longitude = convert(dataOUTPUT)
         Distance = findDISTANCE(Latitude, Longitude, initLAT, initLON)
         if Latitude != 0 and Longitude !=0:
-            print(str(Distance)+ ' m' + 'number of satellites = ' + dataOUTPUT[7])
+            print(str(Distance)+ ' m' + ' number of satellites = ' + dataOUTPUT[7])
