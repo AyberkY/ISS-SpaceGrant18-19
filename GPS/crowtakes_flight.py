@@ -1,6 +1,6 @@
 '''
 Range testing procedure for finding the distance the crow flies
-Pls give us more diameter
+PlS give us more diameter
 '''
 import serial
 import pynmea2
@@ -47,7 +47,7 @@ def findDISTANCE(LAT, LON, initLAT, initLON, R=6371*10**3):     #defines a funct
 
     return d
 
-print('initializing position, please wait')     #block of delays while GPS locks onto satellites
+print('initializing position, please wait...')     #block of delays while GPS locks onto satellites
 sleep(10)
 while not ser.in_waiting > 0:
     sleep(5)
