@@ -18,7 +18,7 @@ def searchDATA(data):
         dataGPS = pynmea2.parse(data)
         #list of data outputted from the GPS
         dataOUT = [str(dataGPS.timestamp), str(dataGPS.lat),str(dataGPS.lat_dir), str(dataGPS.lon),str(dataGPS.lon_dir), str(dataGPS.altitude),str(dataGPS.altitude_units), str(dataGPS.num_sats) ]
-
+        print(dataOUT[7])
     return dataOUT
 
 def convert(list):
