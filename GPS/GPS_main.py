@@ -12,7 +12,7 @@ GPS1 = GPS.GPS()
 try:
     while True:
         i = 0
-        while i < 10
+        while i < 10:
             location = GPS1.readLocation()
             i = i + 1
 
