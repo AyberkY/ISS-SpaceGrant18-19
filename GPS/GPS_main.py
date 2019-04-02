@@ -11,14 +11,15 @@ GPS1 = GPS.GPS()
 
 try:
     while True:
-        location = GPS1.readLocation()
+        i = 0
+        while i < 10
+            location = GPS1.readLocation()
+            i = i + 1
 
-        if (location['lat'] == None):
-            continue
-        else:
-            print('CURRENT LAT: ' + location['lat'])
-            print('CURRENT LON: ' + location['lon'])
-            time.sleep(0.5)
+        location = GPS1.readLocation()
+        print('CURRENT LAT: ' + str(location['lat']))
+        print('CURRENT LON: ' + str(location['lon']))
+        time.sleep(0.5)
 
 except KeyboardInterrupt:
     sys.exit()
