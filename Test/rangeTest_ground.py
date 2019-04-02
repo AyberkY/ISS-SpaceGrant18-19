@@ -20,7 +20,7 @@ try:
             dataStr = str(data, 'ascii')
             dataStr = dataStr + ',' + str(rssi) + '\n'
 
-            fileHand.write(dataStr)
+            fileHandle.write(dataStr)
 
         time.sleep(0.1)
 
