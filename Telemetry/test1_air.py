@@ -29,12 +29,19 @@ rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
 # high power radios like the RFM95 can go up to 23 dB:
 rfm9x.tx_power = 23
 
+#Create text file to store data
+air_data = open("air_data.txt", "w+")
+
+#test writing to file
+for i in range(7)
+    air_data.write("MORE SENSORS.")
+
 # Send a packet.  Note you can only send a packet up to 252 bytes in length.
 # This is a limitation of the radio packet size, so if you need to send larger
 # amounts of data you will need to break it into smaller send calls.  Each send
 # call will wait for the previous one to finish before continuing.
 rfm9x.send(bytes("SSS SUX\r\n","utf-8"))
-print('Sent Hello World message!')
+print('Sent message!')
 
 # Wait to receive packets.  Note that this library can't receive data at a fast
 # rate, in fact it can only receive and process one 252 byte packet at a time.
