@@ -53,7 +53,7 @@ class GPS:
         return {"lat": self.HOME_LAT, "lon": self.HOME_LON, "time": self.HOME_TIME}
 
     def distanceFromHome(self):
-        currLocation = self.readLocation
+        currLocation = self.readLocation()
         deltaLAT = abs(currLocation['lat'] - self.HOME_LAT)
         deltaLON = abs(currLocation['lon'] - self.HOME_LON)
         radLAT = [currLocation['lat']*math.pi/180, self.HOME_LAT*math.pi/180, deltaLAT*math.pi/180]   #switches to RADIANS
