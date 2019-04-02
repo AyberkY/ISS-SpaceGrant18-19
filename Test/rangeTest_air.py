@@ -8,6 +8,7 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Telemetry')
 import RFM9X
 import GPS
 from time import sleep
+import datetime
 
 GPS1 = GPS.GPS()
 
@@ -16,10 +17,17 @@ Telem = RFM9X.RFM9X()
 try:
     while True:
         location = GPS1.readLocation()
-        lat = location['lat']
-        lon = location['lon']
+        lat = str(location['lat'])
+        lon = str(location['lon'])
+        alt = str(location['alt'])
+        sats = str(location['sats'])
 
-        distance = GPS1.distanceFromHome()
+        distance = str(GPS1.distanceFromHome())
 
+        data = lat + ',' + lon + ',' + distance + ',' + alt + ',' + num_sats
+
+        Telem.send(data.encode('utf-8'))
+
+        time.sleep(0.2)
 
 except KeyboardInterrupt:
