@@ -24,6 +24,8 @@ try:
 
             fileHandle.write(dataStr)
 
+            print("GROUND SIDE:    " + dataStr)
+
         time.sleep(0.1)
 
 

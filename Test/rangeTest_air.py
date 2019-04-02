@@ -28,6 +28,8 @@ try:
 
         Telem.send(data.encode('utf-8'))
 
+        print("AIR SIDE:    " + data)
+
         time.sleep(0.2)
 
 except KeyboardInterrupt:
