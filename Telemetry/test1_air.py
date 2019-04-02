@@ -3,6 +3,7 @@ import adafruit_rfm9x
 import board
 import busio
 import digitalio
+import time
 
 # Define radio parameters.
 RADIO_FREQ_MHZ = 433.0  # Frequency of the radio in Mhz. Must match your
