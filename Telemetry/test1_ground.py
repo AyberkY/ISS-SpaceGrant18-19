@@ -40,7 +40,7 @@ while True:
     else:
         # Received a packet!
         # Print out the raw bytes of the packet:
-        print('Received (raw bytes): {0}'.format(packet))
+        #print('Received (raw bytes): {0}'.format(packet))
         # And decode to ASCII text and print it too.  Note that you always
         # receive raw bytes and need to convert to a text format like ASCII
         # if you intend to do string processing on your data.  Make sure the
