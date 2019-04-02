@@ -32,33 +32,36 @@ rfm9x.tx_power = 23
 #Create text file to store data
 ground_data = open("ground_data.txt", "w+")
 
-while True:
-    packet = rfm9x.receive()
-    # Optionally change the receive timeout from its default of 0.5 seconds:
-    #packet = rfm9x.receive(timeout=5.0)
-    # If no packet was received during the timeout then None is returned.
-    if packet is None:
-        # Packet has not been received
-        print('Received nothing! Listening again...')
-    else:
-        # Received a packet!
-        # Print out the raw bytes of the packet:
-        #print('Received (raw bytes): {0}'.format(packet))
+try:
+    while True:
+        packet = rfm9x.receive()
+        # Optionally change the receive timeout from its default of 0.5 seconds:
+        #packet = rfm9x.receive(timeout=5.0)
+        # If no packet was received during the timeout then None is returned.
+        if packet is None:
+            # Packet has not been received
+            print('Received nothing! Listening again...')
+        else:
+            # Received a packet!
+            # Print out the raw bytes of the packet:
+            #print('Received (raw bytes): {0}'.format(packet))
 
-        # And decode to ASCII text and print it too.  Note that you always
-        # receive raw bytes and need to convert to a text format like ASCII
-        # if you intend to do string processing on your data.  Make sure the
-        # sending side is sending ASCII data before you try to decode!
-        packet_text = str(packet, 'ascii')
-        print('Received (ASCII): {0}\n'.format(packet_text))
+            # And decode to ASCII text and print it too.  Note that you always
+            # receive raw bytes and need to convert to a text format like ASCII
+            # if you intend to do string processing on your data.  Make sure the
+            # sending side is sending ASCII data before you try to decode!
+            packet_text = str(packet, 'ascii')
+            print('Received (ASCII): {0}\n'.format(packet_text))
 
-        #Save data to text file
-        ground_data.write(packet_text)
-        print("Saved data to text file\n")
+            #Write data to text file
+            ground_data.write(packet_text)
+            print("Saved data to text file.\n")
 
-        # Also read the RSSI (signal strength) of the last received message and
-        # print it.
-        rssi = rfm9x.rssi
-        print('Received signal strength: {0} dB'.format(rssi))
+            # Also read the RSSI (signal strength) of the last received message and
+            # print it.
+            rssi = rfm9x.rssi
+            print('Received signal strength: {0} dB'.format(rssi))
 
-        break #replace with better way to exit program
+            break #replace with better way to exit program
+except KeyboardInterrupt:
+    print("ending program.")

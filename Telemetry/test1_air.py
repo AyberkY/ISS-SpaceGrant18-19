@@ -61,3 +61,5 @@ while True:
     # rate, in fact it can only receive and process one 252 byte packet at a time.
     # This means you should only use this for low bandwidth scenarios, like sending
     # and receiving a single message at a time.
+
+    time.sleep(.1)
