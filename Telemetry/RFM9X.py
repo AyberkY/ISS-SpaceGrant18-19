@@ -17,7 +17,7 @@ class RFM9X:
 
         self.spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 
-        self.rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
+        self.rfm9x = adafruit_rfm9x.RFM9x(self.spi, self.CS, self.RESET, self.RADIO_FREQ_MHZ)
         rfm9x.tx_power = 23
 
     def send(self, data):
