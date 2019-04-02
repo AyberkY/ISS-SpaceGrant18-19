@@ -7,10 +7,12 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/GPS')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Telemetry')
 import RFM9X
 import time
+import datetime
 
 Telem = RFM9X.RFM9X()
 
-fileHandle = open('dataFile.txt', 'w+')
+filename = str(datetime.datetime.now()) + '.txt'
+fileHandle = open(filename, 'w+')
 
 try:
     while True:
