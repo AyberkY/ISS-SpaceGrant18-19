@@ -8,8 +8,6 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Telemetry')
 import RFM9X
 import time
 
-GPS1 = GPS.GPS()
-
 Telem = RFM9X.RFM9X()
 
 try:
