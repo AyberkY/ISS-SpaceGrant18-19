@@ -9,6 +9,7 @@ import GPS
 
 GPS1 = GPS.GPS()
 
+
 try:
     while True:
         i = 0
@@ -19,7 +20,7 @@ try:
         location = GPS1.readLocation()
         print('CURRENT LAT: ' + str(location['lat']))
         print('CURRENT LON: ' + str(location['lon']))
-        time.sleep(0.5)
+        sleep(0.5)
 
 except KeyboardInterrupt:
     sys.exit()
