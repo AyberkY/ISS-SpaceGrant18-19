@@ -32,8 +32,6 @@ rfm9x.tx_power = 23
 #Create text file to store data
 ground_data = open("ground_data.txt", "w+")
 
-counter = 0 #in place to quit program after test is complete
-
 while True:
     packet = rfm9x.receive()
     # Optionally change the receive timeout from its default of 0.5 seconds:
@@ -63,6 +61,4 @@ while True:
         rssi = rfm9x.rssi
         print('Received signal strength: {0} dB'.format(rssi))
 
-        counter = counter + 1 #replace with better way to exit program
-        if counter > 2:
-            break
+        break #replace with better way to exit program

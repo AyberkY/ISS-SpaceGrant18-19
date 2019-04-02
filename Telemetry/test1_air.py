@@ -54,7 +54,6 @@ while True:
     # This is a limitation of the radio packet size, so if you need to send larger
     # amounts of data you will need to break it into smaller send calls.  Each send
     # call will wait for the previous one to finish before continuing.
-    rfm9x.send(bytes("SSS SUX {0}\r\n".format(counter),"utf-8"))
     rfm9x.send(bytes("Time: {0} \nLatitude: {1} \nLongitude: {2} \nDistance: {3} \nRSSI: {4} \n\n".format(Time,Lat,Long,Dist,RSSI),"utf-8"))
     print('Sent data!')
 
