@@ -47,9 +47,10 @@ def fakeData():
 counter = 0
 while True:
     counter = counter + 1
-    print("Round {0}".format(counter))
-    if counter > 10:
+    if counter > 1:
         break
+    print("Round {0}".format(counter))
+
     Time, Lat, Long, Dist, RSSI = fakeData()
     air_data.write("Time: {0} \nLatitude: {1} \nLongitude: {2} \nDistance: {3} \nRSSI: {4} \n\n".format(Time,Lat,Long,Dist,RSSI))
 
@@ -57,8 +58,9 @@ while True:
     # This is a limitation of the radio packet size, so if you need to send larger
     # amounts of data you will need to break it into smaller send calls.  Each send
     # call will wait for the previous one to finish before continuing.
-    rfm9x.send(bytes("SSS SUX\r\n","utf-8"))
-    print('Sent message!')
+    rfm9x.send(bytes("SSS SUX {0}\r\n".format(counter),"utf-8"))
+    rfm9x.send(bytes("Time: {0} \nLatitude: {1} \nLongitude: {2} \nDistance: {3} \nRSSI: {4} \n\n".format(Time,Lat,Long,Dist,RSSI),"utf-8"))
+    print('Sent data!')
 
     # Wait to receive packets.  Note that this library can't receive data at a fast
     # rate, in fact it can only receive and process one 252 byte packet at a time.
