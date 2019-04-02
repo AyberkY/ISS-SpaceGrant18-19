@@ -1,12 +1,11 @@
 '''
-Air side range testing code.
+Ground side range testing code.
 '''
 
 import sys
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/GPS')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Telemetry')
 import RFM9X
-import GPS
 import time
 
 GPS1 = GPS.GPS()
