@@ -16,7 +16,7 @@ class GPS:
         self.HOME_LOCATED = False
         self.HOME_TIME = -1
 
-        while not ser.in_waiting > 0:
+        while not self.ser.in_waiting > 0:
             sleep(5)
 
     def readLocation(self):
