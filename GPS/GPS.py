@@ -7,7 +7,7 @@ from time import sleep
 
 class GPS:
 
-    def __init__(self, port ='/dev/ttyS0', baudrate = 9600, biteSize = 1):
+    def __init__(self, port ='/dev/ttyS0', baudrate = 9600, biteSize = 8):
         self.ser = serial.Serial(port, baudrate, biteSize)
         self.HOME_LAT = 0
         self.HOME_LON = 0
