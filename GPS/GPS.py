@@ -38,7 +38,7 @@ class GPS:
                 dmsLONlist = [dmsLON[0:3],dmsLON[3:5],dmsLON[6:11]]
                 #if float(dmsLAT) > 0:
                 #    print(dmsLATlist, dmsLONlist)
-                if not HOME_LOCATED:
+                if not self.HOME_LOCATED:
                     self.HOME_LAT = float(dmsLATlist[0]) + (float(dmsLATlist[1])+float(dmsLATlist[2])/100000)/60  #puts them into full for Decimal Degrees
                     self.HOME_LON = ((float(dmsLONlist[0]) + (float(dmsLONlist[1])+float(dmsLONlist[2])/100000)/60))*(-1)
                     self.HOME_TIME = dataOUT = dataGPS.timestamp
