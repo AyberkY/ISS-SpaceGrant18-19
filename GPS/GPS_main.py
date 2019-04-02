@@ -25,5 +25,9 @@ try:
         print()
         sleep(0.5)
 
+        distance = GPS1.distancefromHOME()
+
+        print(distance)
+
 except KeyboardInterrupt:
     sys.exit()
