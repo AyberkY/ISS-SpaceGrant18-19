@@ -15,6 +15,7 @@ class GPS:
         self.CUR_LON = 0
         self.HOME_LOCATED = False
         self.HOME_TIME = -1
+        self.R = 6371*10**3
 
         while not self.ser.in_waiting > 0:
             sleep(5)
@@ -62,5 +63,5 @@ class GPS:
 
         a = (math.sin(radLAT[2]/2))**2+math.cos(radLAT[1])*math.cos(radLAT[0])*(math.sin(radLON/2))**2     #haversine formula
         c = 2*math.atan2(math.sqrt(a),math.sqrt(1-a))
-        distance = R*c
+        distance = self.R*c
         return distance
