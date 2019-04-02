@@ -32,10 +32,6 @@ rfm9x.tx_power = 23
 #Create text file to store data
 air_data = open("air_data.txt", "w+")
 
-#test writing to file
-for i in range(7):
-    air_data.write("MORE SENSORS.\n")
-
 def fakeData():
     time = 1
     lat = 2
@@ -46,7 +42,7 @@ def fakeData():
 
 counter = 0
 while True:
-    counter = counter + 1
+    counter = counter + 1 #remove once we have live data
     if counter > 1:
         break
     print("Round {0}".format(counter))
