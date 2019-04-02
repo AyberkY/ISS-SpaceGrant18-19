@@ -47,10 +47,11 @@ def fakeData():
 counter = 0
 while True:
     counter = counter + 1
+    print("Round {0}".format(counter))
     if counter > 10:
         break
     Time, Lat, Long, Dist, RSSI = fakeData()
-    air_data.write("Time: {0} \nLatitude: {1} \nLongitude: {2} \nDistance: {3} \nRSSI: {4}".format(Time,Lat,Long,Dist,RSSI))
+    air_data.write("Time: {0} \nLatitude: {1} \nLongitude: {2} \nDistance: {3} \nRSSI: {4} \n\n".format(Time,Lat,Long,Dist,RSSI))
 
     # Send a packet.  Note you can only send a packet up to 252 bytes in length.
     # This is a limitation of the radio packet size, so if you need to send larger
