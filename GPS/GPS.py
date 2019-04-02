@@ -26,9 +26,9 @@ class GPS:
             data = ser.readline()
 
             dataOUT = ['0000000000000','0000000000000','0000000000000','0000000000000'] #forces the program to pass trhough something that isn't a none type
-            if data.find('GGA') > 0:
+            if data.find(b'GGA') > 0:
                 #library searches the data
-                dataGPS = pynmea2.parse(data)
+                dataGPS = pynmea2.parse(data.decode('utf-8'))
                 #list of data outputted from the GPS
                 dataOUT = [str(dataGPS.timestamp), str(dataGPS.lat),str(dataGPS.lat_dir), str(dataGPS.lon),str(dataGPS.lon_dir), str(dataGPS.altitude),str(dataGPS.altitude_units), str(dataGPS.num_sats) ]
 
