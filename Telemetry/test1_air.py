@@ -33,7 +33,7 @@ rfm9x.tx_power = 23
 air_data = open("air_data.txt", "w+")
 
 #test writing to file
-for i in range(7)
+for i in range(7):
     air_data.write("MORE SENSORS.")
 
 # Send a packet.  Note you can only send a packet up to 252 bytes in length.
