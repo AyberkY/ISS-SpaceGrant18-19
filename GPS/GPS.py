@@ -24,7 +24,7 @@ class GPS:
 
         if self.ser.in_waiting > 0:
             data = self.ser.readline()
-            ser.flush() #Flushes the input
+            self.ser.flush() #Flushes the input
 
             dataOUT = [0,0,0,0] #forces the program to pass trhough something that isn't a none type
             if data.find(b'GGA') > 0:
