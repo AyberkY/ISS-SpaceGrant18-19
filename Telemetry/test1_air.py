@@ -36,14 +36,30 @@ air_data = open("air_data.txt", "w+")
 for i in range(7):
     air_data.write("MORE SENSORS.\n")
 
-# Send a packet.  Note you can only send a packet up to 252 bytes in length.
-# This is a limitation of the radio packet size, so if you need to send larger
-# amounts of data you will need to break it into smaller send calls.  Each send
-# call will wait for the previous one to finish before continuing.
-rfm9x.send(bytes("SSS SUX\r\n","utf-8"))
-print('Sent message!')
+def fakeData():
+    time = 1
+    lat = 2
+    long = 3
+    dist = 4
+    rssi = rfm9x.rssi #this one ain't fake
+    return(time,lat,long,dist,rssi)
 
-# Wait to receive packets.  Note that this library can't receive data at a fast
-# rate, in fact it can only receive and process one 252 byte packet at a time.
-# This means you should only use this for low bandwidth scenarios, like sending
-# and receiving a single message at a time.
+counter = 0
+while True:
+    counter = counter + 1
+    if counter > 10:
+        break
+    Time, Lat, Long, Dist, RSSI = fakeData()
+    air_data.write(str(Time))
+
+    # Send a packet.  Note you can only send a packet up to 252 bytes in length.
+    # This is a limitation of the radio packet size, so if you need to send larger
+    # amounts of data you will need to break it into smaller send calls.  Each send
+    # call will wait for the previous one to finish before continuing.
+    rfm9x.send(bytes("SSS SUX\r\n","utf-8"))
+    print('Sent message!')
+
+    # Wait to receive packets.  Note that this library can't receive data at a fast
+    # rate, in fact it can only receive and process one 252 byte packet at a time.
+    # This means you should only use this for low bandwidth scenarios, like sending
+    # and receiving a single message at a time.
