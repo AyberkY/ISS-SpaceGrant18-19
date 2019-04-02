@@ -15,9 +15,10 @@ Telem = RFM9X.RFM9X()
 
 try:
     while True:
-        data = str(Telem.receive(), 'ascii')
+        data, rssi = Telem.receive()
 
-        print(data)
+        print(str(data[0], 'ascii'))
+        print('RSSI: ' + str(data[1]))
 
         time.sleep(0.1)
 
