@@ -1,5 +1,5 @@
 # Simple demo of sending and recieving data with the RFM95 LoRa radio.
-from libraries import adafruit_rfm9x
+from ISS-SpaceGrant18-19\libraries\adafruit_rfm9x import adafruit_rfm9x
 import board
 import busio
 import digitalio
