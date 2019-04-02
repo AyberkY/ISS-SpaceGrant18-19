@@ -3,7 +3,7 @@ import pynmea2
 import math
 from time import sleep
 import sys
-import /home/pi/ISS-SpaceGrant18-19/GPS/GPS.py
+import home/pi/ISS-SpaceGrant18-19/GPS/GPS.py
 
 GPS1 = GPS.GPS()
 
