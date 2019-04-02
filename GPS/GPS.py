@@ -42,13 +42,13 @@ class GPS:
                 if not self.HOME_LOCATED:
                     self.HOME_LAT = float(dmsLATlist[0]) + (float(dmsLATlist[1]) + float(dmsLATlist[2])/100000)/60  #puts them into full for Decimal Degrees
                     self.HOME_LON = (float(dmsLONlist[0]) + (float(dmsLONlist[1]) + float(dmsLONlist[2])/100000)/60)*(-1)
-                    self.HOME_TIME = dataOUT = dataGPS.timestamp
+                    self.HOME_TIME = dataGPS.timestamp
                     self.HOME_LOCATED = True
                 else:
-                    self.CUR_LAT = dmsLATlist[0] + (dmsLATlist[1] + dmsLATlist[2]/100000)/60  #puts them into full for Decimal Degrees
-                    self.CUR_LON = (dmsLONlist[0] + (dmsLONlist[1] + dmsLONlist[2]/100000)/60)*(-1)
+                    self.CUR_LAT = float(dmsLATlist[0]) + (float(dmsLATlist[1]) + float(dmsLATlist[2])/100000)/60  #puts them into full for Decimal Degrees
+                    self.CUR_LON = (float(dmsLONlist[0]) + (float(dmsLONlist[1]) + float(dmsLONlist[2])/100000)/60)*(-1)
 
-        return {"lat":self.CUR_LAT, "lon":self.CUR_LON}
+        return {"lat":self.CUR_LAT, "lon":self.CUR_LON, "timestamp":dataOUT[0], "alt":dataOUT[5], "sats":dataOUT[7]}
 
     def homeLocation(self):
         return {"lat": self.HOME_LAT, "lon": self.HOME_LON, "time": self.HOME_TIME}
