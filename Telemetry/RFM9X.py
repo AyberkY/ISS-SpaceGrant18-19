@@ -9,9 +9,9 @@ import digitalio
 import time
 
 class RFM9X:
-    def __init__():
+    def __init__(self):
         self.RADIO_FREQ_MHZ = 433.0
-        
+
         self.CS = digitalio.DigitalInOut(board.CE1)
         self.RESET = digitalio.DigitalInOut(board.D25)
 
@@ -20,10 +20,10 @@ class RFM9X:
         self.rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, RADIO_FREQ_MHZ)
         rfm9x.tx_power = 23
 
-    def send(data):
+    def send(self, data):
         self.rfm9x.send(data)
 
-    def receive(timeout=0.5, keep_listening=True):
+    def receive(self, timeout=0.5, keep_listening=True):
         data = self.rfm9x.receive(timeout, keep_listening)
         if type(data) != None:
             return data
