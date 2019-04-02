@@ -13,8 +13,8 @@ try:
     while True:
         location = GPS1.readLocation()
 
-        print('CURRENT LAT: ' + str(location['lat']))
-        print('CURRENT LON: ' + str(location['lon']))
+        print('CURRENT LAT: ' + location['lat'])
+        print('CURRENT LON: ' + location['lon'])
         time.sleep(0.5)
 
 except KeyboardInterrupt:
