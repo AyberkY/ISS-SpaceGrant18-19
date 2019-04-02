@@ -1,6 +1,6 @@
-import serial
-import pynmea2
-import math
+# import serial
+# import pynmea2
+# import math
 from time import sleep
 import sys
 #from /home/pi/ISS-SpaceGrant18-19/GPS/GPS.py import GPS
