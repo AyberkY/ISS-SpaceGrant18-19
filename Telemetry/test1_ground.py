@@ -64,4 +64,4 @@ try:
 
             break #replace with better way to exit program
 except KeyboardInterrupt:
-    print("ending program.")
+    print("\nending program.")
