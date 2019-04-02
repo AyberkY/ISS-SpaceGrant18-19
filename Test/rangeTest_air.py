@@ -28,7 +28,7 @@ try:
 
         Telem.send(data.encode('utf-8'))
 
-        print("AIR SIDE:    " + data)
+        print("AIR SIDE:    " + data + '\n')
 
         time.sleep(0.2)
 
