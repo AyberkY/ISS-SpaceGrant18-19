@@ -24,3 +24,4 @@ try:
 
 
 except KeyboardInterrupt:
+    print('\nending program.')
