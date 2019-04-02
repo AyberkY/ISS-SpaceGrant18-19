@@ -53,7 +53,7 @@ class GPS:
     def homeLocation(self):
         return {"lat": self.HOME_LAT, "lon": self.HOME_LON, "time": self.HOME_TIME}
 
-    def distanceFromHome(self):aGPS.timestamp
+    def distanceFromHome(self):
         currLocation = self.readLocation()
         deltaLAT = abs(currLocation['lat'] - self.HOME_LAT)
         deltaLON = abs(currLocation['lon'] - self.HOME_LON)
