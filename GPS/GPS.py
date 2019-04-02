@@ -26,7 +26,7 @@ class GPS:
             data = self.ser.readline()
             self.ser.flush() #Flushes the input
 
-            dataOUT = [0,0,0,0] #forces the program to pass trhough something that isn't a none type
+            dataOUT = [0,0,0,0,0,0,0] #forces the program to pass trhough something that isn't a none type
             if data.find(b'GGA') > 0:
                 #library searches the data
                 dataGPS = pynmea2.parse(data.decode('utf-8'))
