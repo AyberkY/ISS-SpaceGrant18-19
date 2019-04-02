@@ -18,8 +18,11 @@ try:
             i = i + 1
 
         location = GPS1.readLocation()
+        distance = GPS1.distanceFromHome()
         print('CURRENT LAT: ' + str(location['lat']))
         print('CURRENT LON: ' + str(location['lon']))
+        print('CURRENT DISTANCE:  ' + str(distance))
+        print()
         sleep(0.5)
 
 except KeyboardInterrupt:
