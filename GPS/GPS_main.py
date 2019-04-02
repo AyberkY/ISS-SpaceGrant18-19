@@ -25,7 +25,7 @@ try:
         print()
         sleep(0.5)
 
-        distance = GPS1.distancefromHOME()
+        distance = GPS1.distanceFromHome()
 
         print(distance)
 
