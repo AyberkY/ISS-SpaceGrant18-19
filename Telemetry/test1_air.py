@@ -34,7 +34,7 @@ air_data = open("air_data.txt", "w+")
 
 #test writing to file
 for i in range(7):
-    air_data.write("MORE SENSORS.")
+    air_data.write("MORE SENSORS.\n")
 
 # Send a packet.  Note you can only send a packet up to 252 bytes in length.
 # This is a limitation of the radio packet size, so if you need to send larger
