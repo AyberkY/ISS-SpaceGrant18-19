@@ -7,7 +7,7 @@ from time import sleep
 
 class GPS:
 
-    def __init__(self, port ='/dev/ttyS0', baudrate = 9600, biteSize = 1):
+    def __init__(self, port ='/dev/ttyS0', baudrate = 9600, biteSize = 8):
         self.ser = serial.Serial(port, baudrate, biteSize)
         self.HOME_LAT = 0
         self.HOME_LON = 0
@@ -16,19 +16,19 @@ class GPS:
         self.HOME_LOCATED = False
         self.HOME_TIME = -1
 
-        while not ser.in_waiting > 0:
+        while not self.ser.in_waiting > 0:
             sleep(5)
 
     def readLocation(self):
         #searches for $GPGGA in the GPS information
 
-        if ser.in_waiting > 0:
-            data = ser.readline()
+        if self.ser.in_waiting > 0:
+            data = self.ser.readline()
 
             dataOUT = ['0000000000000','0000000000000','0000000000000','0000000000000'] #forces the program to pass trhough something that isn't a none type
-            if data.find('GGA') > 0:
+            if data.find(b'GGA') > 0:
                 #library searches the data
-                dataGPS = pynmea2.parse(data)
+                dataGPS = pynmea2.parse(data.decode('utf-8'))
                 #list of data outputted from the GPS
                 dataOUT = [str(dataGPS.timestamp), str(dataGPS.lat),str(dataGPS.lat_dir), str(dataGPS.lon),str(dataGPS.lon_dir), str(dataGPS.altitude),str(dataGPS.altitude_units), str(dataGPS.num_sats) ]
 
