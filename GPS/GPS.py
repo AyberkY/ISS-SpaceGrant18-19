@@ -24,13 +24,14 @@ class GPS:
 
         if self.ser.in_waiting > 0:
             data = self.ser.readline()
+            ser.flush() #Flushes the input
 
-            dataOUT = ['0000000000000','0000000000000','0000000000000','0000000000000'] #forces the program to pass trhough something that isn't a none type
+            dataOUT = [0,0,0,0] #forces the program to pass trhough something that isn't a none type
             if data.find(b'GGA') > 0:
                 #library searches the data
                 dataGPS = pynmea2.parse(data.decode('utf-8'))
                 #list of data outputted from the GPS
-                dataOUT = [str(dataGPS.timestamp), str(dataGPS.lat),str(dataGPS.lat_dir), str(dataGPS.lon),str(dataGPS.lon_dir), str(dataGPS.altitude),str(dataGPS.altitude_units), str(dataGPS.num_sats) ]
+                dataOUT = [dataGPS.timestamp, dataGPS.lat, dataGPS.lat_dir, dataGPS.lon, dataGPS.lon_dir, dataGPS.altitude, dataGPS.altitude_units, dataGPS.num_sats]
 
                 dmsLAT = dataOUT[1]                                #Makes Strings from input
                 dmsLON = dataOUT[3]
@@ -39,15 +40,15 @@ class GPS:
                 #if float(dmsLAT) > 0:
                 #    print(dmsLATlist, dmsLONlist)
                 if not self.HOME_LOCATED:
-                    self.HOME_LAT = float(dmsLATlist[0]) + (float(dmsLATlist[1])+float(dmsLATlist[2])/100000)/60  #puts them into full for Decimal Degrees
-                    self.HOME_LON = ((float(dmsLONlist[0]) + (float(dmsLONlist[1])+float(dmsLONlist[2])/100000)/60))*(-1)
+                    self.HOME_LAT = dmsLATlist[0] + (dmsLATlist[1] + dmsLATlist[2]/100000)/60  #puts them into full for Decimal Degrees
+                    self.HOME_LON = (dmsLONlist[0] + (dmsLONlist[1] + dmsLONlist[2]/100000)/60)*(-1)
                     self.HOME_TIME = dataOUT = dataGPS.timestamp
                     self.HOME_LOCATED = True
                 else:
-                    self.CUR_LAT = float(dmsLATlist[0]) + (float(dmsLATlist[1])+float(dmsLATlist[2])/100000)/60  #puts them into full for Decimal Degrees
-                    self.CUR_LON = ((float(dmsLONlist[0]) + (float(dmsLONlist[1])+float(dmsLONlist[2])/100000)/60))*(-1)
+                    self.CUR_LAT = dmsLATlist[0] + (dmsLATlist[1] + dmsLATlist[2]/100000)/60  #puts them into full for Decimal Degrees
+                    self.CUR_LON = (dmsLONlist[0] + (dmsLONlist[1] + dmsLONlist[2]/100000)/60)*(-1)
 
-        return {"lat":self.CUR_LAT, "lon":self.CUR_LON}
+        return {"lat":self.CUR_LAT, "lon":self.CUR_LON, "timestamp":self.timestamp}
 
     def homeLocation(self):
         return {"lat": self.HOME_LAT, "lon": self.HOME_LON, "time": self.HOME_TIME}
