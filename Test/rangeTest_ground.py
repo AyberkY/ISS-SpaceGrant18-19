@@ -10,7 +10,7 @@ import time
 
 Telem = RFM9X.RFM9X()
 
-fileHandle = open('dataFile.txt', w+)
+fileHandle = open('dataFile.txt', 'w+')
 
 try:
     while True:
