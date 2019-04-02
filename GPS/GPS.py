@@ -22,8 +22,8 @@ class GPS:
     def readLocation(self):
         #searches for $GPGGA in the GPS information
 
-        if ser.in_waiting > 0:
-            data = ser.readline()
+        if self.ser.in_waiting > 0:
+            data = self.ser.readline()
 
             dataOUT = ['0000000000000','0000000000000','0000000000000','0000000000000'] #forces the program to pass trhough something that isn't a none type
             if data.find(b'GGA') > 0:
