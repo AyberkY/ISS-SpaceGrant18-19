@@ -24,7 +24,7 @@ try:
 
         distance = str(GPS1.distanceFromHome())
 
-        data = lat + ',' + lon + ',' + distance + ',' + alt + ',' + num_sats
+        data = lat + ',' + lon + ',' + distance + ',' + alt + ',' + sats
 
         Telem.send(data.encode('utf-8'))
 
