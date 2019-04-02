@@ -17,7 +17,7 @@ try:
     while True:
         data, rssi = Telem.receive()
 
-        if(type(data) != None):
+        if(type(data[0]) != None):
             print(str(data[0], 'ascii'))
             print('RSSI: ' + str(data[1]))
 
