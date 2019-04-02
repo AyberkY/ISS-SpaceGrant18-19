@@ -7,7 +7,7 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/GPS')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Telemetry')
 import RFM9X
 import GPS
-from time import sleep
+import time
 import datetime
 
 GPS1 = GPS.GPS()
