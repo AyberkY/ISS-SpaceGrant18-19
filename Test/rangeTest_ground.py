@@ -10,13 +10,17 @@ import time
 
 Telem = RFM9X.RFM9X()
 
+fileHandle = open('dataFile.txt', w+)
+
 try:
     while True:
         data, rssi = Telem.receive()
 
         if(data != None):
-            print(str(data, 'ascii'))
-            print('RSSI: ' + str(data[1]))
+            dataStr = str(data, 'ascii')
+            dataStr = dataStr + ',' + str(rssi) + '\n'
+
+            fileHand.write(dataStr)
 
         time.sleep(0.1)
 
