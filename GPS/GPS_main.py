@@ -4,6 +4,8 @@ import math
 from time import sleep
 import sys
 from /home/pi/ISS-SpaceGrant18-19/GPS/GPS.py import GPS
+sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/GPS')
+import GPS
 
 GPS1 = GPS.GPS()
 
