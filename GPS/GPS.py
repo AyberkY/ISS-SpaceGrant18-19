@@ -49,6 +49,8 @@ class GPS:
                     self.CUR_LAT = float(dmsLATlist[0]) + (float(dmsLATlist[1]) + float(dmsLATlist[2])/100000)/60  #puts them into full for Decimal Degrees
                     self.CUR_LON = (float(dmsLONlist[0]) + (float(dmsLONlist[1]) + float(dmsLONlist[2])/100000)/60)*(-1)
 
+            data = ''
+
         return {"lat":self.CUR_LAT, "lon":self.CUR_LON, "timestamp":dataOUT[0], "alt":dataOUT[5], "sats":dataOUT[7]}
 
     def homeLocation(self):
