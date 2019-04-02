@@ -17,5 +17,5 @@ try:
         print('CURRENT LON: ' + str(location['lon']))
         time.sleep(0.5)
 
-except KeyboardInterrupt
+except KeyboardInterrupt:
     sys.exit()
