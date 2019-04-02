@@ -22,12 +22,12 @@ class GPS:
 
     def readLocation(self):
         #searches for $GPGGA in the GPS information
-
+        dataOUT = [0,0,0,0,0,0,0,0] #forces the program to pass trhough something that isn't a none type
         if self.ser.in_waiting > 0:
             data = self.ser.readline()
             self.ser.flush() #Flushes the input
 
-            dataOUT = [0,0,0,0,0,0,0,0] #forces the program to pass trhough something that isn't a none type
+
             if data.find(b'GGA') > 0:
                 #library searches the data
                 dataGPS = pynmea2.parse(data.decode('utf-8'))
