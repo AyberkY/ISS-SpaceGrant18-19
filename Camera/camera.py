@@ -29,7 +29,7 @@ def cameraRECORD():                      #function that does the camera
         sleep(10)
         accelCHECKfin = accelMEASRURE()     #defines the final acceleration
         accelAVG = accelAVERAGE(accelCHECKinit, accelCHECKfin)
-        if accelAVG <= 10**-2:      #ends flight if this is true
+        if accelAVG <= 10**-3:      #ends flight if this is true
             flightSTATUS -= 1
         else:
             continue
