@@ -1,5 +1,6 @@
 from picamera import PiCamera
 from time import sleep
+import datetime
 import sys
 
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/IMU/MPU9250')
@@ -13,22 +14,22 @@ def accelMEASURE():                 #defines a function that takes Ayush functio
     x_ACCEL, y_ACCEL, z_ACCEL = accel_DICT['x'], accel_DICT['y'], accel_DICT['z']
 
     currentACCEL = (x_ACCEL**2 + y_ACCEL**2 + z_ACCEL**2)**0.5
-    pastACCEL = ayushFUNCTION(-10)
+    return currentACCEL
 
-    avgACCEL = (abs(currentACCEL) + abs(pastACCEL))/2
-    pastACCEL = currentACCEL
-    return avgACCEL
+def accelAVERAGE(initial, final):       #function that takes in initial and final acceleration and computes the average
+    return ((abs(initial)+abs(final))/2)
 
 
 def cameraRECORD():                      #function that does the camera
-    flightSTATUS = 1                     #flight is happening
-    accelCHECK = accelMEASURE()
+    flightSTATUS = 1                  #flight is happening
+    cam.start_recording(f'/home/pi/ISS-SpaceGrant18-19/Camera/flight.{datetime.datetime.now()}.h264')      #starts recording naming the file flight.{timestamp}
 
-    cam.start_recording('path...')      #starts recording
-
-    while flightSTATUS == 1:            #check if rocket is in flight
+    while flightSTATUS == 1:                #checks if rocket is in flight
+        accelCHECKinit = accelMEASURE()     #defines the initial acceleration
         sleep(10)
-        if accelCHECK <= 10**-2:
+        accelCHECKfin = accelMEASRURE()     #defines the final acceleration
+        accelAVG = accelAVERAGE(accelCHECKinit, accelCHECKfin)
+        if accelAVG <= 10**-2:      #ends flight if this is true
             flightSTATUS -= 1
         else:
             continue
