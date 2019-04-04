@@ -353,9 +353,9 @@ class MPU9250:
         data = self.readMagnet()
         toRet = 0
         if (data['y'] > 0):
-            toRet = 90 - (Math.arcTAN(data['x']/data['y'])) * 180 / Math.radians(180)
+            toRet = 90 - (math.arcTAN(data['x']/data['y'])) * 180 / math.radians(180)
         if (data['y'] < 0):
-            toRet = 90 - (Math.arcTAN(data['x']/data['y'])) * 180 / Math.radians(180)
+            toRet = 90 - (math.arcTAN(data['x']/data['y'])) * 180 / math.radians(180)
         if (data['y'] == 0 and data['x'] < 0):
             toRet = 180.0
         if (data['y'] == 0 and data['x'] < 0):
