@@ -1,6 +1,6 @@
-import serial
-import pynmea2
-import math
+# import serial
+# import pynmea2
+# import math
 from time import sleep
 import sys
 #from /home/pi/ISS-SpaceGrant18-19/GPS/GPS.py import GPS
@@ -8,6 +8,7 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/GPS')
 import GPS
 
 GPS1 = GPS.GPS()
+
 
 try:
     while True:
@@ -17,9 +18,16 @@ try:
             i = i + 1
 
         location = GPS1.readLocation()
+        # distance = GPS1.distanceFromHome()
         print('CURRENT LAT: ' + str(location['lat']))
         print('CURRENT LON: ' + str(location['lon']))
-        time.sleep(0.5)
+        # print('CURRENT DISTANCE:  ' + str(distance))
+        print()
+        sleep(0.5)
+
+        distance = GPS1.distanceFromHome()
+
+        print(distance)
 
 except KeyboardInterrupt:
     sys.exit()
