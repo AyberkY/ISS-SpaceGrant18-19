@@ -44,7 +44,7 @@ try:
             print('temp: ', IMU1.readTemperature())
             print('compass: ', IMU1.readCompass())
         counter = counter + 1
-        time.sleep(0.05)
+        time.sleep(0.1)
 
 except KeyboardInterrupt:
     sys.exit()
