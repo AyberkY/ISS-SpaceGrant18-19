@@ -1,4 +1,4 @@
-#modified library for H3LIS331
+#modified library for LIS331
 #dedicated to Goffrey Chollaen
 
 #############################################
