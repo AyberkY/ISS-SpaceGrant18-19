@@ -4,11 +4,11 @@
 # This code is designed to work with the MPL3115A2_I2CS I2C Mini Module available from ControlEverything.com.
 # https://www.controleverything.com/products
 
-import smbus
+import smbus2
 import time
 
 # Get I2C bus
-bus = smbus.SMBus(1)
+bus = smbus2.SMBus(1)
 
 # MPL3115A2 address, 0x60(96)
 # Select control register, 0x26(38)
