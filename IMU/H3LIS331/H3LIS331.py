@@ -1,4 +1,5 @@
-## GEOFF GAY
+## READ ME:
+# H3LIS331DL
 
 import smbus
 import time
@@ -98,12 +99,12 @@ class H3LIS331DL():
 
 		return {'x' : xAccl, 'y' : yAccl, 'z' : zAccl}
 
-from H3LIS331DL import H3LIS331DL
-h3lis331dl = H3LIS331DL()
+from H3LIS331 import H3LIS331
+h3lis331 = H3LIS331()
 
 while True:
-	h3lis331dl.select_datarate()
-	h3lis331dl.select_data_config()
+	h3lis331.select_datarate()
+	h3lis331.select_data_config()
 	time.sleep(0.2)
 	accl = h3lis331dl.read_accl()
 	print ("Acceleration in X-Axis : %d" %(accl['x']))
