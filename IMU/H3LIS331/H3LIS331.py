@@ -106,7 +106,7 @@ while True:
 	h3lis331.select_datarate()
 	h3lis331.select_data_config()
 	time.sleep(0.2)
-	accl = h3lis331dl.read_accl()
+	accl = h3lis331.read_accl()
 	print ("Acceleration in X-Axis : %d" %(accl['x']))
 	print ("Acceleration in Y-Axis : %d" %(accl['y']))
 	print ("Acceleration in Z-Axis : %d" %(accl['z']))
