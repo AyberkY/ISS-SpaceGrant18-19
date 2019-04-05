@@ -54,7 +54,7 @@ H3LIS331DL_ACCL_RANGE_200G				= 0x10 # Full scale = +/-200g
 H3LIS331DL_ACCL_RANGE_100G				= 0x00 # Full scale = +/-100g
 H3LIS331DL_ACCL_SIM_3					= 0x01 # 3-Wire Interface
 
-class H3LIS331DL():
+class H3LIS331():
 	def __init__ (self):
 		self.select_datarate()
 		self.select_data_config()
