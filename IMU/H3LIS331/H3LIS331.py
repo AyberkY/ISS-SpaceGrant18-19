@@ -99,7 +99,7 @@ class H3LIS331DL():
 
 		return {'x' : xAccl, 'y' : yAccl, 'z' : zAccl}
 
-from H3LIS331 import H3LIS331
+#from H3LIS331 import H3LIS331
 h3lis331 = H3LIS331()
 
 while True:
