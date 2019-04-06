@@ -9,8 +9,8 @@ import mpu9250
 IMU1 = mpu9250.MPU9250()
 cam = PiCamera()
 
-def accelMEASURE():                 #defines a function that takes Ayush function and makes it check if the camera should happen
-    accel_DICT = IMU1.readAccel()
+def accelMEASURE():                 #defines a function that takes Ayush function and makes it check
+    accel_DICT = IMU1.readAccel()   #if the camera should happen
     x_ACCEL, y_ACCEL, z_ACCEL = accel_DICT['x'], accel_DICT['y'], accel_DICT['z']
 
     currentACCEL = (x_ACCEL**2 + y_ACCEL**2 + z_ACCEL**2)**0.5
