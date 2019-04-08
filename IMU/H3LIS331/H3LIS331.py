@@ -1,6 +1,12 @@
 ## READ ME:
 # H3LIS331DL
 
+
+
+##current modification: H3LIS331DL_ACCL_RANGE_100G changed to H3LIS331DL_ACCL_RANGE_400G
+# testing reasons for acceleration error. Also, trying to see if there's ac connection for
+# for the scaling factor.
+
 import smbus
 import time
 
@@ -66,7 +72,7 @@ class H3LIS331():
 
 	def select_data_config(self):
 		"""Select the data configuration of the accelerometer from the given provided values"""
-		DATA_CONFIG = (H3LIS331DL_ACCL_RANGE_100G | H3LIS331DL_ACCL_BDU_CONT)
+		DATA_CONFIG = (H3LIS331DL_ACCL_RANGE_400G | H3LIS331DL_ACCL_BDU_CONT)
 		bus.write_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_CTRL4, DATA_CONFIG)
 
 	def read_accl(self):
