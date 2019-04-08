@@ -2,7 +2,7 @@
 # May he rest gayly
 #02/22/2019
 
-import smbus
+import smbus2
 import time
 import math
 
@@ -81,7 +81,7 @@ AK8963_BIT_14 = 0x00
 ## 16bit output
 AK8963_BIT_16 = 0x01
 
-bus = smbus.SMBus(1)
+bus = smbus2.SMBus(1)
 
 class MPU9250:
 
