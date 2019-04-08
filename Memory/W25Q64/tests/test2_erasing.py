@@ -110,21 +110,32 @@ class spiflash(object):
 
 
 #TESTS -------------------------------------------------------------------
+#TESTS -------------------------------------------------------------------
 
 chip = spiflash(bus = 0, cs = 0)
 
-def get_24b_addr():
-    block  = int(hex(input("Block (0-127): ")), 16)
-    sector = hex(input("Sector (0-16): "))
-    pageN  = hex(input("Page   (0-16): "))
-    sctPg  = int((sector[2:]+pageN[2:]), 16)
-    return [block, sctPg]
+#print_status(read_status())
+#write_disable()
+#print_status(read_status())
 
-addr = get_24b_addr()
+#p = chip.read_page(0,0)
 
-pageBe = chip.read_page(addr[0], addr[1])
-chip.erase_sector(addr[0], addr[1])
-pageAf = chip.read_page(addr[0], addr[1])
+chip.print_page(chip.read_page(0,0)) #added
 
-print(pageBe)
-print(pageAf)
+print "erasing chip"
+chip.erase_all()
+print "chip erased"
+
+#for i in range(256):
+#    p[i] = (i + 2) % 256
+#chip.print_page(p)
+#write_status(0,0)
+#print_status(read_status())
+#print chip.write_and_verify_page(0,0,p)
+
+chip.print_page(chip.read_page(0,0))
+
+#self.wait_until_not_busy()
+#print_status(read_status())
+#write_status(0,0)
+#print_status(read_status())

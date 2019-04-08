@@ -118,18 +118,20 @@ chip = spiflash(bus = 0, cs = 0)
 #write_disable()
 #print_status(read_status())
 
-p = chip.read_page(0,0)
+#p = chip.read_page(0,0)
 
-#print "erasing chip"
-#chip.erase_all()
-#print "chip erased"
+chip.print_page(chip.read_page(0,0)) #added
 
-for i in range(256):
-    p[i] = (i + 2) % 256
-chip.print_page(p)
+print "erasing chip"
+chip.erase_all()
+print "chip erased"
+
+#for i in range(256):
+#    p[i] = (i + 2) % 256
+#chip.print_page(p)
 #write_status(0,0)
 #print_status(read_status())
-print chip.write_and_verify_page(0,0,p)
+#print chip.write_and_verify_page(0,0,p)
 
 chip.print_page(chip.read_page(0,0))
 
