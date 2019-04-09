@@ -124,7 +124,6 @@ chip = spiflash(bus = 0, cs = 0)
 #p = chip.read_page(0,0)
 
 chip.print_page(chip.read_page(0,0)) #added
-print(self.xfer2([RUID]))
 chip.write_enable()
 print "erasing chip"
 chip.erase_all()
