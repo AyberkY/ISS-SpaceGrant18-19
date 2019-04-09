@@ -99,7 +99,7 @@ class H3LIS331():
 		yAccl = (yAccl >> 4)
 		if yAccl > 32767 :
 			yAccl -= 65536
-		#yAccl = yAccl  * (49 / 1000)
+		yAccl = yAccl  * (49 / 1000)
 
 		"""Read data back from H3LIS331DL_REG_OUT_Z_L(0x2C), 2 bytes
 		Z-Axis Accl LSB, Z-Axis Accl MSB"""
