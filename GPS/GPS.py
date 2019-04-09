@@ -41,13 +41,13 @@ class GPS:
                 #if float(dmsLAT) > 0:
                 #    print(dmsLATlist, dmsLONlist)
                 if not self.HOME_LOCATED:
-                    self.HOME_LAT = float(dmsLATlist[0]) + (float(dmsLATlist[1]) + float(dmsLATlist[2])/100000)/60  #puts them into full for Decimal Degrees
-                    self.HOME_LON = (float(dmsLONlist[0]) + (float(dmsLONlist[1]) + float(dmsLONlist[2])/100000)/60)*(-1)
+                    self.HOME_LAT = round(float(dmsLATlist[0]) + (float(dmsLATlist[1]) + float(dmsLATlist[2])/100000)/60,5)  #puts them into full for Decimal Degrees
+                    self.HOME_LON = round((float(dmsLONlist[0]) + (float(dmsLONlist[1]) + float(dmsLONlist[2])/100000)/60)*(-1),5)
                     self.HOME_TIME = dataGPS.timestamp
                     self.HOME_LOCATED = True
                 else:
-                    self.CUR_LAT = float(dmsLATlist[0]) + (float(dmsLATlist[1]) + float(dmsLATlist[2])/100000)/60  #puts them into full for Decimal Degrees
-                    self.CUR_LON = (float(dmsLONlist[0]) + (float(dmsLONlist[1]) + float(dmsLONlist[2])/100000)/60)*(-1)
+                    self.CUR_LAT = round(float(dmsLATlist[0]) + (float(dmsLATlist[1]) + float(dmsLATlist[2])/100000)/60,5)  #puts them into full for Decimal Degrees
+                    self.CUR_LON = round((float(dmsLONlist[0]) + (float(dmsLONlist[1]) + float(dmsLONlist[2])/100000)/60)*(-1),5)
 
             data = ''
 
