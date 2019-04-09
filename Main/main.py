@@ -75,7 +75,7 @@ for i in range(5):
     OLED.setLow()
     BLED.setLow()
     time.sleep(0.1)
-    OLED.setLOW()
+    OLED.setLow()
     BLED.setHigh()
     time.sleep(0.1)
 
