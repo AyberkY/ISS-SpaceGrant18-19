@@ -1,12 +1,7 @@
 import curses
-from curses import wrapper
 import time
 
 def a_curses(stdscr):
-    stdscr = curses.initscr()
-    curses.noecho()
-    curses.cbreak()
-    stdscr.keypad(True)
 
     stdscr.addstr(0,0,"Count: ",curses.A_BOLD)
 
@@ -19,4 +14,4 @@ def a_curses(stdscr):
             print("there was an error")
             break
 
-wrapper(a_curses)
+curses.wrapper(a_curses)
