@@ -5,11 +5,11 @@ import H3LIS331
 
 bus = smbus2.SMBus(1)
 
-H3LIS331 test = H3LIS331()
+H3  = H3LIS331.H3LIS331()
 
 try:
     while True:
-        acc = test.read_accl()
+        acc = H3.read_accl()
         print("X: ", acc['x'])
         print("Y: ", acc['y'])
         print("Z: ", acc['z'])
