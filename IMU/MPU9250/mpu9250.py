@@ -307,8 +307,6 @@ class MPU9250:
     # @param [in] self The object pointer.
     def calGyro(self):
         for x in range(100):
-            if x % 10 == 0:
-                print('w a i t')
             data = self.readGyro()
             self.GX_OFFSET += data["x"]
             self.GY_OFFSET += data["y"]
@@ -323,14 +321,15 @@ class MPU9250:
         self.GZ_OFFSET = self.GZ_OFFSET / 100
         print('GZ OFFSET: ' + str(self.GZ_OFFSET))
 
+        return [self.GX_OFFSET, self.GY_OFFSET, self.GZ_OFFSET]
+
     ## Calculates time elapsed since entered timeElapsed
     # @param [in] timeStart starting frame for time calculation
     # WARNING: returns in milliseconds. I think?
     def timeElapsed(self, timeNow):
         temp = self.timeFloat
         self.timeFloat = timeNow
-        print ('TIME ELAPSED' + str(timeNow - temp))
-
+        #print ('TIME ELAPSED' + str(timeNow - temp))
         return (timeNow - temp)
 
     def curHeading(self):

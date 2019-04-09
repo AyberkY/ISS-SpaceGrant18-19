@@ -5,6 +5,7 @@ RDSR2 = 0x35
 WRSR  = 0x01
 READ  = 0x03
 WRITE = 0x02
+RUID  = 0x4B
 SECTOR_ERASE = 0x20
 CHIP_ERASE = 0xC7
 
@@ -31,7 +32,7 @@ class spiflash(object):
 
     #reads ----------------------------------------------------------------------------------
     def read_status(self):
-        statreg = self.spi.xfer2([RDSR1,RDSR1])[1]
+        statreg = self.spi.xfer2([RDSR,RDSR])[1]
         statreg2 = self.spi.xfer2([RDSR2,RDSR2])[1]
         return statreg, statreg2
 
@@ -85,6 +86,8 @@ class spiflash(object):
         self.spi.xfer2([CHIP_ERASE])
         sleep_ms(10)
 
+        self.write_enable()
+
         self.wait_until_not_busy()
 
     #misc ----------------------------------------------------------------------------------
@@ -107,35 +110,3 @@ class spiflash(object):
                 s += "%02X " % page[row * 16 + col]
             s += "\n"
         print s
-
-
-#TESTS -------------------------------------------------------------------
-#TESTS -------------------------------------------------------------------
-
-chip = spiflash(bus = 0, cs = 0)
-
-chip.print_status(chip.read_status())
-#write_disable()
-#print_status(read_status())
-
-#p = chip.read_page(0,0)
-
-#chip.print_page(chip.read_page(0,0)) #added
-
-#print "erasing chip"
-#chip.erase_all()
-#print "chip erased"
-
-#for i in range(256):
-#    p[i] = (i + 2) % 256
-#chip.print_page(p)
-#write_status(0,0)
-#print_status(read_status())
-#print chip.write_and_verify_page(0,0,p)
-
-#chip.print_page(chip.read_page(0,0))
-
-#self.wait_until_not_busy()
-#print_status(read_status())
-#write_status(0,0)
-#print_status(read_status())
