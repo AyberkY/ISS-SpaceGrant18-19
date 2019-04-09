@@ -49,7 +49,7 @@ time.sleep(0.5)
 print("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 
-filehandle.write("latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z")
+filehandle.write("latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z\n")
 
 while True:
     dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -115,6 +115,6 @@ while True:
         dataArray[15] = 0
 
 ###############__________WRITE TO SD__________###############
-    filehandle.write(str(dataArray))
+    filehandle.write(str(dataArray) + '\n')
 
 ###############_________TELEMETRY_________###############
