@@ -53,7 +53,8 @@ class GPS:
                         self.CUR_LON = round((float(dmsLONlist[0]) + (float(dmsLONlist[1]) + float(dmsLONlist[2])/100000)/60)*(-1),5)
                         self.ALT = dataGPS.altitude
 
-                data = ''
+                except:
+                    data = ''
 
         return {"lat":self.CUR_LAT, "lon":self.CUR_LON, "timestamp":dataOUT[0], "alt":dataOUT[5], "sats":dataOUT[7], "altitude":dataOUT[5]}
 
