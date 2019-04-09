@@ -41,8 +41,8 @@ try:
 except:
     print("COULD NOT CONNECT TO TELEMETRY")
 
-print("\n~~~~~~~~~~~ALL SENSORS INITIALIZED SUCCESSFULLY~~~~~~~~~~~\n")
-filheandle.write("\n~~~~~~~~~~~ALL SENSORS INITIALIZED SUCCESSFULLY~~~~~~~~~~~\n")
+print("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
+filehandle.write("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
 
 time.sleep(0.5)
 
