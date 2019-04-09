@@ -1,12 +1,9 @@
 import curses
-from curses import wrapper
 import time
 
 def a_curses(stdscr):
-    stdscr = curses.initscr()
-    curses.noecho()
-    curses.cbreak()
-    stdscr.keypad(True)
+
+    curses.init_pair(1,curses.COLOR_RED,curses.COLOR_GREEN)
 
     stdscr.addstr(0,0,"Count: ",curses.A_BOLD)
 
@@ -14,9 +11,13 @@ def a_curses(stdscr):
         try:
             stdscr.refresh()
             stdscr.addstr(0,10,str(i))
-            time.sleep(1)
+            time.sleep(0.25)
+
+            if i == 20:
+                stdscr.addstr(2,2,"woot woot",curses.A_BLINK,curses.color_pair(1))
+                continue
         except:
             print("there was an error")
             break
 
-wrapper(a_curses)
+curses.wrapper(a_curses)

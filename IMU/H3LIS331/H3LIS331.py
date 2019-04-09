@@ -80,8 +80,8 @@ class H3LIS331():
 		X-Axis Accl LSB, X-Axis Accl MSB"""
 		data0 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_X_L)
 		data1 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_X_H)
-
-		xAccl = data1 * 256 + data0
+		xAccl = dataConv(data0, data1)
+		#xAccl = data1 * 256 + data0
 		if xAccl > 32767 :
 			xAccl -= 65536
 
@@ -98,12 +98,25 @@ class H3LIS331():
 		Z-Axis Accl LSB, Z-Axis Accl MSB"""
 		data0 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_Z_L)
 		data1 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_Z_H)
-
+		d
 		zAccl = data1 * 256 + data0
 		if zAccl > 32767 :
 			zAccl -= 65536
 
 		return {'x' : xAccl, 'y' : yAccl, 'z' : zAccl}
+
+	    ## Data Convert
+	    # @param [in] self The object pointer.
+	    # @param [in] data1 LSB
+	    # @param [in] data2 MSB
+	    # @retval Value MSB+LSB(int 16bit)
+	def dataConv(self, data1, data2):
+    	value = data1 | (data2<<8)
+        if(value & (1 << 16 - 1)):
+	        value -= (1<<16)
+	    return value
+
+
 """
 #from H3LIS331 import H3LIS331
 h3lis331 = H3LIS331()

@@ -7,7 +7,7 @@ READ  = 0x03
 WRITE = 0x02
 RUID  = 0x4B
 SECTOR_ERASE = 0x20
-CHIP_ERASE = 0x60
+CHIP_ERASE = 0xC7
 
 from time import sleep
 import spidev
