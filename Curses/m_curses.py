@@ -17,6 +17,6 @@ def testGUI(stdscr):
             if color == 3:
                 color = 1
 
-            time.sleep(1)
+            time.sleep(0.1)
 
 curses.wrapper(testGUI)
