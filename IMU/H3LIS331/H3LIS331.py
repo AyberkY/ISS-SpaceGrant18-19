@@ -120,7 +120,7 @@ class H3LIS331():
 		return value
 
 	def dataConv2(self, data):
-		value = (data << 4)
+		value = (data >> 4)
 		if (value & (1 << 16 - 1)):
 			value -= (1<<16)
 		return value
