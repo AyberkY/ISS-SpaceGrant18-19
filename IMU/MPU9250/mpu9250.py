@@ -330,10 +330,11 @@ class MPU9250:
         temp = self.timeFloat
         self.timeFloat = timeNow
         print ('TIME ELAPSED' + str(timeNow - temp))
+
         return (timeNow - temp)
 
     def curHeading(self):
-        return {"roll": self.roll, "pitch": self.pitch, "yaw": self.yaw}
+        return {"roll": round(self.roll, 3), "pitch": round(self.pitch, 3), "yaw": round(self.yaw, 3)}
 
     # FUN PURPOSES
     ## Read temperature
