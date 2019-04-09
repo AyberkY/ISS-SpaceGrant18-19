@@ -11,7 +11,8 @@ H3  = H3LIS331.H3LIS331()
 try:
     while True:
         acc = H3.read_accl()
-        print("X: ", acc['x'])
+        print("XM: ", acc['x'])
+        print("XU: ", accl['xUM'])
         print("Y: ", acc['y'])
         print("Z: ", acc['z'])
         time.sleep(0.5)
