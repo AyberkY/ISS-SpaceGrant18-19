@@ -21,9 +21,9 @@ def a_curses(stdscr):
             print("there was an error")
             break
 
-    for i in range(100, 200):
+    for i in range(100):
         stdscr.refresh()
-        item = 100 - i%100
+        item = 100 - i
         stdscr.addstr(0,10,str(i),curses.A_BLINK)
         time.sleep(0.25)
 
