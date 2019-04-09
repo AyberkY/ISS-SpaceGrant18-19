@@ -56,7 +56,7 @@ class GPS:
                 except:
                     data = ''
 
-        return {"lat":self.CUR_LAT, "lon":self.CUR_LON, "timestamp":dataOUT[0], "alt":dataOUT[5], "sats":dataOUT[7], "altitude":dataOUT[5]}
+        return {"lat":self.CUR_LAT, "lon":self.CUR_LON, "timestamp":dataOUT[0], "sats":dataOUT[7], "altitude":dataOUT[5]}
 
     def homeLocation(self):
         return {"lat": self.HOME_LAT, "lon": self.HOME_LON, "time": self.HOME_TIME}

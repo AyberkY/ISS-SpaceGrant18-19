@@ -33,7 +33,7 @@ class Barometer:
         cTemp = temp / 16.0
         fTemp = cTemp * 1.8 + 32
 
-        return [altitude,temp,cTemp]
+        return [altitude,cTemp]
 
     def getPressure(self):
         # MPL3115A2 address, 0x60(96)
