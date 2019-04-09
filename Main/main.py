@@ -10,7 +10,7 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Telemetry')
 
 import ADS1x15, mpl3115a2, GPS, mpu9250, RFM9X
 
-filename = datetime.datetime.now()
+filename = str(datetime.datetime.now())
 filehandle = open(filename, 'w+')
 
 print("\n~~~~~~~~~~~INITIALIZING SENSORS~~~~~~~~~~~\n")
