@@ -26,7 +26,7 @@ adc = ADS1x15.ADS1115()
 #  -   8 = +/-0.512V
 #  -  16 = +/-0.256V
 # See table 3 in the ADS1015/ADS1115 datasheet for more info on gain.
-GAIN = 16
+GAIN = 1
 
 print('Reading ADS1x15 values, press Ctrl-C to quit...')
 # Print nice channel column headers.
