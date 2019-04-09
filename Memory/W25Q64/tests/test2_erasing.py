@@ -122,6 +122,7 @@ chip = spiflash(bus = 0, cs = 0)
 
 chip.print_page(chip.read_page(0,0)) #added
 
+chip.write_enable()
 print "erasing chip"
 chip.erase_all()
 print "chip erased"
