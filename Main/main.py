@@ -14,7 +14,7 @@ filename = str(datetime.datetime.now())
 filehandle = open(filename, 'w+')
 
 print("\n~~~~~~~~~~~INITIALIZING SENSORS~~~~~~~~~~~\n")
-filheandle.write("\n~~~~~~~~~~~INITIALIZING SENSORS~~~~~~~~~~~\n")
+filehandle.write("\n~~~~~~~~~~~INITIALIZING SENSORS~~~~~~~~~~~\n")
 
 try:
     GPS1 = GPS.GPS()
