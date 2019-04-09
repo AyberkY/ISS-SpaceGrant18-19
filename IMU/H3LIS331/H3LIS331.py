@@ -111,7 +111,7 @@ class H3LIS331():
 	    # @param [in] data2 MSB
 	    # @retval Value MSB+LSB(int 16bit)
 	def dataConv(self, data1, data2):
-        value = data1 | (data2 << 8)
+    	value = data1 | (data2<<8)
         if(value & (1 << 16 - 1)):
 	        value -= (1<<16)
 	    return value
