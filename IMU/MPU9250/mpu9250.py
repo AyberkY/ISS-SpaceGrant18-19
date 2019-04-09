@@ -329,7 +329,7 @@ class MPU9250:
     def timeElapsed(self, timeNow):
         temp = self.timeFloat
         self.timeFloat = timeNow
-        print ('TIME ELAPSED' + str(timeNow - temp))
+        #print ('TIME ELAPSED' + str(timeNow - temp))
         return (timeNow - temp)
 
     def curHeading(self):
