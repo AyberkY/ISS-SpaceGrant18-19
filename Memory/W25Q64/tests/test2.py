@@ -114,7 +114,7 @@ class spiflash(object):
 
 chip = spiflash(bus = 0, cs = 0)
 
-print_status(read_status())
+chip.print_status(read_status())
 #write_disable()
 #print_status(read_status())
 
