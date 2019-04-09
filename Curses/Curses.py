@@ -1,5 +1,6 @@
 import curses
 from curses import wrapper
+import time
 
 def a_curses(stdscr):
     stdscr = curses.initscr()
@@ -13,6 +14,7 @@ def a_curses(stdscr):
         try:
             stdscr.refresh()
             stdscr.addstr(0,10,str(i))
+            time.sleep(1000)
         except:
             print("there was an error")
             break
