@@ -72,11 +72,11 @@ print("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
 
 for i in range(5):
-    OLED.setHIGH()
+    OLED.set()
     BLED.setLow()
     time.sleep(0.1)
     OLED.setLOW()
-    BLED.setHIGH()
+    BLED.setHigh()
     time.sleep(0.1)
 
 OLED.setLow()
@@ -95,7 +95,7 @@ BLED.setLow()
 print("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 
-GLED.setHIGH()
+GLED.setHigh()
 
 filehandle.write("hour,minute,second,microsecond,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z\n")
 
