@@ -166,7 +166,10 @@ try:
         chip.write_page(addr[0], addr[1], page)
         pageAf = chip.read_page(addr[0], addr[1])
 
+        print("Before:\n")
         chip.print_page(pageBe)
+
+        print("After:\n")
         chip.print_page(pageAf)
 except:
     print('\nInterrupted!')
