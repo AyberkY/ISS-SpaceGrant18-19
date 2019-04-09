@@ -12,9 +12,10 @@ try:
     while True:
         acc = H3.read_accl()
         print("XM: ", acc['x'])
-        print("XU: ", accl['xUM'])
+        print("XU: ", acc['xUM'])
         print("Y: ", acc['y'])
         print("Z: ", acc['z'])
-        time.sleep(0.5)
+        print("******************")
+        time.sleep(1)
 except KeyboardInterrupt:
     sys.exit()
