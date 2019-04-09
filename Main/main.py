@@ -43,15 +43,12 @@ try:
 except:
     print("COULD NOT CONNECT TO GPS")
     filehandle.write('COULD NOT CONNECT TO GPS\n')
-"""
+
 try:
     ADC1 = ADS1x15.ADS1115()
 except:
     print("COULD NOT CONNECT TO ADC")
     filehandle.write('COULD NOT CONNECT TO ADC\n')
-"""
-
-ADC1 = ADS1x15.ADS1115()
 
 try:
     BARO1 = mpl3115a2.Barometer()
@@ -92,7 +89,11 @@ print("\n~~~~~~~~~~~CALIBRATING IMU1~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~CALIBRATING IMU1~~~~~~~~~~~\n")
 
 BLED.setHigh()
-IMU1.calGyro()
+x,y,z = IMU1.calGyro()
+filehandle.write("IMU1 OFFSETS:\n")
+filehandle.write("\tGYRO_X_OFFSET:" + str(x) + "\n")
+filehandle.write("\tGYRO_Y_OFFSET:" + str(y) + "\n")
+filehandle.write("\tGYRO_Z_OFFSET:" + str(z) + "\n\n")
 BLED.setLow()
 
 print("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
