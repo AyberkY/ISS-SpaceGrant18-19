@@ -10,12 +10,12 @@ def a_curses(stdscr):
     for i in range(100):
         try:
             stdscr.refresh()
-            stdscr.addstr(0,10,str(i))
+            stdscr.addstr(0,10,str(i),curses.color_pair(1))
             time.sleep(0.25)
 
-            if i == 20:
-                stdscr.addstr(2,2,"woot woot",curses.A_BLINK,curses.color_pair(1))
-                continue
+            #if i == 20:
+            #    stdscr.addstr(2,2,"woot woot",curses.A_BLINK,curses.color_pair(1))
+            #    continue
         except:
             print("there was an error")
             break
