@@ -1,6 +1,7 @@
 import smbus2
 import time
 import H3LIS331
+import sys
 # check if you should use smbus or smbus2
 
 bus = smbus2.SMBus(1)
@@ -14,3 +15,5 @@ try:
         print("Y: ", acc['y'])
         print("Z: ", acc['z'])
         time.sleep(0.5)
+except KeyboardInterrupt:
+    sys.exit()
