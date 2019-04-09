@@ -15,6 +15,7 @@ def a_curses(stdscr):
 
             if i == 20:
                 stdscr.addstr(2,2,"woot woot",curses.A_BLINK,curses.color_pair(1))
+                continue
         except:
             print("there was an error")
             break
