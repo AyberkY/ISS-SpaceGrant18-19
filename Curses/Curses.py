@@ -1,24 +1,20 @@
 import curses
+from curses import wrapper
 
-stdscr = curses.initscr()
-#stdscr is a window object representing the entire screen
+def a_curses(stdscr):
+    stdscr = curses.initscr()
+    curses.noecho()
+    curses.cbreak()
+    stdscr.keypad(True)
 
-curses.noecho()
-#turns off automatic echoing of keys to the screen
+    stdscr.addstr(0,0,"Count: ",curses.A_BOLD)
 
-curses.cbreak()
-#react to keys instantly (without pressing enter)
+    for i in range(100):
+        try:
+            stdscr.refresh()
+            stdscr.addstr(0,10,str(i))
+        except:
+            print("there was an error")
+            break
 
-stdscr.keypad(True)
-#makes curses expect cursor keys, navigation keys (Page Up, Home)
-
-#reverse the above w/ nocbreak, echo, keypad(False)
-
-stdscr.addstr(0,0,"Count: ",curses.A_BOLD)
-
-for i in range(100):
-    try:
-        stdscr.refresh()
-        stdscr.addstr(0,10,str(i))
-    except:
-        break
+wrapper(a_curses)
