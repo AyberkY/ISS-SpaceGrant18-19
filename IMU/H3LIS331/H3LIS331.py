@@ -98,7 +98,7 @@ class H3LIS331():
 		Z-Axis Accl LSB, Z-Axis Accl MSB"""
 		data0 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_Z_L)
 		data1 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_Z_H)
-		d
+		
 		zAccl = data1 * 256 + data0
 		if zAccl > 32767 :
 			zAccl -= 65536
