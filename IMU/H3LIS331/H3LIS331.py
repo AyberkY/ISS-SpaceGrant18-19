@@ -96,6 +96,7 @@ class H3LIS331():
 		data1 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_Y_H)
 
 		yAccl = data1 * 256 + data0
+		yAccl = (yAccl >> 4)
 		if yAccl > 32767 :
 			yAccl -= 65536
 		#yAccl = yAccl  * (49 / 1000)
