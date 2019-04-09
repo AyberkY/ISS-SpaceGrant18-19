@@ -31,7 +31,7 @@ class spiflash(object):
 
     #reads ----------------------------------------------------------------------------------
     def read_status(self):
-        statreg = self.spi.xfer2([RDSR,RDSR])[1]
+        statreg = self.spi.xfer2([RDSR1,RDSR1])[1]
         statreg2 = self.spi.xfer2([RDSR2,RDSR2])[1]
         return statreg, statreg2
 
