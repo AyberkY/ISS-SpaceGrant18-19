@@ -80,7 +80,7 @@ class H3LIS331():
 		X-Axis Accl LSB, X-Axis Accl MSB"""
 		data0 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_X_L)
 		data1 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_X_H)
-		xAccl = dataConv(data0, data1)
+		xAccl = self.dataConv(data0, data1)
 		#xAccl = data1 * 256 + data0
 		if xAccl > 32767 :
 			xAccl -= 65536
