@@ -43,12 +43,15 @@ try:
 except:
     print("COULD NOT CONNECT TO GPS")
     filehandle.write('COULD NOT CONNECT TO GPS\n')
-
+"""
 try:
     ADC1 = ADS1x15.ADS1115()
 except:
     print("COULD NOT CONNECT TO ADC")
     filehandle.write('COULD NOT CONNECT TO ADC\n')
+"""
+
+ADC1 = ADS1x15.ADS1115()
 
 try:
     BARO1 = mpl3115a2.Barometer()
@@ -103,10 +106,10 @@ try:
     while True:
         dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
-        dataArray[0] = str(datetime.datetime.now().hour)
-        dataArray[1] = str(datetime.datetime.now().minute)
-        dataArray[2] = str(datetime.datetime.now().second)
-        dataArray[3] = str(datetime.datetime.now().microsecond)
+        dataArray[0] = datetime.datetime.now().hour
+        dataArray[1] = datetime.datetime.now().minute
+        dataArray[2] = datetime.datetime.now().second
+        dataArray[3] = datetime.datetime.now().microsecond
 
     ###############__________GPS1__________###############
         try:
