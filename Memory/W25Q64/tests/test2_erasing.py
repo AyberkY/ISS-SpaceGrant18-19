@@ -5,8 +5,9 @@ RDSR2 = 0x35
 WRSR  = 0x01
 READ  = 0x03
 WRITE = 0x02
+RUID  = 0x4B
 SECTOR_ERASE = 0x20
-CHIP_ERASE = 0xC7
+CHIP_ERASE = 0x60
 
 from time import sleep
 import spidev
@@ -85,6 +86,8 @@ class spiflash(object):
         self.spi.xfer2([CHIP_ERASE])
         sleep_ms(10)
 
+        self.write_enable()
+
         self.wait_until_not_busy()
 
     #misc ----------------------------------------------------------------------------------
@@ -121,7 +124,7 @@ chip = spiflash(bus = 0, cs = 0)
 #p = chip.read_page(0,0)
 
 chip.print_page(chip.read_page(0,0)) #added
-
+print(self.xfer2([RUID]))
 chip.write_enable()
 print "erasing chip"
 chip.erase_all()
