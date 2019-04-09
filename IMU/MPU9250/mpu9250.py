@@ -261,7 +261,7 @@ class MPU9250:
             self.pitch += y * timeVar
             self.yaw += z * timeVar
 
-        return {"x":x, "y":y, "z":z}
+        return {"x": round(x, 4), "y": round(y, 4), "z": round(z, 4)}
 
     ## Read magneto
     #  @param [in] self The object pointer.
