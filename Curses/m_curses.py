@@ -9,6 +9,6 @@ def testGUI(stdscr):
             stdscr.addstr(0,0,str(i))
             stdscr.refresh()
 
-            time.sleep(0.1)
+            time.sleep(1)
 
 curses.wrapper(testGUI)
