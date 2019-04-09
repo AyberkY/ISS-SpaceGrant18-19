@@ -1,22 +1,22 @@
+import time
+import sys
 import curses
 
-stdscr = curses.initscr()
-#stdscr is a window object representing the entire screen
-print("initscr")
+def testGUI(stdscr):
 
-curses.noecho()
-#turns off automatic echoing of keys to the screen
-print("noecho")
+    curses.init_pair(1, curses.COLOR_ORANGE, curses.COLOR_BLUE)
 
-curses.cbreak()
-#react to keys instantly (without pressing enter)
-print("cbreak")
+    color = 1
 
-stdscr.keypad(1)
-#makes curses expect cursor keys, navigation keys (Page Up, Home)
-print("keypad")
+    for i in range(100):
+        while True:
+            stdscr.erase()
+            stdscr.addstr(0,10,"more sensors",curses.color_pair(color))
+            stdscr.refresh()
+            color += 1
+            if color == 3:
+                color = 1
 
-#reverse the above w/ nocbreak, echo, keypad(0)
+            time.sleep(1)
 
-for i in range(100):
-    stdscr.addstr(0,0,"Count: " + str(i))
+curses.wrapper(testGUI)
