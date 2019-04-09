@@ -4,7 +4,7 @@ import curses
 
 def testGUI(stdscr):
 
-    curses.init_pair(1, curses.COLOR_ORANGE, curses.COLOR_BLUE)
+    curses.init_pair(1, curses.COLOR_RED, curses.COLOR_YELLOW)
 
     color = 1
 
@@ -17,6 +17,6 @@ def testGUI(stdscr):
             if color == 3:
                 color = 1
 
-            time.sleep(1)
+            time.sleep(0.1)
 
 curses.wrapper(testGUI)

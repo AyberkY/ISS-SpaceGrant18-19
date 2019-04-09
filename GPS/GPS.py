@@ -16,6 +16,7 @@ class GPS:
         self.HOME_LOCATED = False
         self.HOME_TIME = -1
         self.R = 6371*10**3
+        self.ALT = 0
 
         while not self.ser.in_waiting > 0:
             sleep(5)
@@ -45,13 +46,15 @@ class GPS:
                     self.HOME_LON = round((float(dmsLONlist[0]) + (float(dmsLONlist[1]) + float(dmsLONlist[2])/100000)/60)*(-1),5)
                     self.HOME_TIME = dataGPS.timestamp
                     self.HOME_LOCATED = True
+                    self.ALT = dataGPS.altitude
                 else:
                     self.CUR_LAT = round(float(dmsLATlist[0]) + (float(dmsLATlist[1]) + float(dmsLATlist[2])/100000)/60,5)  #puts them into full for Decimal Degrees
                     self.CUR_LON = round((float(dmsLONlist[0]) + (float(dmsLONlist[1]) + float(dmsLONlist[2])/100000)/60)*(-1),5)
+                    self.ALT = dataGPS.altitude
 
             data = ''
 
-        return {"lat":self.CUR_LAT, "lon":self.CUR_LON, "timestamp":dataOUT[0], "alt":dataOUT[5], "sats":dataOUT[7]}
+        return {"lat":self.CUR_LAT, "lon":self.CUR_LON, "timestamp":dataOUT[0], "alt":dataOUT[5], "sats":dataOUT[7], "altitude":dataOUT[5]}
 
     def homeLocation(self):
         return {"lat": self.HOME_LAT, "lon": self.HOME_LON, "time": self.HOME_TIME}
