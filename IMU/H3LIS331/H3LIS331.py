@@ -97,6 +97,7 @@ class H3LIS331():
 		yAccl = data1 * 256 + data0
 		if yAccl > 32767 :
 			yAccl -= 65536
+		#yAccl = yAccl  * (49 / 1000)
 
 		"""Read data back from H3LIS331DL_REG_OUT_Z_L(0x2C), 2 bytes
 		Z-Axis Accl LSB, Z-Axis Accl MSB"""
@@ -106,6 +107,7 @@ class H3LIS331():
 		zAccl = data1 * 256 + data0
 		if zAccl > 32767 :
 			zAccl -= 65536
+		zAccl = zAccl  * (49 / 1000)
 
 		return {'x' : xAccl, 'xUM' : xAccNoMod, 'y' : yAccl, 'z' : zAccl}
 
