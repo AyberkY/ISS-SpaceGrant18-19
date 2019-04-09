@@ -32,7 +32,7 @@ except:
     print("COULD NOT CONNECT TO BAROMETER")
 
 try:
-    IMU1 = mpu9250.mpu9250()
+    IMU1 = mpu9250.MPU9250()
 except:
     print("COULD NOT CONNECT TO MPU9250")
 
@@ -52,7 +52,7 @@ filehandle.write("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 filehandle.write("latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z")
 
 while True:
-    dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 ###############__________GPS1__________###############
     try:
