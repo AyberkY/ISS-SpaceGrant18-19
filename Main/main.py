@@ -49,72 +49,78 @@ time.sleep(0.5)
 print("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 
-filehandle.write("latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z\n")
+filehandle.write("timestamp,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z\n")
 
-while True:
-    dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+try:
+    while True:
+        dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
-###############__________GPS1__________###############
-    try:
-        gpsData = GPS1.readLocation()
+        dataArray[0] = str(datetime.datetime.now().time())
 
-        dataArray[0] = gpsData['lat']
-        dataArray[1] = gpsData['lon']
-        dataArray[2] = gpsData['altitude']
-        dataArray[3] = gpsData['sats']
+    ###############__________GPS1__________###############
+        try:
+            gpsData = GPS1.readLocation()
 
-    except:
-        dataArray[0] = 0
-        dataArray[1] = 0
-        dataArray[2] = 0
-        dataArray[3] = 0
+            dataArray[1] = gpsData['lat']
+            dataArray[2] = gpsData['lon']
+            dataArray[3] = gpsData['altitude']
+            dataArray[4] = gpsData['sats']
 
-###############__________ADC1__________###############
-    try:
-        dataArray[4] = ADC1.read_adc(0)
-        dataArray[5] = ADC1.read_adc(1)
-        dataArray[6] = ADC1.read_adc(2)
+        except:
+            dataArray[1] = 0
+            dataArray[2] = 0
+            dataArray[3] = 0
+            dataArray[4] = 0
 
-    except:
-        dataArray[4] = 0
-        dataArray[5] = 0
-        dataArray[6] = 0
+    ###############__________ADC1__________###############
+        try:
+            dataArray[5] = ADC1.read_adc(0)
+            dataArray[6] = ADC1.read_adc(1)
+            dataArray[7] = ADC1.read_adc(2)
 
-###############__________BARO1__________###############
-    try:
-        baro_pressure = BARO1.getPressure()
-        baro_altitude, cTemp = BARO1.getData()
+        except:
+            dataArray[5] = 0
+            dataArray[6] = 0
+            dataArray[7] = 0
 
-        dataArray[7] = baro_pressure
-        dataArray[8] = baro_altitude
-        dataArray[9] = cTemp
+    ###############__________BARO1__________###############
+        try:
+            baro_pressure = BARO1.getPressure()
+            baro_altitude, cTemp = BARO1.getData()
 
-    except:
-        dataArray[7] = 0
-        dataArray[8] = 0
-        dataArray[9] = 0
+            dataArray[8] = baro_pressure
+            dataArray[9] = baro_altitude
+            dataArray[10] = cTemp
 
-###############__________IMU1__________###############
-    try:
-        accelData = IMU1.readAccel()
-        gyroData = IMU1.readGyro()
+        except:
+            dataArray[8] = 0
+            dataArray[9] = 0
+            dataArray[10] = 0
 
-        dataArray[10] = accelData['x']
-        dataArray[11] = accelData['y']
-        dataArray[12] = accelData['z']
-        dataArray[13] = gyroData['x']
-        dataArray[14] = gyroData['y']
-        dataArray[15] = gyroData['z']
+    ###############__________IMU1__________###############
+        try:
+            accelData = IMU1.readAccel()
+            gyroData = IMU1.readGyro()
 
-    except:
-        dataArray[10] = 0
-        dataArray[11] = 0
-        dataArray[12] = 0
-        dataArray[13] = 0
-        dataArray[14] = 0
-        dataArray[15] = 0
+            dataArray[11] = accelData['x']
+            dataArray[12] = accelData['y']
+            dataArray[13] = accelData['z']
+            dataArray[14] = gyroData['x']
+            dataArray[15] = gyroData['y']
+            dataArray[16] = gyroData['z']
 
-###############__________WRITE TO SD__________###############
-    filehandle.write(str(dataArray) + '\n')
+        except:
+            dataArray[11] = 0
+            dataArray[12] = 0
+            dataArray[13] = 0
+            dataArray[14] = 0
+            dataArray[15] = 0
+            dataArray[16] = 0
 
-###############_________TELEMETRY_________###############
+    ###############__________WRITE TO SD__________###############
+        filehandle.write(str(dataArray) + '\n')
+
+    ###############_________TELEMETRY_________###############
+
+except KeyboardInterrupt:
+    filehandle.close()
