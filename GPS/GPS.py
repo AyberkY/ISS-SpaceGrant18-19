@@ -30,27 +30,28 @@ class GPS:
 
 
             if data.find(b'GGA') > 0:
-                #library searches the data
-                dataGPS = pynmea2.parse(data.decode('utf-8'))
-                #list of data outputted from the GPS
-                dataOUT = [str(dataGPS.timestamp), str(dataGPS.lat), str(dataGPS.lat_dir), str(dataGPS.lon), str(dataGPS.lon_dir), str(dataGPS.altitude), str(dataGPS.altitude_units), str(dataGPS.num_sats)]
+                try:
+                    #library searches the data
+                    dataGPS = pynmea2.parse(data.decode('utf-8'))
+                    #list of data outputted from the GPS
+                    dataOUT = [str(dataGPS.timestamp), str(dataGPS.lat), str(dataGPS.lat_dir), str(dataGPS.lon), str(dataGPS.lon_dir), str(dataGPS.altitude), str(dataGPS.altitude_units), str(dataGPS.num_sats)]
 
-                dmsLAT = dataOUT[1]                                #Makes Strings from input
-                dmsLON = dataOUT[3]
-                dmsLATlist = [dmsLAT[0:2],dmsLAT[2:4],dmsLAT[5:11]]     #places them into proper lists
-                dmsLONlist = [dmsLON[0:3],dmsLON[3:5],dmsLON[6:11]]
-                #if float(dmsLAT) > 0:
-                #    print(dmsLATlist, dmsLONlist)
-                if not self.HOME_LOCATED:
-                    self.HOME_LAT = round(float(dmsLATlist[0]) + (float(dmsLATlist[1]) + float(dmsLATlist[2])/100000)/60,5)  #puts them into full for Decimal Degrees
-                    self.HOME_LON = round((float(dmsLONlist[0]) + (float(dmsLONlist[1]) + float(dmsLONlist[2])/100000)/60)*(-1),5)
-                    self.HOME_TIME = dataGPS.timestamp
-                    self.HOME_LOCATED = True
-                    self.ALT = dataGPS.altitude
-                else:
-                    self.CUR_LAT = round(float(dmsLATlist[0]) + (float(dmsLATlist[1]) + float(dmsLATlist[2])/100000)/60,5)  #puts them into full for Decimal Degrees
-                    self.CUR_LON = round((float(dmsLONlist[0]) + (float(dmsLONlist[1]) + float(dmsLONlist[2])/100000)/60)*(-1),5)
-                    self.ALT = dataGPS.altitude
+                    dmsLAT = dataOUT[1]                                #Makes Strings from input
+                    dmsLON = dataOUT[3]
+                    dmsLATlist = [dmsLAT[0:2],dmsLAT[2:4],dmsLAT[5:11]]     #places them into proper lists
+                    dmsLONlist = [dmsLON[0:3],dmsLON[3:5],dmsLON[6:11]]
+                    #if float(dmsLAT) > 0:
+                    #    print(dmsLATlist, dmsLONlist)
+                    if not self.HOME_LOCATED:
+                        self.HOME_LAT = round(float(dmsLATlist[0]) + (float(dmsLATlist[1]) + float(dmsLATlist[2])/100000)/60,5)  #puts them into full for Decimal Degrees
+                        self.HOME_LON = round((float(dmsLONlist[0]) + (float(dmsLONlist[1]) + float(dmsLONlist[2])/100000)/60)*(-1),5)
+                        self.HOME_TIME = dataGPS.timestamp
+                        self.HOME_LOCATED = True
+                        self.ALT = dataGPS.altitude
+                    else:
+                        self.CUR_LAT = round(float(dmsLATlist[0]) + (float(dmsLATlist[1]) + float(dmsLATlist[2])/100000)/60,5)  #puts them into full for Decimal Degrees
+                        self.CUR_LON = round((float(dmsLONlist[0]) + (float(dmsLONlist[1]) + float(dmsLONlist[2])/100000)/60)*(-1),5)
+                        self.ALT = dataGPS.altitude
 
             data = ''
 
