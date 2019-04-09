@@ -31,7 +31,7 @@ class spiflash(object):
 
     #reads ----------------------------------------------------------------------------------
     def read_status(self):
-        statreg = self.spi.xfer2([RDSR,RDSR])[1]
+        statreg = self.spi.xfer2([RDSR1,RDSR1])[1]
         statreg2 = self.spi.xfer2([RDSR2,RDSR2])[1]
         return statreg, statreg2
 
@@ -114,17 +114,17 @@ class spiflash(object):
 
 chip = spiflash(bus = 0, cs = 0)
 
-#print_status(read_status())
+chip.print_status(chip.read_status())
 #write_disable()
 #print_status(read_status())
 
 #p = chip.read_page(0,0)
 
-chip.print_page(chip.read_page(0,0)) #added
+#chip.print_page(chip.read_page(0,0)) #added
 
-print "erasing chip"
-chip.erase_all()
-print "chip erased"
+#print "erasing chip"
+#chip.erase_all()
+#print "chip erased"
 
 #for i in range(256):
 #    p[i] = (i + 2) % 256
@@ -133,7 +133,7 @@ print "chip erased"
 #print_status(read_status())
 #print chip.write_and_verify_page(0,0,p)
 
-chip.print_page(chip.read_page(0,0))
+#chip.print_page(chip.read_page(0,0))
 
 #self.wait_until_not_busy()
 #print_status(read_status())
