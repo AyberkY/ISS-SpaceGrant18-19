@@ -104,7 +104,7 @@ class H3LIS331():
 			zAccl -= 65536
 
 		return {'x' : xAccl, 'y' : yAccl, 'z' : zAccl}
-
+"""
 #from H3LIS331 import H3LIS331
 h3lis331 = H3LIS331()
 
@@ -113,8 +113,10 @@ while True:
 	h3lis331.select_data_config()
 	time.sleep(0.2)
 	accl = h3lis331.read_accl()
+	print(H3LIS331DL_REG_CTRL1)
 	print ("Acceleration in X-Axis : %d" %(accl['x']))
 	print ("Acceleration in Y-Axis : %d" %(accl['y']))
 	print ("Acceleration in Z-Axis : %d" %(accl['z']))
 	print (" ************************************ ")
 	time.sleep(1)
+	"""
