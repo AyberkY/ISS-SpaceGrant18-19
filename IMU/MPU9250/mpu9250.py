@@ -307,8 +307,6 @@ class MPU9250:
     # @param [in] self The object pointer.
     def calGyro(self):
         for x in range(100):
-            if x % 10 == 0:
-                #print('w a i t')
             data = self.readGyro()
             self.GX_OFFSET += data["x"]
             self.GY_OFFSET += data["y"]
