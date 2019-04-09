@@ -12,7 +12,7 @@ def a_curses(stdscr):
         try:
             stdscr.refresh()
             stdscr.addstr(0,10,str(i),curses.color_pair(1))
-            time.sleep(0.25)
+            time.sleep(0.1)
 
             #if i == 20:
             #    stdscr.addstr(2,2,"woot woot",curses.A_BLINK,curses.color_pair(1))
@@ -24,7 +24,7 @@ def a_curses(stdscr):
     for i in range(100):
         stdscr.refresh()
         item = 100 - i
-        stdscr.addstr(0,10,str(i),curses.A_BLINK)
-        time.sleep(0.25)
+        stdscr.addstr(0,10,str(item),curses.A_BLINK)
+        time.sleep(0.1)
 
 curses.wrapper(a_curses)
