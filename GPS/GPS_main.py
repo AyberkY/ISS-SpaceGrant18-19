@@ -19,8 +19,8 @@ try:
 
         location = GPS1.readLocation()
         # distance = GPS1.distanceFromHome()
-        print('CURRENT LAT: ' + str(location['lat']))
-        print('CURRENT LON: ' + str(location['lon']))
+        print('CURRENT LAT: ' + print('{:.3f}'.format((location['lat']))))
+        print('CURRENT LON: ' + print('{:.3f}'.format((location['lat']))))
         # print('CURRENT DISTANCE:  ' + str(distance))
         print()
         sleep(0.5)
