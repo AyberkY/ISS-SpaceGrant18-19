@@ -85,6 +85,8 @@ class H3LIS331():
 		#xAccl = data1 * 256 + data0
 		if xAccl > 32767 :
 			xAccl -= 65536
+		if xAccNoMod > 32767 :
+			xAccNoMod -= 65536
 
 		"""Read data back from H3LIS331DL_REG_OUT_Y_L(0x2A), 2 bytes
 		Y-Axis Accl LSB, Y-Axis Accl MSB"""
