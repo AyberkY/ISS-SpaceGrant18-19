@@ -82,6 +82,7 @@ class H3LIS331():
 		data1 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_X_H)
 		xAccNoMod = data1 * 256 + data0
 		xAccl = self.dataConv(data0, data1)
+		xAccl = (xAccl >> 4)
 		#xAccl = data1 * 256 + data0
 		if xAccl > 32767 :
 			xAccl -= 65536
