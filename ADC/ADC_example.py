@@ -7,9 +7,12 @@ import time
 # Import the ADS1x15 module.
 import ADS1x15
 
+import smbus2
+
+bus = smbus2.SMBus(1)
 
 # Create an ADS1115 ADC (16-bit) instance.
-adc = ADS1x15.ADS1115()
+adc = ADS1x15.ADS1115(i2c=bus)
 
 # Or create an ADS1015 ADC (12-bit) instance.
 #adc = Adafruit_ADS1x15.ADS1015()
