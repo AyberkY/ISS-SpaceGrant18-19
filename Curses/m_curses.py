@@ -4,7 +4,7 @@ import curses
 
 def testGUI(stdscr):
 
-    curses.init_pair(1, curses.COLOR_ORANGE, curses.COLOR_BLUE)
+    curses.init_pair(1, curses.COLOR_RED, curses.COLOR_YELLOW)
 
     color = 1
 
