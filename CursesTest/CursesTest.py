@@ -16,6 +16,6 @@ stdscr.keypad(1)
 
 for i in range(100):
     try:
-        stdscr.addstr(0,0,"Count: " + i)
+        stdscr.addstr(0,0,"Count: " + str(i))
     except curses.error:
         pass
