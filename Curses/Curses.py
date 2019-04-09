@@ -14,8 +14,10 @@ stdscr.keypad(1)
 
 #reverse the above w/ nocbreak, echo, keypad(0)
 
+stdscr.addstr(0,0,"Count: ")
+
 for i in range(100):
     try:
-        stdscr.addstr(0,0,"Count: " + str(i))
-    except curses.error:
+        stdscr.addstr(0,10,str(i))
+    except:
         break
