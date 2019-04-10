@@ -114,8 +114,11 @@ GLED.setHigh()
 
 filehandle.write("hour,minute,second,microsecond,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z\n")
 
+filehandle.close()
 try:
     while True:
+        filehandle.open(filename,'w+')
+
         dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
         dataArray[0] = datetime.datetime.now().hour
@@ -124,6 +127,7 @@ try:
         dataArray[3] = datetime.datetime.now().microsecond
 
     ###############__________GPS1__________###############
+
         try:
             gpsData = GPS1.readLocation()
 
@@ -185,7 +189,7 @@ try:
 
     ###############__________WRITE TO SD__________###############
         filehandle.write(str(dataArray) + '\n')
-
+        filehandle.close()
     ###############_________TELEMETRY_________###############
 
 except KeyboardInterrupt:
