@@ -72,7 +72,7 @@ print("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
 
 for i in range(5):
-    OLED.setLow()
+    OLED.setHigh()
     BLED.setLow()
     time.sleep(0.1)
     OLED.setLow()
