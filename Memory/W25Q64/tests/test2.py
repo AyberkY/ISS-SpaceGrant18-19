@@ -5,6 +5,7 @@ RDSR2 = 0x35
 WRSR  = 0x01
 READ  = 0x03
 WRITE = 0x02
+RUID  = 0x4B
 SECTOR_ERASE = 0x20
 CHIP_ERASE = 0xC7
 
@@ -96,6 +97,9 @@ class spiflash(object):
             #print "%r \tRead %X" % (datetime.now(), statreg)
             sleep_ms(5)
 
+    def read_UID(self): #added
+        return self.spi.xfer2([RUID]) #skip 4 first bytes (dummies)
+
     #helpers -------------------------------------------------------------------------------
     def print_status(self,status):
         print "status %s %s" % (bin(status[1])[2:].zfill(8), bin(status[0])[2:].zfill(8))
@@ -114,7 +118,7 @@ class spiflash(object):
 
 chip = spiflash(bus = 0, cs = 0)
 
-chip.print_status(chip.read_status())
+print(chip.read_UID())
 #write_disable()
 #print_status(read_status())
 
