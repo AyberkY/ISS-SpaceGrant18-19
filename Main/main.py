@@ -114,7 +114,7 @@ BLED.setLow()
 print("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
 
-CAM1.start_recording(f'/home/pi/ISS-SpaceGrant18-19/Camera/flight.{datetime.datetime.now()}.h264')
+CAM1.start_recording('/home/pi/ISS-SpaceGrant18-19/Camera/' + filename + '.h264')
 
 print("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
