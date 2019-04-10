@@ -35,6 +35,8 @@ OLED.setLow()
 GLED.setLow()
 BLED.setLow()
 
+Initialization_Error = False
+
 print("\n~~~~~~~~~~~INITIALIZING SUB-SYSTEMS~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~INITIALIZING SUB-SYSTEMS~~~~~~~~~~~\n")
 
@@ -43,36 +45,42 @@ try:
 except:
     print("COULD NOT CONNECT TO GPS")
     filehandle.write('COULD NOT CONNECT TO GPS\n')
+    Initialization_Error = True
 
 try:
     ADC1 = ADS1x15.ADS1115()
 except:
     print("COULD NOT CONNECT TO ADC")
     filehandle.write('COULD NOT CONNECT TO ADC\n')
+    Initialization_Error = True
 
 try:
     BARO1 = mpl3115a2.Barometer()
 except:
     print("COULD NOT CONNECT TO BAROMETER")
     filehandle.write('COULD NOT CONNECT TO BAROMETER\n')
+    Initialization_Error = True
 
 try:
     IMU1 = mpu9250.MPU9250()
 except:
     print("COULD NOT CONNECT TO MPU9250")
     filehandle.write('COULD NOT CONNECT TO MPU9250\n')
+    Initialization_Error = True
 
 try:
     TELEM1 = RFM9X.RFM9X()
 except:
     print("COULD NOT CONNECT TO TELEMETRY")
     filehandle.write('COULD NOT CONNECT TO TELEMETRY\n')
+    Initialization_Error = True
+
 
 print("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
 
 for i in range(5):
-    OLED.setLow()
+    OLED.setHigh()
     BLED.setLow()
     time.sleep(0.1)
     OLED.setLow()
@@ -98,6 +106,9 @@ BLED.setLow()
 
 print("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
+
+if Initialization_Error:
+    OLED.setHigh()
 
 GLED.setHigh()
 

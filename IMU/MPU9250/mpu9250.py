@@ -261,7 +261,7 @@ class MPU9250:
             self.pitch += y * timeVar
             self.yaw += z * timeVar
 
-        return {"x":x, "y":y, "z":z}
+        return {"x": round(x, 4), "y": round(y, 4), "z": round(z, 4)}
 
     ## Read magneto
     #  @param [in] self The object pointer.
@@ -307,6 +307,8 @@ class MPU9250:
     # @param [in] self The object pointer.
     def calGyro(self):
         for x in range(100):
+            if x % 10 == 0:
+                print('w a i t')
             data = self.readGyro()
             self.GX_OFFSET += data["x"]
             self.GY_OFFSET += data["y"]
@@ -321,8 +323,6 @@ class MPU9250:
         self.GZ_OFFSET = self.GZ_OFFSET / 100
         print('GZ OFFSET: ' + str(self.GZ_OFFSET))
 
-        return [self.GX_OFFSET, self.GY_OFFSET, self.GZ_OFFSET]
-
     ## Calculates time elapsed since entered timeElapsed
     # @param [in] timeStart starting frame for time calculation
     # WARNING: returns in milliseconds. I think?
@@ -333,7 +333,7 @@ class MPU9250:
         return (timeNow - temp)
 
     def curHeading(self):
-        return {"roll": self.roll, "pitch": self.pitch, "yaw": self.yaw}
+        return {"roll": round(self.roll, 3), "pitch": round(self.pitch, 3), "yaw": round(self.yaw, 3)}
 
     # FUN PURPOSES
     ## Read temperature
