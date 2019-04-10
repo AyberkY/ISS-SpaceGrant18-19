@@ -323,6 +323,8 @@ class MPU9250:
         self.GZ_OFFSET = self.GZ_OFFSET / 100
         print('GZ OFFSET: ' + str(self.GZ_OFFSET))
 
+        return [GX_OFFSET, GY_OFFSET, GZ_OFFSET]
+
     ## Calculates time elapsed since entered timeElapsed
     # @param [in] timeStart starting frame for time calculation
     # WARNING: returns in milliseconds. I think?
