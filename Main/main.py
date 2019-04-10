@@ -1,4 +1,4 @@
-import sys, time, datetime
+import sys, time, datetime, picamera
 
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/ADC')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Barometer')
@@ -75,6 +75,13 @@ except:
     filehandle.write('COULD NOT CONNECT TO TELEMETRY\n')
     Initialization_Error = True
 
+try:
+    CAM1 = picamera.PiCamera()
+except:
+    print("COULD NOT CONNECT TO CAMERA")
+    filehandle.write('COULD NOT CONNECT TO CAMERA\n')
+    Initialization_Error = True
+
 
 print("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
@@ -103,6 +110,11 @@ filehandle.write("\tGX_OFFSET:" + str(gyroOffsets[0]) + "\n")
 filehandle.write("\tGY_OFFSET:" + str(gyroOffsets[1]) + "\n")
 filehandle.write("\tGZ_OFFSET:" + str(gyroOffsets[2]) + "\n\n")
 BLED.setLow()
+
+print("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
+filehandle.write("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
+
+CAM1.start_recording(f'/home/pi/ISS-SpaceGrant18-19/Camera/flight.{datetime.datetime.now()}.h264')
 
 print("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
