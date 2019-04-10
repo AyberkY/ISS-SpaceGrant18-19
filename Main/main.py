@@ -129,7 +129,7 @@ filehandle.write("hour,minute,second,microsecond,latitude,longitude,altitude,sat
 filehandle.close()
 try:
     while True:
-        filehandle.open(filename,'w+')
+        filehandle = open(filename,'w+')
 
         dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
