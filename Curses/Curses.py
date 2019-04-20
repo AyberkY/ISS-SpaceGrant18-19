@@ -16,6 +16,10 @@ def cursesTest(stdscr):
     stdscr.addstr(7,0,"Altitude: ",curses.A_BOLD)
     stdscr.addstr(8,0,"Satellites: ",curses.A_BOLD)
 
+    stdscr.addstr(9,0,"read_ADC(0): ",curses.A_BOLD)
+    stdscr.addstr(10,0,"read_ADC(1): ",curses.A_BOLD)
+    stdscr.addstr(11,0,"read_ADC(2): ",curses.A_BOLD)
+
     while True:
         try:
             stdscr.refresh()
