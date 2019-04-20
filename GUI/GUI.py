@@ -46,7 +46,7 @@ def cursesTest(stdscr):
         curses.start_color()
 
         stdscr.addstr(0,11,"CONNECTED",curses.color_pair(1))
-        stdscr.addstr(1,11,"NOT CONNECTED",curses.color(pair(2)))
+        stdscr.addstr(1,11,"NOT CONNECTED",curses.color_pair(2))
 
         stdscr.addstr(0,45,str(random.randint(0,100))+"   ")
         stdscr.addstr(1,45,str(random.randint(0,100))+"   ")
