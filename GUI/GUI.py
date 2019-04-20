@@ -6,6 +6,8 @@ def cursesTest(stdscr):
 
     curses.init_pair(1,curses.COLOR_GREEN,curses.COLOR_BLACK)
     curses.init_pair(2,curses.COLOR_RED,curses.COLOR_BLACK)
+    curses.init_pair(3,curses.COLOR_MAGENTA,curses.COLOR_BLACK)
+    curses.init_pair(4,curses.COLOR_CYAN,curses.COLOR_BLACK)
 
     stdscr.addstr(0,0,"GPS: ",curses.A_BOLD)
     stdscr.addstr(1,0,"ADC: ",curses.A_BOLD)
@@ -40,6 +42,9 @@ def cursesTest(stdscr):
     stdscr.addstr(7,60,"Gyro x: ")
     stdscr.addstr(8,60,"Gyro y: ")
     stdscr.addstr(9,60,"Gyro z: ")
+
+    stdscr.addstr(11,60,"SSS SUX",curses.color_pair(3) | curses.A_BOLD)
+    stdscr.addstr(12,60,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
 
     while True:
         GPS_bool = bool(random.getrandbits(1))
