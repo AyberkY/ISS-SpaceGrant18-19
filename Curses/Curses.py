@@ -12,7 +12,7 @@ def cursesTest(stdscr):
         try:
             stdscr.refresh()
             stdscr.addstr(0,10,str(i),curses.color_pair(1))
-            time.sleep(0.2)
+            time.sleep(3)
 
             if i == 10:
                 stdscr.addstr(2,2,"halfway there!",curses.color_pair(1))
