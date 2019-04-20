@@ -3,7 +3,7 @@ import time
 
 def cursesTest(stdscr):
 
-    curses.init_pair(1,curses.COLOR_RED,curses.COLOR_GREEN)
+    curses.init_pair(1,curses.COLOR_BLACK,curses.COLOR_CYAN)
     #second color is background color
 
     stdscr.addstr(0,0,"Count: ",curses.A_BOLD)
@@ -13,10 +13,6 @@ def cursesTest(stdscr):
             stdscr.refresh()
             stdscr.addstr(0,10,str(i),curses.color_pair(1))
             time.sleep(2)
-
-            if i == 10:
-                time.sleep(5)
-                stdscr.addstr(2,2,"halfway there!",curses.color_pair(1))
 
         except:
             print("there was an error")
