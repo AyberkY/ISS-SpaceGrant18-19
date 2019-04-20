@@ -36,7 +36,19 @@ def cursesTest(stdscr):
         try:
             stdscr.refresh()
             stdscr.addstr(0,15,str(random.randint(0,100)))
-            stdscr.addstr(1,15,"42")
+            stdscr.addstr(1,15,str(random.randint(0,100)))
+            stdscr.addstr(2,15,str(random.randint(0,100)))
+            stdscr.addstr(3,15,str(random.randint(0,100)))
+
+            stdscr.addstr(5,15,str(random.randint(0,100)))
+            stdscr.addstr(6,15,str(random.randint(0,100)))
+            stdscr.addstr(7,15,str(random.randint(0,100)))
+            stdscr.addstr(8,15,str(random.randint(0,100)))
+
+            stdscr.addstr(10,15,str(random.randint(0,100)))
+            stdscr.addstr(11,15,str(random.randint(0,100)))
+            stdscr.addstr(12,15,str(random.randint(0,100)))
+
             time.sleep(0.5)
 
         except:
