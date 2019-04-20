@@ -6,23 +6,18 @@ def cursesTest(stdscr):
     curses.init_pair(1,curses.COLOR_BLACK,curses.COLOR_CYAN)
     #second color is background color
 
-    stdscr.addstr(0,0,"Count: ",curses.A_BOLD)
+    stdscr.addstr(0,0,"Hour: ",curses.A_BOLD)
+    stdscr.addstr(1,0,"Min: ")
 
-    for i in range(20):
+    while True:
         try:
             stdscr.refresh()
-            stdscr.addstr(0,10,str(i),curses.color_pair(1))
-            time.sleep(2)
+            stdscr.addstr(0,10,"13",)
+            stdscr.addstr(1,10,"42")
+            time.sleep(0.5)
 
         except:
             print("there was an error")
             break
 
-    '''for i in range(20):
-        stdscr.refresh()
-        item = 20 - i
-        stdscr.addstr(0,10,str(item),curses.A_BLINK)
-        time.sleep(0.2)
-    '''
-
-curses.wrapper(cursesTest)
+wrapper(cursesTest)
