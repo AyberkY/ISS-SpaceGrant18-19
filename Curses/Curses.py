@@ -20,4 +20,4 @@ def cursesTest(stdscr):
             print("there was an error")
             break
 
-wrapper(cursesTest)
+curses.wrapper(cursesTest)
