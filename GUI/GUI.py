@@ -42,11 +42,20 @@ def cursesTest(stdscr):
     stdscr.addstr(9,60,"Gyro z: ")
 
     while True:
+        GPS_bool = bool(random.getrandbits(1))
+        ADC_bool = bool(random.getrandbits(1))
+        Baro_bool = bool(random.getrandbits(1))
+        IMU_bool = bool(random.getrandbits(1))
+        Telem_bool = bool(random.getrandbits(1))
+        Cam_bool = bool(random.getrandbits(1))
+
         stdscr.refresh()
         curses.start_color()
 
-        stdscr.addstr(0,11,"CONNECTED",curses.color_pair(1) | curses.A_BOLD)
-        stdscr.addstr(1,11,"NOT CONNECTED",curses.color_pair(2) | curses.A_BOLD)
+        if GPS_bool == True:
+            stdscr.addstr(0,11,"CONNECTED     ",curses.color_pair(1) | curses.A_BOLD)
+        else:
+            stdscr.addstr(0,11,"NOT CONNECTED     ",curses.color_pair(2) | curses.A_BOLD)
 
         stdscr.addstr(0,45,str(random.randint(0,100))+"   ")
         stdscr.addstr(1,45,str(random.randint(0,100))+"   ")
