@@ -7,13 +7,20 @@ def cursesTest(stdscr):
     #second color is background color
 
     stdscr.addstr(0,0,"Hour: ",curses.A_BOLD)
-    stdscr.addstr(1,0,"Min: ")
+    stdscr.addstr(1,0,"Minutes: ",curses.A_BOLD)
+    stdscr.addstr(2,0,"Seconds: ",curses.A_BOLD)
+    stdscr.addstr(3,0,"Millisec: ",curses.A_BOLD)
+
+    stdscr.addstr(5,0,"Latitude: ",curses.A_BOLD)
+    stdscr.addstr(6,0,"Longitude: ",curses.A_BOLD)
+    stdscr.addstr(7,0,"Altitude: ",curses.A_BOLD)
+    stdscr.addstr(8,0,"Satellites: ",curses.A_BOLD)
 
     while True:
         try:
             stdscr.refresh()
-            stdscr.addstr(0,10,"13",)
-            stdscr.addstr(1,10,"42")
+            stdscr.addstr(0,15,"13",)
+            stdscr.addstr(1,15,"42")
             time.sleep(0.5)
 
         except:
