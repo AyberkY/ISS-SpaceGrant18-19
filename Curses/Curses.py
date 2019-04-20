@@ -34,7 +34,7 @@ def cursesTest(stdscr):
     while True:
         try:
             stdscr.refresh()
-            stdscr.addstr(0,15,"13",)
+            stdscr.addstr(0,15,str(random.randint(0,100)))
             stdscr.addstr(1,15,"42")
             time.sleep(0.5)
 
