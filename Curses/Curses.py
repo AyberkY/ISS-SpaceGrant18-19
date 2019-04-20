@@ -12,7 +12,7 @@ def cursesTest(stdscr):
         try:
             stdscr.refresh()
             stdscr.addstr(0,10,str(i),curses.color_pair(1))
-            time.sleep(0.1)
+            time.sleep(0.2)
 
             if i == 10:
                 stdscr.addstr(2,2,"halfway there!",curses.color_pair(1))
@@ -21,10 +21,10 @@ def cursesTest(stdscr):
             print("there was an error")
             break
 
-    for i in range(100):
+    for i in range(20):
         stdscr.refresh()
-        item = 100 - i
+        item = 20 - i
         stdscr.addstr(0,10,str(item),curses.A_BLINK)
-        time.sleep(0.1)
+        time.sleep(0.2)
 
 curses.wrapper(cursesTest)
