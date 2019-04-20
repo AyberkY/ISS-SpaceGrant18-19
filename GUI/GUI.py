@@ -35,30 +35,30 @@ def cursesTest(stdscr):
     while True:
         try:
             stdscr.refresh()
-            stdscr.addstr(0,15,str(random.randint(0,100))+"   ")
-            stdscr.addstr(1,15,str(random.randint(0,100))+"   ")
-            stdscr.addstr(2,15,str(random.randint(0,100))+"   ")
-            stdscr.addstr(3,15,str(random.randint(0,100))+"   ")
-
-            stdscr.addstr(5,15,str(random.randint(0,100))+"   ")
-            stdscr.addstr(6,15,str(random.randint(0,100))+"   ")
-            stdscr.addstr(7,15,str(random.randint(0,100))+"   ")
-            stdscr.addstr(8,15,str(random.randint(0,100))+"   ")
-
-            stdscr.addstr(10,15,str(random.randint(0,100))+"   ")
-            stdscr.addstr(11,15,str(random.randint(0,100))+"   ")
-            stdscr.addstr(12,15,str(random.randint(0,100))+"   ")
-
             stdscr.addstr(0,45,str(random.randint(0,100))+"   ")
             stdscr.addstr(1,45,str(random.randint(0,100))+"   ")
             stdscr.addstr(2,45,str(random.randint(0,100))+"   ")
+            stdscr.addstr(3,45,str(random.randint(0,100))+"   ")
 
-            stdscr.addstr(4,45,str(random.randint(0,100))+"   ")
             stdscr.addstr(5,45,str(random.randint(0,100))+"   ")
             stdscr.addstr(6,45,str(random.randint(0,100))+"   ")
             stdscr.addstr(7,45,str(random.randint(0,100))+"   ")
             stdscr.addstr(8,45,str(random.randint(0,100))+"   ")
-            stdscr.addstr(9,45,str(random.randint(0,100))+"   ")
+
+            stdscr.addstr(10,45,str(random.randint(0,100))+"   ")
+            stdscr.addstr(11,45,str(random.randint(0,100))+"   ")
+            stdscr.addstr(12,45,str(random.randint(0,100))+"   ")
+
+            stdscr.addstr(0,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(1,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(2,75,str(random.randint(0,100))+"   ")
+
+            stdscr.addstr(4,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(5,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(6,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(7,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(8,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(9,75,str(random.randint(0,100))+"   ")
 
             time.sleep(0.5)
 
