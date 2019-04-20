@@ -9,6 +9,7 @@ def cursesTest(stdscr):
     curses.init_pair(3,curses.COLOR_MAGENTA,curses.COLOR_BLACK)
     curses.init_pair(4,curses.COLOR_CYAN,curses.COLOR_BLACK)
 
+    #Column 1: connectivity
     stdscr.addstr(0,0,"GPS: ",curses.A_BOLD)
     stdscr.addstr(1,0,"ADC: ",curses.A_BOLD)
     stdscr.addstr(2,0,"Barometer: ",curses.A_BOLD)
@@ -17,6 +18,7 @@ def cursesTest(stdscr):
     stdscr.addstr(5,0,"Camera: ",curses.A_BOLD)
 
 
+    #Column 2
     stdscr.addstr(0,30,"Hour: ")
     stdscr.addstr(1,30,"Minutes: ")
     stdscr.addstr(2,30,"Seconds: ")
@@ -32,6 +34,7 @@ def cursesTest(stdscr):
     stdscr.addstr(12,30,"read_ADC(2): ")
 
 
+    #Column 3
     stdscr.addstr(0,60,"baro_pressure: ")
     stdscr.addstr(1,60,"baro_altitude: ")
     stdscr.addstr(2,60,"Temp (C): ")
@@ -47,6 +50,7 @@ def cursesTest(stdscr):
     stdscr.addstr(12,60,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
 
     while True:
+        #Fake connectivity data; replace ifs with try/except when real data is available
         GPS_bool = bool(random.getrandbits(1))
         ADC_bool = bool(random.getrandbits(1))
         Baro_bool = bool(random.getrandbits(1))
@@ -57,7 +61,6 @@ def cursesTest(stdscr):
         stdscr.refresh()
         curses.start_color()
 
-        #replace ifs with try/except when real data comes in
         if GPS_bool == True:
             stdscr.addstr(0,11,"CONNECTED     ",curses.color_pair(1) | curses.A_BOLD)
         else:
