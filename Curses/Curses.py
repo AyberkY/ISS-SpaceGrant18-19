@@ -20,9 +20,16 @@ def cursesTest(stdscr):
     stdscr.addstr(11,0,"read_ADC(1): ",curses.A_BOLD)
     stdscr.addstr(12,0,"read_ADC(2): ",curses.A_BOLD)
 
-    stdscr.addstr(0,25,"baro_pressure: ",curses.A_BOLD)
-    stdscr.addstr(1,25,"baro_altitude: ",curses.A_BOLD)
-    stdscr.addstr(2,25,"Temp (C): ",curses.A_BOLD)
+    stdscr.addstr(0,30,"baro_pressure: ",curses.A_BOLD)
+    stdscr.addstr(1,30,"baro_altitude: ",curses.A_BOLD)
+    stdscr.addstr(2,30,"Temp (C): ",curses.A_BOLD)
+
+    stdscr.addstr(4,30,"Accel x: ",curses.A_BOLD)
+    stdscr.addstr(5,30,"Accel y: ",curses.A_BOLD)
+    stdscr.addstr(6,30,"Accel z: ",curses.A_BOLD)
+    stdscr.addstr(7,30,"Gyro x: ",curses.A_BOLD)
+    stdscr.addstr(8,30,"Gyro y: ",curses.A_BOLD)
+    stdscr.addstr(9,30,"Gyro z: ",curses.A_BOLD)
 
     while True:
         try:
