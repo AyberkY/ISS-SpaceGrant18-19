@@ -4,7 +4,8 @@ import random
 
 def cursesTest(stdscr):
 
-
+    curses.init_pair(1,curses.COLOR_GREEN,-1)
+    curses.init_pair(2,curses.COLOR_RED,-1)
 
     stdscr.addstr(0,0,"GPS: ",curses.A_BOLD)
     stdscr.addstr(1,0,"ADC: ",curses.A_BOLD)
@@ -44,7 +45,8 @@ def cursesTest(stdscr):
         stdscr.refresh()
         curses.start_color()
 
-        stdscr.addstr(0,11,"GO",curses.A_GREEN,curses.A_BOLD)
+        stdscr.addstr(0,11,"CONNECTED",curses.color_pair(1))
+        stdscr.addstr(1,11,"NOT CONNECTED",curses.color(pair(2)))
 
         stdscr.addstr(0,45,str(random.randint(0,100))+"   ")
         stdscr.addstr(1,45,str(random.randint(0,100))+"   ")
