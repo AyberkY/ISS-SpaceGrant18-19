@@ -35,10 +35,10 @@ def cursesTest(stdscr):
     while True:
         try:
             stdscr.refresh()
-            stdscr.addstr(0,15,str(random.randint(0,10)))
-            stdscr.addstr(1,15,str(random.randint(0,10)))
-            stdscr.addstr(2,15,str(random.randint(0,10)))
-            stdscr.addstr(3,15,str(random.randint(0,10)))
+            stdscr.addstr(0,15,str(random.randint(0,100))+" ")
+            stdscr.addstr(1,15,str(random.randint(0,100))+" ")
+            stdscr.addstr(2,15,str(random.randint(0,100))+" ")
+            stdscr.addstr(3,15,str(random.randint(0,100))+" ")
 
             stdscr.addstr(5,15,str(random.randint(0,10)))
             stdscr.addstr(6,15,str(random.randint(0,10)))
