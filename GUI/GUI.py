@@ -59,9 +59,9 @@ def cursesTest(stdscr):
             stdscr.addstr(0,11,"NOT CONNECTED     ",curses.color_pair(2) | curses.A_BOLD)
 
         if ADC_bool == True:
-            stdscr.addscr(1,11,"CONNECTED     ",curses.color_pair(1) | curses.A_BOLD)
+            stdscr.addstr(1,11,"CONNECTED     ",curses.color_pair(1) | curses.A_BOLD)
         else:
-            stdscr.addscr(1,11,"NOT CONNECTED     ",curses.color_pair(2) | curses.A_BOLD)
+            stdscr.addstr(1,11,"NOT CONNECTED     ",curses.color_pair(2) | curses.A_BOLD)
 
         if Baro_bool == True:
             stdscr.addstr(2,11,"CONNECTED     ",curses.color_pair(1) | curses.A_BOLD)
