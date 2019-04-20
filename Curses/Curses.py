@@ -1,5 +1,6 @@
 import curses
 import time
+import random
 
 def cursesTest(stdscr):
 
