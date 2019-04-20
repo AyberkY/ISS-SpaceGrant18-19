@@ -15,7 +15,7 @@ def cursesTest(stdscr):
             time.sleep(0.1)
 
             if i == 10:
-                stdscr.addstr(2,2,"halfway there!",curses.A_BLINK,curses.color_pair(1))
+                stdscr.addstr(2,2,"halfway there!",curses.color_pair(1))
                 time.sleep(5)
         except:
             print("there was an error")
