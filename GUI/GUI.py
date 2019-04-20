@@ -44,7 +44,7 @@ def cursesTest(stdscr):
         stdscr.refresh()
         curses.start_color()
 
-        stdscr.addstr(0,11,"GO",curses.A_BOLD)
+        stdscr.addstr(0,11,"GO",curses.A_GREEN,curses.A_BOLD)
 
         stdscr.addstr(0,45,str(random.randint(0,100))+"   ")
         stdscr.addstr(1,45,str(random.randint(0,100))+"   ")
