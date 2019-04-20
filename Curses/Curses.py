@@ -6,13 +6,14 @@ def cursesTest(stdscr):
     curses.init_pair(1,curses.COLOR_RED,curses.COLOR_GREEN)
     #second color is background color
 
+    stdscr.refresh()
     stdscr.addstr(0,0,"Count: ",curses.A_BOLD)
 
     for i in range(20):
         try:
             stdscr.refresh()
             stdscr.addstr(0,10,str(i),curses.color_pair(1))
-            time.sleep(3)
+            time.sleep(2)
 
             if i == 10:
                 stdscr.addstr(2,2,"halfway there!",curses.color_pair(1))
