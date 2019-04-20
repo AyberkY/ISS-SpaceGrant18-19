@@ -4,8 +4,7 @@ import random
 
 def cursesTest(stdscr):
 
-    curses.init_pair(1,curses.COLOR_BLACK,curses.COLOR_CYAN)
-    #second color is background color
+    curses.init_pair(1,curses.COLOR_GREEN)
 
     stdscr.addstr(0,0,"GPS: ",curses.A_BOLD)
     stdscr.addstr(1,0,"ADC: ",curses.A_BOLD)
@@ -44,7 +43,7 @@ def cursesTest(stdscr):
     while True:
         stdscr.refresh()
 
-        stdscr.addstr(0,11,"GO",curses.A_BOLD)
+        stdscr.addstr(0,11,"GO",curses.color_pair(1),curses.A_BOLD)
 
         stdscr.addstr(0,45,str(random.randint(0,100))+"   ")
         stdscr.addstr(1,45,str(random.randint(0,100))+"   ")
