@@ -42,7 +42,7 @@ def cursesTest(stdscr):
 
     while True:
         stdscr.refresh()
-        stdscr.start_color()
+        curses.start_color()
 
         stdscr.addstr(0,11,"GO",curses.A_BOLD)
 
