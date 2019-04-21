@@ -117,6 +117,6 @@ def cursesTest(stdscr):
         stdscr.addstr(8,75,str(random.randint(0,100))+"   ")
         stdscr.addstr(9,75,str(random.randint(0,100))+"   ")
 
-        time.sleep(0.5)
+        time.sleep(0.25)
 
 curses.wrapper(cursesTest)
