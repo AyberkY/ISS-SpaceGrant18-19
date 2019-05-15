@@ -103,7 +103,7 @@ class spiflash(object):
     def print_page(self, page):
         s = ""
         for row in range(16):
-            for col in range(15):
+            for col in range(16):
                 s += str(page[row * 16 + col])
             s += "\n"
         print(s)
@@ -118,7 +118,7 @@ chip.print_page(page)
 
 page = []
 for i in range(256):
-    page.append(1)
+    page.append(3)
 
 chip.write_page(0x00, 0x00, page)
 
