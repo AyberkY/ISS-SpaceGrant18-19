@@ -107,7 +107,7 @@ class spiflash(object):
             for col in range(15):
                 s += hex(page[row * 16 + col])
             s += "\n"
-        print s
+        print(s)
 
 
 #TESTS -------------------------------------------------------------------
