@@ -99,7 +99,7 @@ class spiflash(object):
 
     #helpers -------------------------------------------------------------------------------
     def print_status(self,status):
-        print "status " + bin(status[1])[2:].zfill(8) + " " + bin(status[0])[2:].zfill(8)
+        print("status " + bin(status[1])[2:].zfill(8) + " " + bin(status[0])[2:].zfill(8))
 
     def print_page(self, page):
         s = ""
