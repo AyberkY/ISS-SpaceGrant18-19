@@ -14,7 +14,7 @@ import time
 bus = smbus.SMBus(1)
 
 # I2C address of the device
-H3LIS331DL_DEFAULT_ADDRESS			= 0x18
+H3LIS331DL_DEFAULT_ADDRESS			= 0x60
 
 # H3LIS331DL Register Map
 H3LIS331DL_REG_WHOAMI					= 0x0F # Who Am I Register
