@@ -7,7 +7,7 @@ import time
 import math
 
 ## MPU9250 Default I2C slave address
-SLAVE_ADDRESS        = 0x68
+SLAVE_ADDRESS        = 0x69
 ## Magnetometer: AK8963 I2C slave address
 AK8963_SLAVE_ADDRESS = 0x0C
 ## Device id
