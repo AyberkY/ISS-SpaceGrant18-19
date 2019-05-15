@@ -98,15 +98,15 @@ class spiflash(object):
 
     #helpers -------------------------------------------------------------------------------
     def print_status(self,status):
-        print "status %s %s" % (bin(status[1])[2:].zfill(8), bin(status[0])[2:].zfill(8))
+        print("status " + bin(status[1])[2:].zfill(8) + " " + bin(status[0])[2:].zfill(8))
 
     def print_page(self, page):
         s = ""
         for row in range(16):
             for col in range(15):
-                s += "%02X " % page[row * 16 + col]
+                s += hex(page[row * 16 + col])
             s += "\n"
-        print s
+        print(s)
 
 
 #TESTS -------------------------------------------------------------------
