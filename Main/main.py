@@ -12,7 +12,7 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/LED')
 
 import ADS1x15, mpl3115a2, GPS, mpu9250, RFM9X, LED
 
-filename = str(datetime.datetime.now())
+filename = str(datetime.datetime.now()) + ".txt"
 filehandle = open(filename, 'w+')
 
 
