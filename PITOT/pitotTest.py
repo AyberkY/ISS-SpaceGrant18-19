@@ -2,6 +2,8 @@ import pitotSensor, time
 
 pitot1 = pitotSensor.PITOT()
 
+pitot1.calibrate()
+
 print("OFFSET: " + str(pitot1.offset))
 
 time.sleep(1)
