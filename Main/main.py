@@ -160,9 +160,7 @@ filehandle.write("hour,minute,second,microsecond,latitude,longitude,altitude,sat
 filehandle.close()
 try:
     while True:
-        filehandle = open(filename,'w')
-
-        sys.exit()
+        filehandle = open(filename,'a')
 
         dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
@@ -233,9 +231,8 @@ try:
             dataArray[19] = 0
 
     ###############__________WRITE TO SD__________###############
-        print("Writing to SD")
         filehandle.write(str(dataArray) + '\n')
-        filehandle.close()
+        filehandle.flush()
     ###############_________TELEMETRY_________###############
 
 except KeyboardInterrupt:
