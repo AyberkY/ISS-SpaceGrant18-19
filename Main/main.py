@@ -238,3 +238,4 @@ try:
 
 except KeyboardInterrupt:
     filehandle.close()
+    sys.exit()
