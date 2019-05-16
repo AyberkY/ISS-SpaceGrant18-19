@@ -232,6 +232,7 @@ try:
 
         ###############__________WRITE TO SD__________###############
             filehandle.write(str(dataArray) + '\n')
+            filehandle.flush()
             # filehandle.close()
         ###############_________TELEMETRY_________###############
 
