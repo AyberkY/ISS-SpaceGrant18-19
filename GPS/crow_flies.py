@@ -12,7 +12,7 @@ ser = serial.Serial(port, baudrate = 9600, timeout = 0.5)    #creates a serial o
 def searchDATA(data):
     #searches for $GPGGA in the GPS information
     dataOUT = ['0000000000000','0000000000000','0000000000000','0000000000000']
-    if data.find('GGA') > 0:
+    if data.find(b'GGA') > 0:
         #library searches the data
         dataGPS = pynmea2.parse(data)
         #list of data outputted from the GPS
