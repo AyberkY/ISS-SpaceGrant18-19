@@ -4,7 +4,7 @@ pitot1 = pitotSensor.PITOT()
 
 #pitot1.calibrate()
 
-print("OFFSET: " + pitot1.offsets)
+print("OFFSET: " + pitot1.offset)
 
 time.sleep(1)
 
