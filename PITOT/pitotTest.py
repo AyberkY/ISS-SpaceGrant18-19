@@ -2,7 +2,7 @@ import pitotSensor, time
 
 pitot1 = pitotSensor.PITOT()
 
-pitot1.calibrate()
+#pitot1.calibrate()
 
 print("OFFSET: " + pitot1.offsets)
 
