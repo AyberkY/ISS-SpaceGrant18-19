@@ -13,7 +13,7 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/LED')
 import ADS1x15, mpl3115a2, GPS, mpu9250, RFM9X, LED
 
 filename = str(datetime.datetime.now()) + ".txt"
-filehandle = open(filename, 'w+')
+filehandle = open(filename, 'w')
 
 
 OLED = LED.LED('orange')
@@ -160,7 +160,7 @@ filehandle.write("hour,minute,second,microsecond,latitude,longitude,altitude,sat
 filehandle.close()
 try:
     while True:
-        filehandle = open(filename,'w+')
+        filehandle = open(filename,'w')
 
         dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
