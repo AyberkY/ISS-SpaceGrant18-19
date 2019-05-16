@@ -113,7 +113,7 @@ class spiflash(object):
 
 chip = spiflash(bus = 0, cs = 0)
 
-page = chip.read_page(0x00, 0x01, 0x05)
+page = chip.read_page(0x00, 0x01, 0x01)
 chip.print_page(page)
 chip.erase_sector(0x00, 0x01)
 
