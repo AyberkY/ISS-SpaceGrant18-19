@@ -104,7 +104,7 @@ class spiflash(object):
         s = ""
         for row in range(16):
             for col in range(16):
-                s += hex(page[row * 16 + col]) + " "
+                s += hex(page[row * 16 + col])[2:] + " "
             s += "\n"
         print(s)
 
