@@ -5,7 +5,6 @@ RDSR2 = 0x35
 WRSR  = 0x01
 READ  = 0x03
 WRITE = 0x02
-RUID  = 0x4B
 SECTOR_ERASE = 0x20
 CHIP_ERASE = 0xC7
 
@@ -36,8 +35,8 @@ class spiflash(object):
         statreg2 = self.spi.xfer2([RDSR2,RDSR2])[1]
         return statreg, statreg2
 
-    def read_page(self, adr1, adr2):
-        xfer = [READ, adr1, adr2, 0] + [255 for _ in range(256)] # command + 256 dummies
+    def read_page(self, adr1, adr2, adr3):
+        xfer = [READ, adr1, adr2, adr3] + [255 for _ in range(256)] # command + 256 dummies
         return self.spi.xfer2(xfer)[4:] #skip 4 first bytes (dummies)
 
     #writes ----------------------------------------------------------------------------------
@@ -57,18 +56,18 @@ class spiflash(object):
 
         self.wait_until_not_busy()
 
-    def write_page(self, addr1, addr2, page):
+    def write_page(self, addr1, addr2, addr3, page):
         self.write_enable()
 
-        xfer = [WRITE, addr1, addr2, 0] + page[:256]
+        xfer = [WRITE, addr1, addr2, addr3] + page[:256]
         self.spi.xfer2(xfer)
         sleep_ms(10)
 
         self.wait_until_not_busy()
 
     def write_and_verify_page(self, addr1, addr2, page):
-        self.write_page(addr1, addr2, page)
-        return self.read_page(addr1, addr2)[:256] == page[:256]
+        self.write_page(addr1, addr2, addr3, page)
+        return self.read_page(addr1, addr2, addr3)[:256] == page[:256]
 
     #erases ----------------------------------------------------------------------------------
     def erase_sector(self,addr1, addr2):
@@ -86,8 +85,6 @@ class spiflash(object):
         self.spi.xfer2([CHIP_ERASE])
         sleep_ms(10)
 
-        self.write_enable()
-
         self.wait_until_not_busy()
 
     #misc ----------------------------------------------------------------------------------
@@ -101,12 +98,36 @@ class spiflash(object):
 
     #helpers -------------------------------------------------------------------------------
     def print_status(self,status):
-        print "status %s %s" % (bin(status[1])[2:].zfill(8), bin(status[0])[2:].zfill(8))
+        print("status " + bin(status[1])[2:].zfill(8) + " " + bin(status[0])[2:].zfill(8))
 
     def print_page(self, page):
         s = ""
         for row in range(16):
-            for col in range(15):
-                s += "%02X " % page[row * 16 + col]
+            for col in range(16):
+                s += str(page[row * 16 + col])
             s += "\n"
-        print s
+        print(s)
+
+
+#Initializaiton -------------------------------------------------------------------------------
+
+#SPI
+chip = spiflash(bus = 0, cs = 0)
+
+#Block ranges for each type of data
+rangeTime = 0
+rangeAltB = 32
+rangeAccl = 64
+rangePito = 96
+rangeSect = 0 #Sector range
+rangePage = 0 #Page range
+rangeLine = 0
+
+#Pages of data
+dataTime = []
+dataAltB = []
+dataAccl = []
+dataPito = []
+
+def writeLine(dataArr):
+    dataTime += [hex(dataArr[1]), hex(dataArr[2]), hex(dataArr[3] // 1000), hex(dataArr[3] // 10000 - dataArr[3] // 100)]

@@ -35,8 +35,8 @@ class spiflash(object):
         statreg2 = self.spi.xfer2([RDSR2,RDSR2])[1]
         return statreg, statreg2
 
-    def read_page(self, adr1, adr2):
-        xfer = [READ, adr1, adr2, 0] + [255 for _ in range(256)] # command + 256 dummies
+    def read_page(self, adr1, adr2, adr3):
+        xfer = [READ, adr1, adr2, adr3] + [255 for _ in range(256)] # command + 256 dummies
         return self.spi.xfer2(xfer)[4:] #skip 4 first bytes (dummies)
 
     #writes ----------------------------------------------------------------------------------
@@ -56,18 +56,18 @@ class spiflash(object):
 
         self.wait_until_not_busy()
 
-    def write_page(self, addr1, addr2, page):
+    def write_page(self, addr1, addr2, addr3, page):
         self.write_enable()
 
-        xfer = [WRITE, addr1, addr2, 0] + page[:256]
+        xfer = [WRITE, addr1, addr2, addr3] + page[:256]
         self.spi.xfer2(xfer)
         sleep_ms(10)
 
         self.wait_until_not_busy()
 
-    def write_and_verify_page(self, addr1, addr2, page):
-        self.write_page(addr1, addr2, page)
-        return self.read_page(addr1, addr2)[:256] == page[:256]
+    def write_and_verify_page(self, addr1, addr2, addr3 page):
+        self.write_page(addr1, addr2, addr3, page)
+        return self.read_page(addr1, addr2, addr3)[:256] == page[:256]
 
     #erases ----------------------------------------------------------------------------------
     def erase_sector(self,addr1, addr2):
@@ -113,7 +113,7 @@ class spiflash(object):
 
 chip = spiflash(bus = 0, cs = 0)
 
-page = chip.read_page(0x00,0x00)
+page = chip.read_page(0x00, 0x00, 0x01)
 chip.print_page(page)
 chip.erase_sector(0x00, 0x00)
 
@@ -121,7 +121,7 @@ page = []
 for i in range(256):
     page.append(3)
 
-chip.write_page(0x00, 0x00, page)
+chip.write_page(0x00, 0x00, 0x01, page)
 
-page = chip.read_page(0x00,0x00)
+page = chip.read_page(0x00,0x00, 0x01)
 chip.print_page(page)
