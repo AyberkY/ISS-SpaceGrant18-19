@@ -122,6 +122,7 @@ for i in range(256):
     page.append(3)
 
 print(len(page))
+print(page)
 
 chip.write_page(0x00, 0x01, 0x01, page)
 
