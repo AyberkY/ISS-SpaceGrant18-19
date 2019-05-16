@@ -12,7 +12,7 @@ class PITOT:
             data = bus.read_i2c_block_data(self.address, 0, 2)
             pressure_raw = data[0] << 8
             pressure_raw += data[1]
-            sum += pressure_raw
+            sum += pressure_raw - 8192
             time.sleep(0.01)
 
         self.offset = sum / 100
