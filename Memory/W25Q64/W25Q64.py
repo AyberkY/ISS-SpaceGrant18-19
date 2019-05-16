@@ -162,11 +162,10 @@ def writeData(dataArr):
             rangeAccl += 1
             rangePito += 1
 
-#Writing data on SD from SPI
+#Reading the entire chip
 def readSPI():
     data = []
     for i in range(128):
         for j in range(256):
-            data += chip.read_page(i, j)
-
+            data.append(chip.read_page(i, j))
     return data
