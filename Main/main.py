@@ -160,81 +160,81 @@ filehandle.write("hour,minute,second,microsecond,latitude,longitude,altitude,sat
 filehandle.close()
 try:
     while True:
-        with open(filename,'w+') as filehandle:
+        filehandle = open(filename,'w+')
 
-            dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
-            dataArray[0] = datetime.datetime.now().hour
-            dataArray[1] = datetime.datetime.now().minute
-            dataArray[2] = datetime.datetime.now().second
-            dataArray[3] = datetime.datetime.now().microsecond
+        dataArray[0] = datetime.datetime.now().hour
+        dataArray[1] = datetime.datetime.now().minute
+        dataArray[2] = datetime.datetime.now().second
+        dataArray[3] = datetime.datetime.now().microsecond
 
-        ###############__________GPS1__________###############
+    ###############__________GPS1__________###############
 
-            try:
-                gpsData = GPS1.readLocation()
+        try:
+            gpsData = GPS1.readLocation()
 
-                dataArray[4] = gpsData['lat']
-                dataArray[5] = gpsData['lon']
-                dataArray[6] = gpsData['altitude']
-                dataArray[7] = gpsData['sats']
+            dataArray[4] = gpsData['lat']
+            dataArray[5] = gpsData['lon']
+            dataArray[6] = gpsData['altitude']
+            dataArray[7] = gpsData['sats']
 
-            except:
-                dataArray[4] = 0
-                dataArray[5] = 0
-                dataArray[6] = 0
-                dataArray[7] = 0
+        except:
+            dataArray[4] = 0
+            dataArray[5] = 0
+            dataArray[6] = 0
+            dataArray[7] = 0
 
-        ###############__________ADC1__________###############
-            try:
-                dataArray[8] = ADC1.read_adc(0)
-                dataArray[9] = ADC1.read_adc(1)
-                dataArray[10] = ADC1.read_adc(2)
+    ###############__________ADC1__________###############
+        try:
+            dataArray[8] = ADC1.read_adc(0)
+            dataArray[9] = ADC1.read_adc(1)
+            dataArray[10] = ADC1.read_adc(2)
 
-            except:
-                dataArray[8] = 0
-                dataArray[9] = 0
-                dataArray[10] = 0
+        except:
+            dataArray[8] = 0
+            dataArray[9] = 0
+            dataArray[10] = 0
 
-        ###############__________BARO1__________###############
-            try:
-                baro_pressure = BARO1.getPressure()
-                baro_altitude, cTemp = BARO1.getData()
+    ###############__________BARO1__________###############
+        try:
+            baro_pressure = BARO1.getPressure()
+            baro_altitude, cTemp = BARO1.getData()
 
-                dataArray[11] = baro_pressure
-                dataArray[12] = baro_altitude
-                dataArray[13] = cTemp
+            dataArray[11] = baro_pressure
+            dataArray[12] = baro_altitude
+            dataArray[13] = cTemp
 
-            except:
-                dataArray[11] = 0
-                dataArray[12] = 0
-                dataArray[13] = 0
+        except:
+            dataArray[11] = 0
+            dataArray[12] = 0
+            dataArray[13] = 0
 
-        ###############__________IMU1__________###############
-            try:
-                accelData = IMU1.readAccel()
-                gyroData = IMU1.readGyro()
+    ###############__________IMU1__________###############
+        try:
+            accelData = IMU1.readAccel()
+            gyroData = IMU1.readGyro()
 
-                dataArray[14] = accelData['x']
-                dataArray[15] = accelData['y']
-                dataArray[16] = accelData['z']
-                dataArray[17] = gyroData['x']
-                dataArray[18] = gyroData['y']
-                dataArray[19] = gyroData['z']
+            dataArray[14] = accelData['x']
+            dataArray[15] = accelData['y']
+            dataArray[16] = accelData['z']
+            dataArray[17] = gyroData['x']
+            dataArray[18] = gyroData['y']
+            dataArray[19] = gyroData['z']
 
-            except:
-                dataArray[14] = 0
-                dataArray[15] = 0
-                dataArray[16] = 0
-                dataArray[17] = 0
-                dataArray[18] = 0
-                dataArray[19] = 0
+        except:
+            dataArray[14] = 0
+            dataArray[15] = 0
+            dataArray[16] = 0
+            dataArray[17] = 0
+            dataArray[18] = 0
+            dataArray[19] = 0
 
-        ###############__________WRITE TO SD__________###############
-            filehandle.write(str(dataArray) + '\n')
-            filehandle.flush()
-            # filehandle.close()
-        ###############_________TELEMETRY_________###############
+    ###############__________WRITE TO SD__________###############
+        print("Writing to SD")
+        filehandle.write(str(dataArray) + '\n')
+        filehandle.close()
+    ###############_________TELEMETRY_________###############
 
 except KeyboardInterrupt:
     filehandle.close()
