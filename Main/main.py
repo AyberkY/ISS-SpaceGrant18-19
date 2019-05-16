@@ -225,14 +225,14 @@ try:
             dataArray[12] = 0
             dataArray[13] = 0
 
-        ###############__________PITOT1__________###############
-            try:
-                pitot_pressure = PITOT1.getPressure()
+    ###############__________PITOT1__________###############
+        try:
+            pitot_pressure = PITOT1.getPressure()
 
-                dataArray[14] = pitot_pressure
+            dataArray[14] = pitot_pressure
 
-            except:
-                dataArray[14] = 0
+        except:
+            dataArray[14] = 0
 
     ###############__________IMU1__________###############
         try:
