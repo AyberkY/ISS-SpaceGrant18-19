@@ -7,7 +7,7 @@ class PITOT:
         self.offset = 0
 
     def getPressure(self):
-        data = self.bus.read_i2c_block_data(self.slaveAddress, 0, 2)
+        data = self.bus.read_i2c_block_data(0x28, 0, 2)
         pressure_raw = data[0] << 8
         pressure_raw += data[1]
 
