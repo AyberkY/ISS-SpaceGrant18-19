@@ -35,7 +35,7 @@ class BUZZER:
         GPIO.setup(self.pinNumber, GPIO.OUT)
 
     def setHigh(self):
-        GPRO.output(self.pinNumber, GPIO.HIGH)
+        GPIO.output(self.pinNumber, GPIO.HIGH)
 
     def setLow(self):
         GPIO.output(self.pinNumber, GPIO.LOW)
