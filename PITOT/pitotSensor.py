@@ -14,11 +14,8 @@ class PITOT:
 
         return pressure_raw - self.offset
 
-    def calibrate(self):
+    def calPressure(self):
         sum = 0
         for i in range(100):
-            data = bus.read_i2c_block_data(0x28, 0, 2)
-            pressure_raw = data[0] << 8
-            pressure_raw += data[1]
-            sum += pressure_raw
+            sum += self.getPressure()
         self.offset = sum / 100
