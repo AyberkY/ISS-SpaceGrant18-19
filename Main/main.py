@@ -135,7 +135,7 @@ filehandle.write("\n~~~~~~~~~~~CALIBRATING PITOT SENSOR~~~~~~~~~~~\n")
 
 PITOT1.calPressure()
 filehandle.write("\tPITOT OFFSET:" + str(PITOT1.offset))
-print("\tPITOT OFFSET:" + str(PITOT1.offset) + "\n")
+print("PITOT OFFSET:" + str(PITOT1.offset) + "\n")
 
 print("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
@@ -170,7 +170,7 @@ else:
 
 GLED.setHigh()
 
-filehandle.write("hour,minute,second,microsecond,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,pitot,cTemp,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z\n")
+filehandle.write("hour,minute,second,microsecond,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,pitot,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z\n")
 
 filehandle.close()
 try:
