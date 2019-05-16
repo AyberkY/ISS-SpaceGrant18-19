@@ -132,7 +132,8 @@ BLED.setLow()
 
 print("\n~~~~~~~~~~~CALIBRATING PITOT SENSOR~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~CALIBRATING PITOT SENSOR~~~~~~~~~~~\n")
-PITOT1.calibrate()
+
+PITOT1.calPressure()
 filehandle.write("\tPITOT OFFSET:" + str(PITOT1.offset))
 
 print("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
