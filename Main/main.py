@@ -157,9 +157,9 @@ GLED.setHigh()
 
 filehandle.write("hour,minute,second,microsecond,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z\n")
 
-sys.exit()
-
 filehandle.close()
+
+sys.exit()
 try:
     while True:
         filehandle = open(filename,'w')
