@@ -65,7 +65,7 @@ class spiflash(object):
 
         self.wait_until_not_busy()
 
-    def write_and_verify_page(self, addr1, addr2, addr3 page):
+    def write_and_verify_page(self, addr1, addr2, addr3, page):
         self.write_page(addr1, addr2, addr3, page)
         return self.read_page(addr1, addr2, addr3)[:256] == page[:256]
 
