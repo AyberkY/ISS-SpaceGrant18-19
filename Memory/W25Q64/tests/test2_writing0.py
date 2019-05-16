@@ -5,6 +5,7 @@ RDSR2 = 0x35
 WRSR  = 0x01
 READ  = 0x03
 WRITE = 0x02
+RUID  = 0x4B
 SECTOR_ERASE = 0x20
 CHIP_ERASE = 0xC7
 
@@ -31,12 +32,12 @@ class spiflash(object):
 
     #reads ----------------------------------------------------------------------------------
     def read_status(self):
-        statreg = self.spi.xfer2([RDSR,RDSR])[1]
+        statreg = self.spi.xfer2([RDSR1,RDSR1])[1]
         statreg2 = self.spi.xfer2([RDSR2,RDSR2])[1]
         return statreg, statreg2
 
     def read_page(self, adr1, adr2):
-        xfer = [READ, adr1, adr2] + [255 for _ in range(256)] # command + 256 dummies
+        xfer = [READ, adr1, adr2, 0] + [255 for _ in range(256)] # command + 256 dummies
         return self.spi.xfer2(xfer)[4:] #skip 4 first bytes (dummies)
 
     #writes ----------------------------------------------------------------------------------
@@ -59,7 +60,7 @@ class spiflash(object):
     def write_page(self, addr1, addr2, page):
         self.write_enable()
 
-        xfer = [WRITE, addr1, addr2] + page[:256]
+        xfer = [WRITE, addr1, addr2, 0] + page[:256]
         self.spi.xfer2(xfer)
         sleep_ms(10)
 
@@ -95,6 +96,9 @@ class spiflash(object):
             statreg = self.spi.xfer2([RDSR1, RDSR1])[1]
             #print "%r \tRead %X" % (datetime.now(), statreg)
             sleep_ms(5)
+
+    def read_UID(self): #added
+        return self.spi.xfer2([RUID]) #skip 4 first bytes (dummies)
 
     #helpers -------------------------------------------------------------------------------
     def print_status(self,status):
