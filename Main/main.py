@@ -135,6 +135,7 @@ filehandle.write("\n~~~~~~~~~~~CALIBRATING PITOT SENSOR~~~~~~~~~~~\n")
 
 PITOT1.calPressure()
 filehandle.write("\tPITOT OFFSET:" + str(PITOT1.offset))
+print("\tPITOT OFFSET:" + str(PITOT1.offset) + "\n")
 
 print("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
