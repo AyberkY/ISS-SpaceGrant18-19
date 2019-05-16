@@ -129,5 +129,25 @@ dataAltB = []
 dataAccl = []
 dataPito = []
 
-def writeLine(dataArr):
+def writeData(dataArr):
+
+    #Data Array
     dataTime += [hex(dataArr[1]), hex(dataArr[2]), hex(dataArr[3] // 1000), hex(dataArr[3] // 10000 - dataArr[3] // 100)]
+    dataAltB += []
+    dataAccl += []
+    dataPito += []
+
+    if not (rangeLine < 16):
+        rangeLine = 0
+
+        chip.write(hex(rangeTime), hex(rangeSect), hex(rangePage), dataTime)
+        chip.write(hex(rangeAltB), hex(rangeSect), hex(rangePage), dataTime)
+        chip.write(hex(rangeAccl), hex(rangeSect), hex(rangePage), dataTime)
+        chip.write(hex(rangePito), hex(rangeSect), hex(rangePage), dataTime)
+
+        if not (rangeSect < 16):
+            rangeSect = 0
+            rangeTime += 1
+            rangeAltB += 1
+            rangeAccl += 1
+            rangePito += 1
