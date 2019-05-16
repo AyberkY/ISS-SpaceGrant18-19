@@ -15,6 +15,6 @@ class PITOT:
 
     def calibrate(self):
         sum = 0
-        for i in range(1000):
+        for i in range(100):
             sum += self.getPressure()
-        self.offset = sum / 1000
+        self.offset = sum / 100
