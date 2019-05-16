@@ -3,6 +3,7 @@ Pin assignments:
 GPIO6 = ORANGE
 GPIO13 = GREEN
 GPIO19 = BLUE
+GPIO20 = BUZZER
 """
 
 import RPi.GPIO as GPIO
@@ -19,6 +20,18 @@ class LED:
         elif color == 'blue':
             self.pinNumber = 19
 
+        GPIO.setup(self.pinNumber, GPIO.OUT)
+
+    def setHigh(self):
+        GPIO.output(self.pinNumber, GPIO.HIGH)
+
+    def setLow(self):
+        GPIO.output(self.pinNumber, GPIO.LOW)
+
+class BUZZER:
+    def __init__(self):
+        GPIO.setmode(GPIO.BCM)
+        self.pinNumber = 20
         GPIO.setup(self.pinNumber, GPIO.OUT)
 
     def setHigh(self):

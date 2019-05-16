@@ -2,6 +2,7 @@ import sys, time, datetime, picamera
 
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/ADC')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Barometer')
+sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/PITOT')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Camera')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/GPS')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/IMU/MPU9250')
@@ -10,26 +11,37 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Telemetry')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/LED')
 
 
-import ADS1x15, mpl3115a2, GPS, mpu9250, RFM9X, LED
+import ADS1x15, mpl3115a2, pitotSensor, GPS, mpu9250, RFM9X, LED
 
-filename = str(datetime.datetime.now())
-filehandle = open(filename, 'w+')
+filename = str(datetime.datetime.now()) + ".txt"
+filehandle = open(filename, 'w')
 
 
 OLED = LED.LED('orange')
 GLED = LED.LED('green')
 BLED = LED.LED('blue')
+BUZZER = LED.BUZZER()
 OLED.setLow()
 GLED.setLow()
 BLED.setLow()
+BUZZER.setLow()
 
 time.sleep(1)
 
 OLED.setHigh()
+BUZZER.setHigh()
+time.sleep(0.05)
+BUZZER.setLow()
 time.sleep(0.3)
 GLED.setHigh()
+BUZZER.setHigh()
+time.sleep(0.05)
+BUZZER.setLow()
 time.sleep(0.3)
 BLED.setHigh()
+BUZZER.setHigh()
+time.sleep(0.05)
+BUZZER.setLow()
 time.sleep(1)
 OLED.setLow()
 GLED.setLow()
@@ -59,6 +71,13 @@ try:
 except:
     print("COULD NOT CONNECT TO BAROMETER")
     filehandle.write('COULD NOT CONNECT TO BAROMETER\n')
+    Initialization_Error = True
+
+try:
+    PITOT1 = pitotSensor.PITOT()
+except:
+    print("COULD NOT CONNECT TO PITOT SENSOR")
+    filehandle.write('COULD NOT CONNECT TO PITOT SENSOR\n')
     Initialization_Error = True
 
 try:
@@ -111,6 +130,13 @@ filehandle.write("\tGY_OFFSET:" + str(gyroOffsets[1]) + "\n")
 filehandle.write("\tGZ_OFFSET:" + str(gyroOffsets[2]) + "\n\n")
 BLED.setLow()
 
+print("\n~~~~~~~~~~~CALIBRATING PITOT SENSOR~~~~~~~~~~~\n")
+filehandle.write("\n~~~~~~~~~~~CALIBRATING PITOT SENSOR~~~~~~~~~~~\n")
+
+PITOT1.calPressure()
+filehandle.write("\tPITOT OFFSET:" + str(PITOT1.offset))
+print("PITOT OFFSET:" + str(PITOT1.offset) + "\n")
+
 print("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
 
@@ -121,17 +147,37 @@ filehandle.write("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 
 if Initialization_Error:
     OLED.setHigh()
+    BUZZER.setHigh()
+    time.sleep(0.2)
+    BUZZER.setLow()
+    time.sleep(0.1)
+    BUZZER.setHigh()
+    time.sleep(0.2)
+    BUZZER.setLow()
+    time.sleep(0.1)
+else:
+    BUZZER.setHigh()
+    time.sleep(0.02)
+    BUZZER.setLow()
+    time.sleep(0.1)
+    BUZZER.setHigh()
+    time.sleep(0.02)
+    BUZZER.setLow()
+    time.sleep(0.1)
+    BUZZER.setHigh()
+    time.sleep(0.02)
+    BUZZER.setLow()
 
 GLED.setHigh()
 
-filehandle.write("hour,minute,second,microsecond,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z\n")
+filehandle.write("hour,minute,second,microsecond,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,pitot,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z\n")
 
 filehandle.close()
 try:
     while True:
-        filehandle = open(filename,'w+')
+        filehandle = open(filename,'a')
 
-        dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
         dataArray[0] = datetime.datetime.now().hour
         dataArray[1] = datetime.datetime.now().minute
@@ -179,30 +225,40 @@ try:
             dataArray[12] = 0
             dataArray[13] = 0
 
+    ###############__________PITOT1__________###############
+        try:
+            pitot_pressure = PITOT1.getPressure()
+
+            dataArray[14] = pitot_pressure
+
+        except:
+            dataArray[14] = 0
+
     ###############__________IMU1__________###############
         try:
             accelData = IMU1.readAccel()
             gyroData = IMU1.readGyro()
 
-            dataArray[14] = accelData['x']
-            dataArray[15] = accelData['y']
-            dataArray[16] = accelData['z']
-            dataArray[17] = gyroData['x']
-            dataArray[18] = gyroData['y']
-            dataArray[19] = gyroData['z']
+            dataArray[15] = accelData['x']
+            dataArray[16] = accelData['y']
+            dataArray[17] = accelData['z']
+            dataArray[18] = gyroData['x']
+            dataArray[19] = gyroData['y']
+            dataArray[20] = gyroData['z']
 
         except:
-            dataArray[14] = 0
             dataArray[15] = 0
             dataArray[16] = 0
             dataArray[17] = 0
             dataArray[18] = 0
             dataArray[19] = 0
+            dataArray[20] = 0
 
     ###############__________WRITE TO SD__________###############
         filehandle.write(str(dataArray) + '\n')
-        filehandle.close()
+        filehandle.flush()
     ###############_________TELEMETRY_________###############
 
 except KeyboardInterrupt:
     filehandle.close()
+    sys.exit()
