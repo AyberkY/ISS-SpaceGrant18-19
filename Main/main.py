@@ -231,6 +231,7 @@ try:
             dataArray[19] = 0
 
     ###############__________WRITE TO SD__________###############
+        print("Writing to SD")
         filehandle.write(str(dataArray) + '\n')
         filehandle.close()
     ###############_________TELEMETRY_________###############
