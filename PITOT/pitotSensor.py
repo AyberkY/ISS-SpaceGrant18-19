@@ -4,6 +4,7 @@ class PITOT:
     def __init__(self):
         self.slaveAddress = 0x28
         self.bus = smbus.SMBus(1)
+        self.offset = 0
         sum = 0
         for i in range(100):
             sum += self.getPressure()
