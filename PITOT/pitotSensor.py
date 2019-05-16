@@ -4,10 +4,17 @@ class PITOT:
     def __init__(self):
         self.slaveAddress = 0x28
         self.bus = smbus.SMBus(1)
+        self.offset = 0
 
     def getPressure(self):
         data = self.bus.read_i2c_block_data(self.slaveAddress, 0, 2)
         pressure_raw = data[0] << 8
         pressure_raw += data[1]
 
-        return pressure_raw
+        return pressure_raw - self.offset
+
+    def calibrate(self):
+        sum = 0
+        for i in range(1000):
+            sum += self.getPressure()
+        self.offset = sum / 1000
