@@ -162,6 +162,8 @@ def writeData(dataArr):
             rangeAccl += 1
             rangePito += 1
 
+    rangeLine += 1
+
 #Reading the entire chip
 def readSPI():
     data = []
