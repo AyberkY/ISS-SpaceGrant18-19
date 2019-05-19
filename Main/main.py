@@ -16,11 +16,10 @@ import ADS1x15, mpl3115a2, pitotSensor, GPS, mpu9250, RFM9X, LED
 filename = str(datetime.datetime.now()) + ".txt"
 filehandle = open(filename, 'w')
 
-
 OLED = LED.LED('orange')
 GLED = LED.LED('green')
 BLED = LED.LED('blue')
-BUZZER = LED.BUZZER()
+BUZZER = LED.BUZZER(false)
 OLED.setLow()
 GLED.setLow()
 BLED.setLow()
@@ -258,6 +257,8 @@ try:
         filehandle.write(str(dataArray) + '\n')
         filehandle.flush()
     ###############_________TELEMETRY_________###############
+
+
 
 except KeyboardInterrupt:
     filehandle.close()

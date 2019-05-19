@@ -29,13 +29,15 @@ class LED:
         GPIO.output(self.pinNumber, GPIO.LOW)
 
 class BUZZER:
-    def __init__(self):
+    def __init__(self, enabled=True):
         GPIO.setmode(GPIO.BCM)
         self.pinNumber = 20
         GPIO.setup(self.pinNumber, GPIO.OUT)
+        self.enabled = enabled
 
     def setHigh(self):
-        GPIO.output(self.pinNumber, GPIO.HIGH)
+        if self.enabled:
+            GPIO.output(self.pinNumber, GPIO.HIGH)
 
     def setLow(self):
         GPIO.output(self.pinNumber, GPIO.LOW)
