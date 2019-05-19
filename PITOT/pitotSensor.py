@@ -1,4 +1,4 @@
-import smbus, time, math
+import smbus2, time, math
 
 bus = smbus.SMBus(1)
 
