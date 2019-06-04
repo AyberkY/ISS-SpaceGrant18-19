@@ -2,7 +2,15 @@ import curses
 import time
 import random
 
+sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Telemetry')
+
+import RFM9X
+
 def cursesTest(stdscr):
+
+    TELEM1 = RFM9X.RFM9X()
+
+
 
     curses.init_pair(1,curses.COLOR_GREEN,curses.COLOR_BLACK)
     curses.init_pair(2,curses.COLOR_RED,curses.COLOR_BLACK)
@@ -16,7 +24,6 @@ def cursesTest(stdscr):
     stdscr.addstr(3,0,"IMU: ",curses.A_BOLD)
     stdscr.addstr(4,0,"Telemetry: ",curses.A_BOLD)
     stdscr.addstr(5,0,"Camera: ",curses.A_BOLD)
-
 
     #Column 2
     stdscr.addstr(0,30,"Hour: ")
@@ -33,7 +40,6 @@ def cursesTest(stdscr):
     stdscr.addstr(11,30,"read_ADC(1): ")
     stdscr.addstr(12,30,"read_ADC(2): ")
 
-
     #Column 3
     stdscr.addstr(0,60,"baro_pressure: ")
     stdscr.addstr(1,60,"baro_altitude: ")
@@ -46,7 +52,6 @@ def cursesTest(stdscr):
     stdscr.addstr(8,60,"Gyro y: ")
     stdscr.addstr(9,60,"Gyro z: ")
 
-    stdscr.addstr(11,60,"SSS SUX",curses.color_pair(3) | curses.A_BOLD)
     stdscr.addstr(12,60,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
 
     while True:
@@ -104,7 +109,6 @@ def cursesTest(stdscr):
         stdscr.addstr(10,45,str(random.randint(0,100))+"   ")
         stdscr.addstr(11,45,str(random.randint(0,100))+"   ")
         stdscr.addstr(12,45,str(random.randint(0,100))+"   ")
-
 
         stdscr.addstr(0,75,str(random.randint(0,100))+"   ")
         stdscr.addstr(1,75,str(random.randint(0,100))+"   ")

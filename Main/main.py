@@ -48,6 +48,8 @@ BLED.setLow()
 
 Initialization_Error = False
 
+initializations = []
+
 print("\n~~~~~~~~~~~INITIALIZING SUB-SYSTEMS~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~INITIALIZING SUB-SYSTEMS~~~~~~~~~~~\n")
 
@@ -253,12 +255,13 @@ try:
             dataArray[19] = 0
             dataArray[20] = 0
 
+    ###############_________TELEMETRY_________###############
+        try:
+            TELEM1.send(datArray)
+
     ###############__________WRITE TO SD__________###############
         filehandle.write(str(dataArray) + '\n')
         filehandle.flush()
-    ###############_________TELEMETRY_________###############
-
-
 
 except KeyboardInterrupt:
     filehandle.close()
