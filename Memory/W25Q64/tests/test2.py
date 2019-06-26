@@ -119,7 +119,8 @@ class spiflash(object):
 chip = spiflash(bus = 0, cs = 0)
 
 print(chip.read_UID())
-#write_disable()
+#write
+\_disable()
 #print_status(read_status())
 
 #p = chip.read_page(0,0)
@@ -143,3 +144,22 @@ print(chip.read_UID())
 #print_status(read_status())
 #write_status(0,0)
 #print_status(read_status())
+
+def decToHex(num):
+    data = ""
+    for i in str(num):
+        if i == ".":
+            data += "F"
+        else:
+            data += i
+    return data
+
+def dataFormat(data):
+    newData = []
+    data = decToHex(data)
+    for i in range(8):
+        if (len(data) - (len(newData)*2)) >= 2:
+            newData += [hex(int(data[i*2: (i+1)*2], 16))]
+        else:
+            newData += [0xFF]
+    return newData
