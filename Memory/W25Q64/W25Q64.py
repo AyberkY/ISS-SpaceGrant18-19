@@ -115,54 +115,34 @@ class spiflash(object):
 
 #Initializaiton -------------------------------------------------------------------------------
 
-#SPI Connection
-chip = spiflash(bus = 0, cs = 0)
+#Formatting functions (Makes data entry easier)
+def decToHex(num):
+    data = ""
+    for i in str(num):
+        if i == ".":
+            data += "F"
+        else:
+            data += i
+    return data
 
-#Clear Data
-chip.erase_all()
+def dataFormat(data):
+    newData = []
+    data = decToHex(data)
+    for i in range(8):
+        if (len(data) - (len(newData)*2)) >= 2:
+            newData += [hex(int(data[i*2: (i+1)*2], 16))]
+        else:
+            newData += [0xFF]
+    return newData
 
-#Block ranges for each type of data
-rangeTime = 0
-rangeAltB = 32
-rangeAccl = 64
-rangePito = 96
-rangeSect = 0 #Sector range
-rangePage = 0 #Page range
-rangeLine = 0
-
-#Pages of data
-dataTime = []
-dataAltB = []
-dataAccl = []
-dataPito = []
-
-#Writing data onto SPI
-def writeData(dataArr):
-
-    #Data Array
-    dataTime += [hex(dataArr[1]), hex(dataArr[2]), hex(dataArr[3] // 1000), hex(dataArr[3] // 10000 - dataArr[3] // 100)] + [255 for _ in range(8)]
-    dataAltB += []
-    dataAccl += []
-    dataPito += ((5 - len(str(dataArr[14]))) * [0x00]) + [hex(int(str(dataArr[14])[i])) for i in range(len(str(dataArr[14])))] + [255 for _ in range(11)]
-
-    #Write a page
-    if not (rangeLine < 16):
-        rangeLine = 0
-
-        chip.write(hex(rangeTime), hex(rangeSect), hex(rangePage), dataTime)
-        chip.write(hex(rangeAltB), hex(rangeSect), hex(rangePage), dataTime)
-        chip.write(hex(rangeAccl), hex(rangeSect), hex(rangePage), dataTime)
-        chip.write(hex(rangePito), hex(rangeSect), hex(rangePage), dataTime)
-
-        #Next block
-        if not (rangeSect < 16):
-            rangeSect = 0
-            rangeTime += 1
-            rangeAltB += 1
-            rangeAccl += 1
-            rangePito += 1
-
-    rangeLine += 1
+def dataFormat_int(data):
+    data = decToHex(data)
+    temp = ""
+    for i in range(len(data)):
+        temp += data[i]
+        if (i == (len(data) - 1)):
+            temp += "F"
+    return dataFormat(temp)
 
 #Reading the entire chip
 def readSPI():
@@ -171,3 +151,127 @@ def readSPI():
         for j in range(256):
             data.append(chip.read_page(i, j))
     return data
+
+#SPI Connection
+chip = spiflash(bus = 0, cs = 0)
+
+#Clear Data
+chip.erase_all()
+
+#Block ranges for each type of data
+rangeTime  = 0   #Time
+rangeLat   = 8   #Latitude
+rangeLot   = 16  #Longitude
+rangeAlt   = 24  #Altitude
+rangeSat   = 32  #Satellites
+rangeBPres = 40  #Barometric Pressure
+rangeBAlt  = 48  #BArometric Altitude
+rangeCTemp = 56  #Temperature in Celsius
+rangePPres = 64  #Pitot Tube Pressure
+rangeAcclX = 72  #Acceleration X
+rangeAcclY = 80  #Acceleration Y
+rangeAcclZ = 88  #Acceleration Z
+rangeGyroX = 96  #Gyroscope X
+rangeGyroY = 104 #Gyroscope Y
+rangeGyroZ = 112 #Gyroscope Z
+
+rangeSect = 0 #Sector range
+rangePage = 0 #Page range
+rangeLine = 0 #Line range
+
+#Pages of data
+dataTime  = []
+dataLat   = []
+dataLot   = []
+dataAlt   = []
+dataSat   = []
+dataBPres = []
+dataBAlt  = []
+dataCTemp = []
+dataPPres = []
+dataAcclX = []
+dataAcclY = []
+dataAcclZ = []
+dataGyroX = []
+dataGyroY = []
+dataGyroZ = []
+
+#Loop Function -----------------------------------------------------------------
+
+#Writing data onto SPI page by page
+def writeData(dataArr):
+
+    #Data Array
+    dataTime  += [[hex(int(decToHex(dataArray[0]))), hex(int(decToHex(dataArray[1]))), hex(int(decToHex(dataArray[2])))] + dataFormat(dataArray[3])]
+    dataLat   += [dataFormat(dataArray[4])]
+    dataLot   += [dataFormat(dataArray[5])]
+    dataAlt   += [dataFormat(dataArray[6])]
+    dataSat   += [dataFormat_int(dataArray[7])]
+    dataBPres += [dataFormat(dataArray[11])]
+    dataBAlt  += [dataFormat(dataArray[12])]
+    dataCTemp += [dataFormat(dataArray[13])]
+    dataPPres += [dataFormat(dataArray[14])]
+    dataAcclX += [dataFormat(dataArray[15])]
+    dataAcclY += [dataFormat(dataArray[16])]
+    dataAcclZ += [dataFormat(dataArray[17])]
+    dataGyroX += [dataFormat(dataArray[18])]
+    dataGyroY += [dataFormat(dataArray[19])]
+    dataGyroZ += [dataFormat(dataArray[20])]
+
+    #Write a page
+    if not (rangeLine < 8):
+        rangeLine = 0
+
+        chip.write(hex(rangeTime ), hex(rangeSect), hex(rangePage), dataTime )
+        chip.write(hex(rangeLat  ), hex(rangeSect), hex(rangePage), dataLat  )
+        chip.write(hex(rangeLot  ), hex(rangeSect), hex(rangePage), dataLot  )
+        chip.write(hex(rangeAlt  ), hex(rangeSect), hex(rangePage), dataAlt  )
+        chip.write(hex(rangeSat  ), hex(rangeSect), hex(rangePage), dataSat  )
+        chip.write(hex(rangeBPres), hex(rangeSect), hex(rangePage), dataBPres)
+        chip.write(hex(rangeBAlt ), hex(rangeSect), hex(rangePage), dataBAlt )
+        chip.write(hex(rangeCTemp), hex(rangeSect), hex(rangePage), dataCTemp)
+        chip.write(hex(rangePPres), hex(rangeSect), hex(rangePage), dataPPres)
+        chip.write(hex(rangeAcclX), hex(rangeSect), hex(rangePage), dataAcclX)
+        chip.write(hex(rangeAcclY), hex(rangeSect), hex(rangePage), dataAcclY)
+        chip.write(hex(rangeAcclZ), hex(rangeSect), hex(rangePage), dataAcclZ)
+        chip.write(hex(rangeGyroX), hex(rangeSect), hex(rangePage), dataGyroX)
+        chip.write(hex(rangeGyroY), hex(rangeSect), hex(rangePage), dataGyroY)
+        chip.write(hex(rangeGyroZ), hex(rangeSect), hex(rangePage), dataGyroZ)
+
+        #Reset the data
+        dataTime  = []
+        dataLat   = []
+        dataLot   = []
+        dataAlt   = []
+        dataSat   = []
+        dataBPres = []
+        dataBAlt  = []
+        dataCTemp = []
+        dataPPres = []
+        dataAcclX = []
+        dataAcclY = []
+        dataAcclZ = []
+        dataGyroX = []
+        dataGyroY = []
+        dataGyroZ = []
+
+        #Next block
+        if not (rangeSect < 8):
+            rangeSect = 0
+            rangeTime  += 1  #Time
+            rangeLat   += 1  #Latitude
+            rangeLot   += 1  #Longitude
+            rangeAlt   += 1  #Altitude
+            rangeSat   += 1  #Satellites
+            rangeBPres += 1  #Barometric Pressure
+            rangeBAlt  += 1  #BArometric Altitude
+            rangeCTemp += 1  #Temperature in Celsius
+            rangePPres += 1  #Pitot Tube Pressure
+            rangeAcclX += 1  #Acceleration X
+            rangeAcclY += 1  #Acceleration Y
+            rangeAcclZ += 1  #Acceleration Z
+            rangeGyroX += 1  #Gyroscope X
+            rangeGyroY += 1  #Gyroscope Y
+            rangeGyroZ += 1  #Gyroscope Z
+
+    rangeLine += 1
