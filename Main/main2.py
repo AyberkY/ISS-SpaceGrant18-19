@@ -59,9 +59,90 @@ States of flight computer:
 6 - UNDER MAIN
 7 - BALLISTIC
 """
-State = 0
+state = 0
 
-initializations = []
+def gatherData():
+
+    dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+    dataArray[0] = datetime.datetime.now().hour
+    dataArray[1] = datetime.datetime.now().minute
+    dataArray[2] = datetime.datetime.now().second
+    dataArray[3] = datetime.datetime.now().microsecond
+    dataArray[4] = state
+
+###############__________GPS1__________###############
+
+    try:
+        gpsData = GPS1.readLocation()
+
+        dataArray[5] = gpsData['lat']
+        dataArray[6] = gpsData['lon']
+        dataArray[7] = gpsData['altitude']
+        dataArray[8] = gpsData['sats']
+
+    except:
+        dataArray[5] = 0
+        dataArray[6] = 0
+        dataArray[7] = 0
+        dataArray[8] = 0
+
+###############__________ADC1__________###############
+    try:
+        dataArray[9] = ADC1.read_adc(0)
+        dataArray[10] = ADC1.read_adc(1)
+        dataArray[11] = ADC1.read_adc(2)
+
+    except:
+        dataArray[9] = 0
+        dataArray[10] = 0
+        dataArray[11] = 0
+
+###############__________BARO1__________###############
+    try:
+        baro_pressure = BARO1.getPressure()
+        baro_altitude, cTemp = BARO1.getData()
+
+        dataArray[12] = baro_pressure
+        dataArray[13] = baro_altitude
+        dataArray[14] = cTemp
+
+    except:
+        dataArray[12] = 0
+        dataArray[13] = 0
+        dataArray[14] = 0
+
+###############__________PITOT1__________###############
+    try:
+        pitot_pressure = PITOT1.getPressure()
+
+        dataArray[15] = pitot_pressure
+
+    except:
+        dataArray[15] = 0
+
+###############__________IMU1__________###############
+    try:
+        accelData = IMU1.readAccel()
+        gyroData = IMU1.readGyro()
+
+        dataArray[16] = accelData['x']
+        dataArray[17] = accelData['y']
+        dataArray[18] = accelData['z']
+        dataArray[19] = gyroData['x']
+        dataArray[20] = gyroData['y']
+        dataArray[21] = gyroData['z']
+
+    except:
+        dataArray[16] = 0
+        dataArray[17] = 0
+        dataArray[18] = 0
+        dataArray[19] = 0
+        dataArray[20] = 0
+        dataArray[21] = 0
+
+    return dataArray
+
 
 print("\n~~~~~~~~~~~INITIALIZING SUB-SYSTEMS~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~INITIALIZING SUB-SYSTEMS~~~~~~~~~~~\n")
@@ -187,95 +268,18 @@ GLED.setHigh()
 filehandle.write("hour,minute,second,microsecond,state,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,pitot,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z\n")
 
 filehandle.close()
-try:
-    while True:
+
+while True:
+    dataArray = gatherData()
+
+    try:
         filehandle = open(filename,'a')
-
-        dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-
-        dataArray[0] = datetime.datetime.now().hour
-        dataArray[1] = datetime.datetime.now().minute
-        dataArray[2] = datetime.datetime.now().second
-        dataArray[3] = datetime.datetime.now().microsecond
-        dataArray[4] = state
-
-    ###############__________GPS1__________###############
-
-        try:
-            gpsData = GPS1.readLocation()
-
-            dataArray[5] = gpsData['lat']
-            dataArray[6] = gpsData['lon']
-            dataArray[7] = gpsData['altitude']
-            dataArray[8] = gpsData['sats']
-
-        except:
-            dataArray[5] = 0
-            dataArray[6] = 0
-            dataArray[7] = 0
-            dataArray[8] = 0
-
-    ###############__________ADC1__________###############
-        try:
-            dataArray[9] = ADC1.read_adc(0)
-            dataArray[10] = ADC1.read_adc(1)
-            dataArray[11] = ADC1.read_adc(2)
-
-        except:
-            dataArray[9] = 0
-            dataArray[10] = 0
-            dataArray[11] = 0
-
-    ###############__________BARO1__________###############
-        try:
-            baro_pressure = BARO1.getPressure()
-            baro_altitude, cTemp = BARO1.getData()
-
-            dataArray[12] = baro_pressure
-            dataArray[13] = baro_altitude
-            dataArray[14] = cTemp
-
-        except:
-            dataArray[12] = 0
-            dataArray[13] = 0
-            dataArray[14] = 0
-
-    ###############__________PITOT1__________###############
-        try:
-            pitot_pressure = PITOT1.getPressure()
-
-            dataArray[15] = pitot_pressure
-
-        except:
-            dataArray[15] = 0
-
-    ###############__________IMU1__________###############
-        try:
-            accelData = IMU1.readAccel()
-            gyroData = IMU1.readGyro()
-
-            dataArray[16] = accelData['x']
-            dataArray[17] = accelData['y']
-            dataArray[18] = accelData['z']
-            dataArray[19] = gyroData['x']
-            dataArray[20] = gyroData['y']
-            dataArray[21] = gyroData['z']
-
-        except:
-            dataArray[16] = 0
-            dataArray[17] = 0
-            dataArray[18] = 0
-            dataArray[19] = 0
-            dataArray[20] = 0
-            dataArray[21] = 0
-
-    ###############_________TELEMETRY_________###############
-        try:
-            TELEM1.send(datArray)
-
-    ###############__________WRITE TO SD__________###############
         filehandle.write(str(dataArray) + '\n')
         filehandle.flush()
+        filehandle.close()
+
+    try:
+        TELEM1.send(dataArray)
 
 except KeyboardInterrupt:
     filehandle.close()
