@@ -1,11 +1,8 @@
-## READ ME:
+# Distributed with a free-will license.
+# Use it any way you want, profit or free, provided it fits in the licenses of its associated works.
 # H3LIS331DL
-
-
-
-##current modification: H3LIS331DL_ACCL_RANGE_100G changed to H3LIS331DL_ACCL_RANGE_400G
-# testing reasons for acceleration error. Also, trying to see if there's ac connection for
-# for the scaling factor.
+# This code is designed to work with the H3LIS331DL_I2CS I2C Mini Module available from ControlEverything.com.
+# https://www.controleverything.com/content/Accelorometer?sku=H3LIS331DL_I2CS#tabs-0-product_tabset-2
 
 import smbus
 import time
@@ -60,7 +57,7 @@ H3LIS331DL_ACCL_RANGE_200G				= 0x10 # Full scale = +/-200g
 H3LIS331DL_ACCL_RANGE_100G				= 0x00 # Full scale = +/-100g
 H3LIS331DL_ACCL_SIM_3					= 0x01 # 3-Wire Interface
 
-class H3LIS331():
+class H3LIS331DL():
 	def __init__ (self):
 		self.select_datarate()
 		self.select_data_config()
@@ -72,7 +69,7 @@ class H3LIS331():
 
 	def select_data_config(self):
 		"""Select the data configuration of the accelerometer from the given provided values"""
-		DATA_CONFIG = (H3LIS331DL_ACCL_RANGE_400G | H3LIS331DL_ACCL_BDU_CONT)
+		DATA_CONFIG = (H3LIS331DL_ACCL_RANGE_100G | H3LIS331DL_ACCL_BDU_CONT)
 		bus.write_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_CTRL4, DATA_CONFIG)
 
 	def read_accl(self):
@@ -80,15 +77,10 @@ class H3LIS331():
 		X-Axis Accl LSB, X-Axis Accl MSB"""
 		data0 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_X_L)
 		data1 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_X_H)
-		xAccNoMod = data1 * 256 + data0
-		xAccl = self.dataConv(data0, data1)
-		xAccl = (xAccl >> 4)
-		#xAccl = data1 * 256 + data0
+
+		xAccl = data1 * 256 + data0
 		if xAccl > 32767 :
 			xAccl -= 65536
-		xAccl = xAccl  * (49 / 1000)
-		if xAccNoMod > 32767 :
-			xAccNoMod -= 65536
 
 		"""Read data back from H3LIS331DL_REG_OUT_Y_L(0x2A), 2 bytes
 		Y-Axis Accl LSB, Y-Axis Accl MSB"""
@@ -96,10 +88,8 @@ class H3LIS331():
 		data1 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_Y_H)
 
 		yAccl = data1 * 256 + data0
-		yAccl = (yAccl >> 4)
 		if yAccl > 32767 :
 			yAccl -= 65536
-		yAccl = yAccl  * (49 / 1000)
 
 		"""Read data back from H3LIS331DL_REG_OUT_Z_L(0x2C), 2 bytes
 		Z-Axis Accl LSB, Z-Axis Accl MSB"""
@@ -107,44 +97,21 @@ class H3LIS331():
 		data1 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_Z_H)
 
 		zAccl = data1 * 256 + data0
-		zAccl = (zAccl >> 4)
 		if zAccl > 32767 :
 			zAccl -= 65536
-		zAccl = zAccl  * (49 / 1000)
 
-		return {'x' : xAccl, 'xUM' : xAccNoMod, 'y' : yAccl, 'z' : zAccl}
+		return {'x' : xAccl, 'y' : yAccl, 'z' : zAccl}
 
-	    ## Data Convert
-	    # @param [in] self The object pointer.
-	    # @param [in] data1 LSB
-	    # @param [in] data2 MSB
-	    # @retval Value MSB+LSB(int 16bit)
-	def dataConv(self, data1, data2):
-		value = data1 | (data2 << 8)
-		if (value & (1 << 16 - 1)):
-			value -= (1<<16)
-		return value
-
-	def dataConv2(self, data):
-		value = (data >> 4)
-		if (value & (1 << 16 - 1)):
-			value -= (1<<16)
-		return value
-
-
-"""
-#from H3LIS331 import H3LIS331
-h3lis331 = H3LIS331()
+from H3LIS331DL import H3LIS331DL
+h3lis331dl = H3LIS331DL()
 
 while True:
-	h3lis331.select_datarate()
-	h3lis331.select_data_config()
+	h3lis331dl.select_datarate()
+	h3lis331dl.select_data_config()
 	time.sleep(0.2)
-	accl = h3lis331.read_accl()
-	print(H3LIS331DL_REG_CTRL1)
-	print ("Acceleration in X-Axis : %d" %(accl['x']))
-	print ("Acceleration in Y-Axis : %d" %(accl['y']))
-	print ("Acceleration in Z-Axis : %d" %(accl['z']))
-	print (" ************************************ ")
+	accl = h3lis331dl.read_accl()
+	print "Acceleration in X-Axis : %d" %(accl['x'])
+	print "Acceleration in Y-Axis : %d" %(accl['y'])
+	print "Acceleration in Z-Axis : %d" %(accl['z'])
+	print " ************************************ "
 	time.sleep(1)
-	"""
