@@ -318,9 +318,9 @@ class ADS1x15(object):
 
     def read_voltage(self, channel):
         if channel == 0:
-            return 0
+            return self.read_adc(0)
         elif channel == 1:
-            return 0
+            return self.read_adc(1)
         elif channel == 2:
             # 22520 @ 4.154
             return (self.read_adc(2)/22520) * 4.154
