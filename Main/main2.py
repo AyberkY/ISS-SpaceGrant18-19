@@ -279,6 +279,9 @@ try:
             filehandle.flush()
             filehandle.close()
 
+        except:
+            pass
+
 except KeyboardInterrupt:
     filehandle.close()
     sys.exit()
