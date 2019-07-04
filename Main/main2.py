@@ -279,9 +279,6 @@ try:
             filehandle.flush()
             filehandle.close()
 
-        try:
-            TELEM1.send(dataArray)
-
 except KeyboardInterrupt:
     filehandle.close()
     sys.exit()
