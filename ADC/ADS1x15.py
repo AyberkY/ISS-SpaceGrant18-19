@@ -317,11 +317,11 @@ class ADS1x15(object):
         return self._conversion_value(result[1], result[0])
 
     def read_voltage(self, channel):
-        if channel = 0:
+        if channel == 0:
             return 0
-        elif channel = 1:
+        elif channel == 1:
             return 0
-        elif channel = 2:
+        elif channel == 2:
             # 22520 @ 4.154
             return (read_adc(2)/22520) * 4.154
 
