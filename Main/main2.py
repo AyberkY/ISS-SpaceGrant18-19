@@ -269,17 +269,18 @@ filehandle.write("hour,minute,second,microsecond,state,latitude,longitude,altitu
 
 filehandle.close()
 
-while True:
-    dataArray = gatherData()
+try:
+    while True:
+        dataArray = gatherData()
 
-    try:
-        filehandle = open(filename,'a')
-        filehandle.write(str(dataArray) + '\n')
-        filehandle.flush()
-        filehandle.close()
+        try:
+            filehandle = open(filename,'a')
+            filehandle.write(str(dataArray) + '\n')
+            filehandle.flush()
+            filehandle.close()
 
-    try:
-        TELEM1.send(dataArray)
+        try:
+            TELEM1.send(dataArray)
 
 except KeyboardInterrupt:
     filehandle.close()
