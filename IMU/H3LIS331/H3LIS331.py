@@ -114,4 +114,4 @@ while True:
 	print "Acceleration in Y-Axis : %d" %(accl['y'])
 	print "Acceleration in Z-Axis : %d" %(accl['z'])
 	print " ************************************ "
-	time.sleep(1)
+	time.sleep(0.1)
