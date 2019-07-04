@@ -324,7 +324,8 @@ class ADS1x15(object):
         elif channel == 2:
             # 22520 @ 4.154
             return (read_adc(2)/22520) * 4.154
-
+        else:
+            return 0
 
 class ADS1115(ADS1x15):
     """ADS1115 16-bit analog to digital converter instance."""
