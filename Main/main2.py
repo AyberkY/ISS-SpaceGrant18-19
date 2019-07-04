@@ -235,7 +235,8 @@ print("PITOT OFFSET:" + str(PITOT1.offset) + "\n")
 print("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
 
-CAM1.start_recording('/home/pi/ISS-SpaceGrant18-19/Camera/' + filename + '.h264')
+try:
+    CAM1.start_recording('/home/pi/ISS-SpaceGrant18-19/Camera/' + filename + '.h264')
 
 print("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
