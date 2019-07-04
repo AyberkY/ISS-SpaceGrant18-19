@@ -1,4 +1,4 @@
-# Copyright (c) 2016 Adafruit Industries
+ # Copyright (c) 2016 Adafruit Industries
 # Author: Tony DiCola
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -315,6 +315,15 @@ class ADS1x15(object):
         # return it.
         result = self._device.readList(ADS1x15_POINTER_CONVERSION, 2)
         return self._conversion_value(result[1], result[0])
+
+    def read_voltage(self, channel):
+        if channel = 0:
+            return 0
+        elif channel = 1:
+            return 0
+        elif channel = 2:
+            # 22520 @ 4.154
+            return (read_adc(2)/22520) * 4.154
 
 
 class ADS1115(ADS1x15):

@@ -89,9 +89,9 @@ def gatherData():
 
 ###############__________ADC1__________###############
     try:
-        dataArray[9] = ADC1.read_adc(0)
-        dataArray[10] = ADC1.read_adc(1)
-        dataArray[11] = ADC1.read_adc(2)
+        dataArray[9] = ADC1.read_voltage(0)
+        dataArray[10] = ADC1.read_voltage(1)
+        dataArray[11] = ADC1.read_voltage(2)
 
     except:
         dataArray[9] = 0
@@ -239,7 +239,7 @@ try:
     CAM1.start_recording('/home/pi/ISS-SpaceGrant18-19/Camera/' + filename + '.h264')
 except:
     pass
-    
+
 print("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 
