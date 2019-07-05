@@ -116,8 +116,8 @@ time.sleep(0.2)
 
 while True:
 	accl = h3lis331dl.read_accl()
-	print ("Acceleration in X-Axis : %d" %(accl['x']))
-	print ("Acceleration in Y-Axis : %d" %(accl['y']))
-	print ("Acceleration in Z-Axis : %d" %(accl['z']))
+	print ("Acceleration in X-Axis : %f" %(accl['x']))
+	print ("Acceleration in Y-Axis : %f" %(accl['y']))
+	print ("Acceleration in Z-Axis : %f" %(accl['z']))
 	print (" ************************************ ")
 	time.sleep(0.1)
