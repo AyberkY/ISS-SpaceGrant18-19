@@ -13,6 +13,8 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/LED')
 
 import ADS1x15, mpl3115a2, pitotSensor, GPS, mpu9250, RFM9X, LED
 
+launch_detect_hysteresis = 50     #Launch Detection Hysteresis value in microseconds
+
 filename = str(datetime.datetime.now()) + ".txt"
 filehandle = open(filename, 'w')
 
@@ -143,7 +145,6 @@ def gatherData():
 
     return dataArray
 
-
 print("\n~~~~~~~~~~~INITIALIZING SUB-SYSTEMS~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~INITIALIZING SUB-SYSTEMS~~~~~~~~~~~\n")
 
@@ -194,7 +195,7 @@ try:
 except:
     print("COULD NOT CONNECT TO CAMERA")
     filehandle.write('COULD NOT CONNECT TO CAMERA\n')
-    Initialization_Error = True
+    Initialization_Error = True'COULD NOT CONNECT TO CAMERA\n'
 
 
 print("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
@@ -238,10 +239,12 @@ filehandle.write("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
 try:
     CAM1.start_recording('/home/pi/ISS-SpaceGrant18-19/Camera/' + filename + '.h264')
 except:
-    pass
+    filehandle.write('COULD NOT BEGIN CAMERA RECORDING\n')
 
 print("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~ENTERING FLIGHT LOOP~~~~~~~~~~~\n")
+
+state = 1   #Switch to PAD mode
 
 if Initialization_Error:
     OLED.setHigh()
@@ -276,6 +279,8 @@ try:
     while True:
         dataArray = gatherData()
 
+        
+
         try:
             filehandle = open(filename,'a')
             filehandle.write(str(dataArray) + '\n')
@@ -284,6 +289,8 @@ try:
 
         except:
             pass
+
+
 
 except KeyboardInterrupt:
     filehandle.close()
