@@ -196,7 +196,7 @@ try:
 except:
     print("COULD NOT CONNECT TO CAMERA")
     filehandle.write('COULD NOT CONNECT TO CAMERA\n')
-    Initialization_Error = True'COULD NOT CONNECT TO CAMERA\n'
+    Initialization_Error = True
 
 
 print("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
