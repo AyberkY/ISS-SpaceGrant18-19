@@ -271,7 +271,7 @@ try:
 
     ###############_________TELEMETRY_________###############
         try:
-            TELEM1.send(datArray)
+            TELEM1.send(dataArray)
 
     ###############__________WRITE TO SD__________###############
         filehandle.write(str(dataArray) + '\n')

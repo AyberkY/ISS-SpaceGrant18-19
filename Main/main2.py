@@ -1,4 +1,4 @@
-import sys, time, datetime, picamera
+168import sys, time, datetime, picamera
 
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/ADC')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Barometer')
@@ -22,6 +22,10 @@ apogee_detect_hysteresis = 500      #Apogee detection hysteresis value in millis
 apogee_detect_threshold = 5         #Apogee detection threshold value in meters per second
 max_drogue_speed = 20               #Maximum descent speed to be considered under droge parachute
 max_main_speed = 5                  #Maximum main speed to be considered under main parachute
+
+h3_x_offset = 0                     #H3LIS331DL X axis offset value
+h3_y_offset = 0                     #H3LIS331DL Y axis offset value
+h3_z_offset = 0                     #H3LIS331DL Z axis offset value
 
 filename = str(datetime.datetime.now()) + ".txt"
 filehandle = open(filename, 'w')
@@ -71,7 +75,7 @@ States of flight computer:
 """
 state = 0
 
-dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 def gatherData():
 
@@ -149,6 +153,21 @@ def gatherData():
         dataArray[17] = 0
         dataArray[18] = 0
 
+###############__________IMU2__________###############
+#                    (H3LIS331DL)
+        try:
+            accelData = IMU2.readAccel()
+            gyroData = IMU2.readGyro()
+
+            dataArray[19] = accelData['x'] - h3_x_offset
+            dataArray[20] = accelData['y'] - h3_y_offset
+            dataArray[21] = accelData['z'] - h3_z_offset
+
+        except:
+            dataArray[19] = 0
+            dataArray[20] = 0
+            dataArray[21] = 0
+
     return dataArray
 
 print("\n~~~~~~~~~~~INITIALIZING SUB-SYSTEMS~~~~~~~~~~~\n")
@@ -187,6 +206,13 @@ try:
 except:
     print("COULD NOT CONNECT TO MPU9250")
     filehandle.write('COULD NOT CONNECT TO MPU9250\n')
+    Initialization_Error = True
+
+try:
+    IMU2 = H3LIS331.H3LIS331DL()
+except:
+    print("COULD NOT CONNECT TO H3LIS331DL")
+    filehandle.write('COULD NOT CONNECT TO H3LIS331DL\n')
     Initialization_Error = True
 
 try:
@@ -231,6 +257,20 @@ filehandle.write("\tGX_OFFSET:" + str(gyroOffsets[0]) + "\n")
 filehandle.write("\tGY_OFFSET:" + str(gyroOffsets[1]) + "\n")
 filehandle.write("\tGZ_OFFSET:" + str(gyroOffsets[2]) + "\n\n")
 BLED.setLow()
+
+print("\n~~~~~~~~~~~CALIBRATING IMU2~~~~~~~~~~~\n")
+filehandle.write("\n~~~~~~~~~~~CALIBRATING IMU2~~~~~~~~~~~\n")
+
+for i in range(1000):
+    accelData1 = IMU1.readAccel()
+    accelData2 = IMU2.read_accl()
+    h3_x_offset += (accelData1['x'] - accelData2['x'])
+    h3_y_offset += (accelData1['y'] - accelData2['y'])
+    h3_z_offset += (accelData1['z'] - accelData2['z'])
+
+h3_x_offset /= 1000
+h3_y_offset /= 1000
+h3_z_offset /= 1000
 
 print("\n~~~~~~~~~~~CALIBRATING PITOT SENSOR~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~CALIBRATING PITOT SENSOR~~~~~~~~~~~\n")
@@ -277,7 +317,7 @@ else:
 
 GLED.setHigh()
 
-filehandle.write("unix_timestamp,state,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,pitot,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z,vertical_speed\n")
+filehandle.write("unix_timestamp,state,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,pitot,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z,h3_acc_x,h3_acc_y,h3_acc_z,vertical_speed\n")
 
 filehandle.close()
 
@@ -301,7 +341,7 @@ try:
         ########################################################
 
         vertical_speed = round((dataArray[10] - prev_altitude) / (time.time() - prev_time), 4)
-        dataArray[19] = vertical_speed
+        dataArray[22] = vertical_speed
         print("Vertical Speed: " + str(vertical_speed) + "m/s")
 
         ########################################################
@@ -381,6 +421,10 @@ try:
         except:
             pass
 
+        try:
+            TELEM1.send(dataArray)
+        except:
+            pass
 
 
 except KeyboardInterrupt:
