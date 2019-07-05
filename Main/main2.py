@@ -22,7 +22,7 @@ filehandle = open(filename, 'w')
 OLED = LED.LED('orange')
 GLED = LED.LED('green')
 BLED = LED.LED('blue')
-BUZZER = LED.BUZZER(False)
+BUZZER = LED.BUZZER(True)
 OLED.setLow()
 GLED.setLow()
 BLED.setLow()
@@ -282,6 +282,10 @@ try:
     while True:
         dataArray = gatherData()
 
+        ########################################################
+        ###############     LAUNCH DETECTION     ###############
+        ########################################################
+
         if state == 1 and not launch_detect_possible and abs(dataArray[16]) > launch_detect_threshold:
             launch_detect_possible = True
             T0 = time.time() * 1000
@@ -292,6 +296,25 @@ try:
         if state == 1 and launch_detect_possible and abs(dataArray[16]) > launch_detect_threshold:
             if ((time.time() * 1000) - T0) > launch_detect_hysteresis:
                 state = 2
+                BUZZER.setHigh()
+                BLED.setHigh()
+                time.sleep(0.5)
+                BUZZER.setLow()
+
+        ########################################################
+        ###############      COAST DETECTION     ###############
+        ########################################################
+
+        if state == 2 and not coast_detect_possible and abs(dataArray[16]) < coast_detect_threshold:
+            coast_detect_possible = True
+            T0 = time.time() * 1000
+
+        if state == 2 and coast_detect_possible and abs(dataArray[16]) > coast_detect_threshold:
+            coast_detect_possible = False
+
+        if state == 2 and coast_detect_possible and abs(dataArray[16]) < coast_detect_threshold:
+            if ((time.time() * 1000) - T0) > coast_detect_hysteresis:
+                state = 3
                 BUZZER.setHigh()
                 BLED.setHigh()
                 time.sleep(0.5)
