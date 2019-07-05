@@ -9,7 +9,7 @@ import RFM9X
 
 def cursesTest(stdscr):
 
-    TELEM1 = RFM9X.RFM9X()
+#    TELEM1 = RFM9X.RFM9X()
 
 
 
