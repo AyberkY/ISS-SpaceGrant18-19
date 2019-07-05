@@ -424,10 +424,8 @@ try:
         except:
             pass
 
-        try:
-            TELEM1.send(dataArray)
-        except:
-            print("Could not send data")
+
+        TELEM1.send(dataArray)
 
 
 except KeyboardInterrupt:
