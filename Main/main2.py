@@ -292,10 +292,10 @@ try:
         if state == 1 and launch_detect_possible and abs(dataArray[16]) > launch_detect_threshold:
             if ((time.time() * 1000) - T0) > launch_detect_hysteresis:
                 state = 2
-                BUZZER.setHIGH()
-                BLED.setHIGH()
+                BUZZER.setHigh()
+                BLED.setHigh()
                 time.sleep(0.5)
-                BUZZER.setLOW()
+                BUZZER.setLow()
 
         try:
             filehandle = open(filename,'a')
