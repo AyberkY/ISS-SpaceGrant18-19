@@ -113,6 +113,7 @@ h3lis331dl = H3LIS331DL()
 h3lis331dl.select_datarate()
 h3lis331dl.select_data_config()
 time.sleep(0.2)
+prev_time = 0
 
 while True:
 	accl = h3lis331dl.read_accl()
