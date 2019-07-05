@@ -345,7 +345,7 @@ try:
 
         vertical_speed = round((dataArray[10] - prev_altitude) / (time.time() - prev_time), 4)
         dataArray[22] = vertical_speed
-        print("Vertical Speed: " + str(vertical_speed) + "m/s")
+        # print("Vertical Speed: " + str(vertical_speed) + "m/s")
 
         ########################################################
         ###############     LAUNCH DETECTION     ###############
