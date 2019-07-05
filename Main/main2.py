@@ -425,7 +425,7 @@ try:
             pass
 
 
-        TELEM1.send(dataArray)
+        TELEM1.send(str(dataArray))
 
 
 except KeyboardInterrupt:
