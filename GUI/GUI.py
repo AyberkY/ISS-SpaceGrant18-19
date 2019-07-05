@@ -11,14 +11,6 @@ def cursesTest(stdscr):
 
     TELEM1 = RFM9X.RFM9X()
 
-    start_x = 25
-    start_y = 100
-    scr_height = 10
-    scr_width = 10
-
-    stdscr = curses.initscr()
-    stdscr.clear()
-    win = curses.newwin(25,100,10,10)
 
     curses.init_pair(1,curses.COLOR_GREEN,curses.COLOR_BLACK)
     curses.init_pair(2,curses.COLOR_RED,curses.COLOR_BLACK)
