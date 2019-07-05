@@ -286,7 +286,7 @@ try:
             launch_detect_possible = True
             T0 = time.time() * 1000
 
-        if state == 1 and launch_detect_possible and abs(datArray[16]) < launch_detect_threshold:
+        if state == 1 and launch_detect_possible and abs(dataArray[16]) < launch_detect_threshold:
             launch_detect_possible = False
 
         if state == 1 and launch_detect_possible and abs(dataArray[16]) > launch_detect_threshold:
