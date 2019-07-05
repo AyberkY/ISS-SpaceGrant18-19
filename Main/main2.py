@@ -282,7 +282,7 @@ try:
     while True:
         dataArray = gatherData()
 
-        if state == 1 and !launch_detect_possible and abs(dataArray[16]) > launch_detect_threshold:
+        if state == 1 and not launch_detect_possible and abs(dataArray[16]) > launch_detect_threshold:
             launch_detect_possible = True
             T0 = time.time() * 1000
 
