@@ -110,11 +110,11 @@ class H3LIS331DL():
 
 #from H3LIS331DL import H3LIS331DL
 h3lis331dl = H3LIS331DL()
+h3lis331dl.select_datarate()
+h3lis331dl.select_data_config()
+time.sleep(0.2)
 
 while True:
-	h3lis331dl.select_datarate()
-	h3lis331dl.select_data_config()
-	time.sleep(0.2)
 	accl = h3lis331dl.read_accl()
 	print ("Acceleration in X-Axis : %d" %(accl['x']))
 	print ("Acceleration in Y-Axis : %d" %(accl['y']))
