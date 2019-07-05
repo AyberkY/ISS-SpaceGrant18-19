@@ -279,6 +279,7 @@ filehandle.write("hour,minute,second,microsecond,state,latitude,longitude,altitu
 filehandle.close()
 
 launch_detect_possible = False
+coast_detect_possible = False
 
 try:
     while True:
