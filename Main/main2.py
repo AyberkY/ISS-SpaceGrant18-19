@@ -17,6 +17,10 @@ launch_detect_hysteresis = 5        #Launch detection hysteresis value in millis
 launch_detect_threshold = 1.5       #Launch detection threshold acceleration value in Gs
 coast_detect_hysteresis = 5         #Coast detection hysteresis value in milliseconds
 coast_detect_threshold = 0.5        #Coast detection threshold acceleration value in Gs
+apogee_detect_hysteresis = 500      #Apogee detection hysteresis value in milliseconds
+apogee_detect_threshold = 5         #Apogee detection threshold value in meters per second
+max_drogue_speed = 20               #Maximum descent speed to be considered under droge parachute
+max_main_speed = 5                  #Maximum main speed to be considered under main parachute
 
 filename = str(datetime.datetime.now()) + ".txt"
 filehandle = open(filename, 'w')
@@ -279,6 +283,10 @@ dataArray = gatherData()
 
 launch_detect_possible = False
 coast_detect_possible = False
+apogee_detect_possible = False
+descent_detect_possible = False
+descent_detected = False
+
 prev_time = time.time()
 prev_altitude = dataArray[10]
 
@@ -323,6 +331,44 @@ try:
         if state == 2 and coast_detect_possible and abs(dataArray[13]) < coast_detect_threshold:
             if ((time.time() * 1000) - T0) > coast_detect_hysteresis:
                 state = 3
+
+        ########################################################
+        ###############     APOGEE DETECTION     ###############
+        ########################################################
+
+        if state == 3 and not apogee_detect_possible and abs(vertical_speed) < apogee_detect_threshold:
+            apogee_detect_possible = True
+            T0 = time.time() * 1000
+
+        if state == 3 and apogee_detect_possible and abs(vertical_speed) > apogee_detect_threshold:
+            apogee_detect_possible = False
+
+        if state == 3 and apogee_detect_possible and abs(vertical_speed) < apogee_detect_threshold:
+            if ((time.time() * 1000) - T0) > apogee_detect_hysteresis:
+                state = 4
+
+        ########################################################
+        ###############  DESCENT CLASSIFICATION  ###############
+        ########################################################
+
+        if state == 4 and not descent_detect_possible and abs(vertical_speed) > apogee_detect_threshold:
+            descent_detect_possible = True
+            T0 = time.time() * 1000
+
+        if state == 4 and descent_detect_possible and abs(vertical_speed) < apogee_detect_threshold:
+            descent_detect_possible = False
+
+        if state == 4 and apogee_detect_possible and abs(vertical_speed) > apogee_detect_threshold:
+            if ((time.time() * 1000) - T0) > apogee_detect_hysteresis:
+                descent_detected = True
+
+        if descent_detected:
+            if abs(vertical_speed) < max_main_speed:
+                state = 6
+            elif abs(vertical_speed) > max_main_speed and abs(vertical_speed) < max_drogue_speed:
+                state = 5
+            else:
+                state = 7
 
         try:
             filehandle = open(filename,'a')
