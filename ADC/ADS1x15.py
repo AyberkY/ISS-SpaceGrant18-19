@@ -321,7 +321,7 @@ class ADS1x15(object):
             return self.read_adc(0)
         elif channel == 1:
             # 32767 @ 8.26
-            return (round(((self.read_adc(1)/32767) * 8.260), 4))
+            return self.read_adc(1)
         elif channel == 2:
             # 22520 @ 4.154
             return (round(((self.read_adc(2)/22520) * 4.154), 4))
