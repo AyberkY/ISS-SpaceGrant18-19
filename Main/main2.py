@@ -290,7 +290,7 @@ try:
         ###############   ONBOARD CALCULATIONS   ###############
         ########################################################
 
-        vetical_speed = (dataArray[10] - prev_altitude) / (time.time() - prev_time)
+        vertical_speed = (dataArray[10] - prev_altitude) / (time.time() - prev_time)
         dataArray[19] = vertical_speed
         print("Vertical Speed: " + str(vertical_speed) + "m/s")
 
