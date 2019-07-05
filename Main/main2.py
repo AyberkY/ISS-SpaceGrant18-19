@@ -1,4 +1,4 @@
-168import sys, time, datetime, picamera
+import sys, time, datetime, picamera
 
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/ADC')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Barometer')
