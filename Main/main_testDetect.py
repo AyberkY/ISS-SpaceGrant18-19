@@ -66,9 +66,9 @@ States of flight computer:
 """
 state = 0
 
-dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-
 def gatherData():
+
+    dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
     dataArray[0] = time.time()
     dataArray[1] = state
@@ -271,28 +271,16 @@ else:
 
 GLED.setHigh()
 
-filehandle.write("unix_timestamp,state,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,pitot,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z,vertical_speed\n")
+filehandle.write("unix_timestamp,state,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,pitot,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z\n")
 
 filehandle.close()
 
-dataArray = gatherData()
-
 launch_detect_possible = False
 coast_detect_possible = False
-prev_time = time.time()
-prev_altitude = dataArray[10]
 
 try:
     while True:
         dataArray = gatherData()
-
-        ########################################################
-        ###############   ONBOARD CALCULATIONS   ###############
-        ########################################################
-
-        vetical_speed = (dataArray[10] - prev_altitude) / (time.time() - prev_time)
-        dataArray[19] = vertical_speed
-        print("Vertical Speed: " + str(vertical_speed) + "m/s")
 
         ########################################################
         ###############     LAUNCH DETECTION     ###############
@@ -308,6 +296,10 @@ try:
         if state == 1 and launch_detect_possible and abs(dataArray[13]) > launch_detect_threshold:
             if ((time.time() * 1000) - T0) > launch_detect_hysteresis:
                 state = 2
+                BUZZER.setHigh()
+                BLED.setHigh()
+                time.sleep(0.5)
+                BUZZER.setLow()
 
         ########################################################
         ###############      COAST DETECTION     ###############
@@ -323,6 +315,10 @@ try:
         if state == 2 and coast_detect_possible and abs(dataArray[13]) < coast_detect_threshold:
             if ((time.time() * 1000) - T0) > coast_detect_hysteresis:
                 state = 3
+                BUZZER.setHigh()
+                BLED.setHigh()
+                time.sleep(0.5)
+                BUZZER.setLow()
 
         try:
             filehandle = open(filename,'a')
