@@ -13,7 +13,8 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/LED')
 
 import ADS1x15, mpl3115a2, pitotSensor, GPS, mpu9250, RFM9X, LED
 
-launch_detect_hysteresis = 50     #Launch Detection Hysteresis value in microseconds
+launch_detect_hysteresis = 5       #Launch Detection Hysteresis value in milliseconds
+launch_detect_threshold = 1.5       #Launch detection threshold acceleration value in Gs
 
 filename = str(datetime.datetime.now()) + ".txt"
 filehandle = open(filename, 'w')
@@ -275,11 +276,26 @@ filehandle.write("hour,minute,second,microsecond,state,latitude,longitude,altitu
 
 filehandle.close()
 
+launch_detect_possible = False
+
 try:
     while True:
         dataArray = gatherData()
 
-        
+        if state == 1 and !launch_detect_possible and abs(dataArray[16]) > launch_detect_threshold:
+            launch_detect_possible = True
+            T0 = time.time() * 1000
+
+        if state == 1 and launch_detect_possible and abs(datArray[16]) < launch_detect_threshold:
+            launch_detect_possible = False
+
+        if state == 1 and launch_detect_possible and abs(dataArray[16]) > launch_detect_threshold:
+            if ((time.time() * 1000) - T0) > launch_detect_hysteresis:
+                state = 2
+                BUZZER.setHIGH()
+                BLED.setHIGH()
+                time.sleep(0.5)
+                BUZZER.setLOW()
 
         try:
             filehandle = open(filename,'a')
