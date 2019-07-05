@@ -11,9 +11,9 @@ try:
     while True:
         accel = IMU1.readAccel()
         print('')
-        print ("ax = " , ( accel['x'] ))
-        print " ay = " , ( accel['y'] )
-        print " az = " , ( accel['z'] )
+        print("ax = " + str(accel['x']))
+        print("ay = " + str(accel['y']))
+        print("az = " + str(accel['z']))
 
         #t = IMU1.timeElapsed(time.time())
         #print('TIME ELAPSED: ' + str(t)
