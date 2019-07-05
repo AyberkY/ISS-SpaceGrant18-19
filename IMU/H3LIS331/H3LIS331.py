@@ -82,6 +82,8 @@ class H3LIS331DL():
 		if xAccl > 32767 :
 			xAccl -= 65536
 
+		xAccl = (xAccl / 32767) * 100
+
 		"""Read data back from H3LIS331DL_REG_OUT_Y_L(0x2A), 2 bytes
 		Y-Axis Accl LSB, Y-Axis Accl MSB"""
 		data0 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_Y_L)
@@ -91,6 +93,8 @@ class H3LIS331DL():
 		if yAccl > 32767 :
 			yAccl -= 65536
 
+		yAccl = (yAccl / 32767) * 100
+
 		"""Read data back from H3LIS331DL_REG_OUT_Z_L(0x2C), 2 bytes
 		Z-Axis Accl LSB, Z-Axis Accl MSB"""
 		data0 = bus.read_byte_data(H3LIS331DL_DEFAULT_ADDRESS, H3LIS331DL_REG_OUT_Z_L)
@@ -99,6 +103,8 @@ class H3LIS331DL():
 		zAccl = data1 * 256 + data0
 		if zAccl > 32767 :
 			zAccl -= 65536
+
+		zAccl = (zAccl / 32767) * 100
 
 		return {'x' : xAccl, 'y' : yAccl, 'z' : zAccl}
 
