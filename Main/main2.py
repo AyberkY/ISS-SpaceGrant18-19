@@ -275,9 +275,12 @@ h3_z_offset /= 1000
 print("\n~~~~~~~~~~~CALIBRATING PITOT SENSOR~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~CALIBRATING PITOT SENSOR~~~~~~~~~~~\n")
 
-PITOT1.calPressure()
-filehandle.write("\tPITOT OFFSET:" + str(PITOT1.offset))
-print("PITOT OFFSET:" + str(PITOT1.offset) + "\n")
+try:
+    PITOT1.calPressure()
+    filehandle.write("\tPITOT OFFSET:" + str(PITOT1.offset))
+    print("PITOT OFFSET:" + str(PITOT1.offset) + "\n")
+except:
+    print("\n~~~~~~~~~~~PITOT CALIBRATION FAILED~~~~~~~~~~~\n")
 
 print("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~STARTING VIDEO RECORDING~~~~~~~~~~~\n")
