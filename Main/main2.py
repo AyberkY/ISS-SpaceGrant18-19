@@ -6,12 +6,13 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/PITOT')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Camera')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/GPS')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/IMU/MPU9250')
+sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/IMU/H3LIS331')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Memory')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Telemetry')
 sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/LED')
 
 
-import ADS1x15, mpl3115a2, pitotSensor, GPS, mpu9250, RFM9X, LED
+import ADS1x15, mpl3115a2, pitotSensor, GPS, mpu9250, H3LIS331, RFM9X, LED
 
 launch_detect_hysteresis = 5        #Launch detection hysteresis value in milliseconds
 launch_detect_threshold = 1.5       #Launch detection threshold acceleration value in Gs
@@ -128,6 +129,7 @@ def gatherData():
         dataArray[12] = 0
 
 ###############__________IMU1__________###############
+#                     (MPU9250)
     try:
         accelData = IMU1.readAccel()
         gyroData = IMU1.readGyro()
