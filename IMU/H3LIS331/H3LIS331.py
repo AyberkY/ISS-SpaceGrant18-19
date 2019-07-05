@@ -121,6 +121,6 @@ while True:
 	print ("Acceleration in Y-Axis : %f" %(accl['y']))
 	print ("Acceleration in Z-Axis : %f" %(accl['z']))
 	print (" ************************************ ")
-	time = time.time()
-	print ("Rate: %f" %(1/(time - prev_time)))
-	prev_time = time
+	current_time = time.time()
+	print ("Rate: %f" %(1/(current_time - prev_time)))
+	prev_time = current_time
