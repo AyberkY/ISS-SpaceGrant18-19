@@ -1,6 +1,6 @@
-import smbus2, time, math
+import smbus, time, math
 
-bus = smbus2.SMBus(1)
+bus = smbus.SMBus(1)
 
 class PITOT:
     def __init__(self):
