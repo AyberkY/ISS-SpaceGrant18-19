@@ -202,7 +202,7 @@ dataGyroZ = []
 def writeData(dataArr):
 
     #Data Array
-    dataTime  += [dataFormat(dataArr[0])]
+    dataTime  = dataTime + [dataFormat(dataArr[0])]
     dataLat   += [dataFormat(dataArr[2])]
     dataLot   += [dataFormat(dataArr[3])]
     dataAlt   += [dataFormat(dataArr[4])]
