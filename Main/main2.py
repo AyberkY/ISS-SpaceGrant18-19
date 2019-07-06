@@ -174,7 +174,7 @@ print("\n~~~~~~~~~~~INITIALIZING SUB-SYSTEMS~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~INITIALIZING SUB-SYSTEMS~~~~~~~~~~~\n")
 
 try:
-GPS1 = GPS.GPS()
+    GPS1 = GPS.GPS()
 except:
     print("COULD NOT CONNECT TO GPS")
     filehandle.write('COULD NOT CONNECT TO GPS\n')
