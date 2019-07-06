@@ -66,10 +66,10 @@ def cursesTest(stdscr):
 
         else:
 
-            stdscr.addstr(5,5,str(0)+"   ")
-            stdscr.addstr(6,5,str(0)+"   ")
-            stdscr.addstr(7,5,str(0)+"   ")
-            stdscr.addstr(8,5,str(0)+"   ")
+            stdscr.addstr(5,5,str(data[2])+"   ")
+            stdscr.addstr(6,5,str(data[3])+"   ")
+            stdscr.addstr(7,5,str(data[4])+"   ")
+            stdscr.addstr(8,5,str(data[5])+"   ")
 
 
 def main():
