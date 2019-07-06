@@ -29,18 +29,18 @@ def cursesTest(stdscr):
     stdscr.addstr(9,0,"read_ADC(2): ")
 
     #Column 3
-    stdscr.addstr(0,30,"baro_pressure: ")
-    stdscr.addstr(1,30,"baro_altitude: ")
-    stdscr.addstr(2,30,"Temp (C): ")
+    stdscr.addstr(0,40,"baro_pressure: ")
+    stdscr.addstr(1,40,"baro_altitude: ")
+    stdscr.addstr(2,40,"Temp (C): ")
 
-    stdscr.addstr(4,30,"Accel x: ")
-    stdscr.addstr(5,30,"Accel y: ")
-    stdscr.addstr(6,30,"Accel z: ")
-    stdscr.addstr(7,30,"Gyro x: ")
-    stdscr.addstr(8,30,"Gyro y: ")
-    stdscr.addstr(9,30,"Gyro z: ")
+    stdscr.addstr(4,40,"Accel x: ")
+    stdscr.addstr(5,40,"Accel y: ")
+    stdscr.addstr(6,40,"Accel z: ")
+    stdscr.addstr(7,40,"Gyro x: ")
+    stdscr.addstr(8,40,"Gyro y: ")
+    stdscr.addstr(9,40,"Gyro z: ")
 
-    stdscr.addstr(12,30,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
+    stdscr.addstr(12,40,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
 
     while True:
         try:
@@ -67,27 +67,27 @@ def cursesTest(stdscr):
                 stdscr.addstr(8,15,str(data[7])+"   ")
                 stdscr.addstr(9,15,str(data[8])+"   ")
 
-                stdscr.addstr(0,45,str(data[9])+"   ")
-                stdscr.addstr(1,45,str(data[10])+"   ")
-                stdscr.addstr(2,45,str(data[11])+"   ")
+                stdscr.addstr(0,55,str(data[9])+"   ")
+                stdscr.addstr(1,55,str(data[10])+"   ")
+                stdscr.addstr(2,55,str(data[11])+"   ")
 
-                stdscr.addstr(4,45,str(data[13])+"   ")
-                stdscr.addstr(5,45,str(data[14])+"   ")
-                stdscr.addstr(6,45,str(data[15])+"   ")
-                stdscr.addstr(7,45,str(data[16])+"   ")
-                stdscr.addstr(8,45,str(data[17])+"   ")
-                stdscr.addstr(9,45,str(data[18])+"   ")
+                stdscr.addstr(4,55,str(data[13])+"   ")
+                stdscr.addstr(5,55,str(data[14])+"   ")
+                stdscr.addstr(6,55,str(data[15])+"   ")
+                stdscr.addstr(7,55,str(data[16])+"   ")
+                stdscr.addstr(8,55,str(data[17])+"   ")
+                stdscr.addstr(9,55,str(data[18])+"   ")
 
             else:
                 pass
-                # stdscr.addstr(5,45,str(0)+"   ")
-                # stdscr.addstr(6,45,str(0)+"   ")
-                # stdscr.addstr(7,45,str(0)+"   ")
-                # stdscr.addstr(8,45,str(0)+"   ")
+                # stdscr.addstr(5,55,str(0)+"   ")
+                # stdscr.addstr(6,55,str(0)+"   ")
+                # stdscr.addstr(7,55,str(0)+"   ")
+                # stdscr.addstr(8,55,str(0)+"   ")
                 #
-                # stdscr.addstr(10,45,str(0)+"   ")
-                # stdscr.addstr(11,45,str(0)+"   ")
-                # stdscr.addstr(12,45,str(0)+"   ")
+                # stdscr.addstr(10,55,str(0)+"   ")
+                # stdscr.addstr(11,55,str(0)+"   ")
+                # stdscr.addstr(12,55,str(0)+"   ")
                 #
                 # stdscr.addstr(0,75,str(0)+"   ")
                 # stdscr.addstr(1,75,str(0)+"   ")
