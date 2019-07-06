@@ -61,6 +61,17 @@ def cursesTest(stdscr):
     stdscr.addstr(2,80,"Accel z: ")
     stdscr.addstr(3,90,"(H3LIS331)")
 
+    stdscr.addstr(5,80,"MAX_ACCEL: ")
+    stdscr.addstr(6,80,"MAX_VELO: ")
+    stdscr.addstr(7,80,"MAX_ALT: ")
+    stdscr.addstr(8,80,"COAST_DUR: ")
+    stdscr.addstr(9,80,"MAX_ALT: ")
+
+    stdscr.addstr(11,80,"BOOST: ")
+    stdscr.addstr(12,80,"COAST: ")
+    stdscr.addstr(13,80,"APOGEE: ")
+
+
     stdscr.addstr(19,15,"STATE: ",curses.A_BOLD)
     stdscr.addstr(19,50,"SUCCESSFULL_CHARGE: ",curses.A_BOLD)
     stdscr.addstr(19,100,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
@@ -106,6 +117,16 @@ def cursesTest(stdscr):
                 stdscr.addstr(0,95,str(data[19])+"   ")
                 stdscr.addstr(1,95,str(data[20])+"   ")
                 stdscr.addstr(2,95,str(data[21])+"   ")
+
+                stdscr.addstr(5,95,str(max_accel)+"    ")
+                stdscr.addstr(6,95,str(max_velocity)+"    ")
+                stdscr.addstr(7,95,str(max_altitude)+"    ")
+                stdscr.addstr(8,95,str(coast_duration)+"    ")
+                stdscr.addstr(9,95,str(max_altitude)+"    ")
+
+                stdscr.addstr(11,95,str(boost_detected)+"    ")
+                stdscr.addstr(12,95,str(coast_detected)+"    ")
+                stdscr.addstr(13,95,str(apogee_detected)+"    ")
 
                 if data[1] == "0":
                     stdscr.addstr(19,25,"INITIALIZING   ",curses.color_pair(2) | curses.A_BOLD)
