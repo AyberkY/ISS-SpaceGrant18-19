@@ -219,7 +219,7 @@ def writeData(dataArr):
     dataGyroZ += [dataFormat(dataArray[20])]
 
     #Write a page
-    if not (rangeLine < 8):
+    if not (rangeLine < 16):
         rangeLine = 0
 
         chip.write(hex(rangeTime ), hex(rangeSect), hex(rangePage), dataTime )
@@ -256,7 +256,7 @@ def writeData(dataArr):
         dataGyroZ = []
 
         #Next block
-        if not (rangeSect < 8):
+        if not (rangeSect < 16):
             rangeSect = 0
             rangeTime  += 1  #Time
             rangeLat   += 1  #Latitude
