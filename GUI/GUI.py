@@ -63,7 +63,7 @@ def cursesTest(stdscr):
 
     stdscr.addstr(15,15,"MAX_ACCEL: ")
     stdscr.addstr(15,45,"MAX_VELOCITY: ")
-    stdscr.addstr(15,75,"MAX_ALTITUDE")
+    stdscr.addstr(15,75,"MAX_ALTITUDE: ")
 
     stdscr.addstr(17,15,"BOOST_DUR: ")
     stdscr.addstr(17,45,"COAST_DUR: ")
