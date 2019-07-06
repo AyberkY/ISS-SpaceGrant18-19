@@ -424,9 +424,10 @@ try:
         except:
             pass
 
-
-        TELEM1.send(bytes(str(dataArray), "utf-8"))
-
+        try:
+            TELEM1.send(bytes(str(dataArray), "utf-8"))
+        except:
+            pass
 
 except KeyboardInterrupt:
     filehandle.close()
