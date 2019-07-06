@@ -98,7 +98,7 @@ class spiflash(object):
             sleep_ms(5)
 
     def read_UID(self): #added
-        return self.spi.xfer2([RUID]) #skip 4 first bytes (dummies)
+        return self.spi.xfer2([RUID]) #skip 4 first bytes ()
 
     #helpers -------------------------------------------------------------------------------
     def print_status(self,status):
@@ -202,21 +202,21 @@ dataGyroZ = []
 def writeData(dataArr):
 
     #Data Array
-    dataTime  += [[hex(int(decToHex(dataArray[0]))), hex(int(decToHex(dataArray[1]))), hex(int(decToHex(dataArray[2])))] + dataFormat(dataArray[3])]
-    dataLat   += [dataFormat(dataArray[4])]
-    dataLot   += [dataFormat(dataArray[5])]
-    dataAlt   += [dataFormat(dataArray[6])]
-    dataSat   += [dataFormat_int(dataArray[7])]
-    dataBPres += [dataFormat(dataArray[11])]
-    dataBAlt  += [dataFormat(dataArray[12])]
-    dataCTemp += [dataFormat(dataArray[13])]
-    dataPPres += [dataFormat(dataArray[14])]
-    dataAcclX += [dataFormat(dataArray[15])]
-    dataAcclY += [dataFormat(dataArray[16])]
-    dataAcclZ += [dataFormat(dataArray[17])]
-    dataGyroX += [dataFormat(dataArray[18])]
-    dataGyroY += [dataFormat(dataArray[19])]
-    dataGyroZ += [dataFormat(dataArray[20])]
+    dataTime  += [dataFormat(dataArr[0])]
+    dataLat   += [dataFormat(dataArr[2])]
+    dataLot   += [dataFormat(dataArr[3])]
+    dataAlt   += [dataFormat(dataArr[4])]
+    dataSat   += [dataFormat_int(dataArr[5])]
+    dataBPres += [dataFormat(dataArr[9])]
+    dataBAlt  += [dataFormat(dataArr[10])]
+    dataCTemp += [dataFormat(dataArr[11])]
+    dataPPres += [dataFormat(dataArr[12])]
+    dataAcclX += [dataFormat(dataArr[13])]
+    dataAcclY += [dataFormat(dataArr[14])]
+    dataAcclZ += [dataFormat(dataArr[15])]
+    dataGyroX += [dataFormat(dataArr[16])]
+    dataGyroY += [dataFormat(dataArr[17])]
+    dataGyroZ += [dataFormat(dataArr[18])]
 
     #Write a page
     if not (rangeLine < 16):
