@@ -233,7 +233,7 @@ except:
     Initialization_Error = True
 
 
-MEMORY = W25Q64.spiflash()
+MEMORY = W25Q64.spiflash(0, 0)
 MEMORY.erase_all()
 
 print("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
