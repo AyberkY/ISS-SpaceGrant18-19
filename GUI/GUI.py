@@ -93,21 +93,21 @@ def cursesTest(stdscr):
                 stdscr.addstr(2,95,str(data[20])+"   ")
 
                 if data[1] == "0":
-                    stdscr.addstr(15,10,"INITIALIZING",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(15,25,"INITIALIZING",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "1":
-                    stdscr.addstr(15,10,"PAD / IDLE",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(15,25,"PAD / IDLE",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "2":
-                    stdscr.addstr(15,10,"BOOST",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(15,25,"BOOST",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "3":
-                    stdscr.addstr(15,10,"COAST",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(15,25,"COAST",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "4":
-                    stdscr.addstr(15,10,"APOGEE",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(15,25,"APOGEE",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "5":
-                    stdscr.addstr(15,10,"UNDER DROGUE",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(15,25,"UNDER DROGUE",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "6":
-                    stdscr.addstr(15,10,"UNDER MAIN",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(15,25,"UNDER MAIN",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "7":
-                    stdscr.addstr(15,10,"BALLISTIC BALLISTIC BALLISTIC",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(15,25,"BALLISTIC BALLISTIC BALLISTIC",curses.color_pair(2) | curses.A_BOLD)
 
                 filehandle.write(str(data))
 
