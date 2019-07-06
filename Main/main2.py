@@ -156,8 +156,7 @@ def gatherData():
 ###############__________IMU2__________###############
 #                    (H3LIS331DL)
         try:
-            accelData = IMU2.readAccel()
-            gyroData = IMU2.readGyro()
+            accelData = IMU2.read_accl()
 
             dataArray[19] = accelData['x'] - h3_x_offset
             dataArray[20] = accelData['y'] - h3_y_offset
