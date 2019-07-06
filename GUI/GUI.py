@@ -54,58 +54,58 @@ def cursesTest(stdscr):
     stdscr.addstr(12,60,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
 
     while True:
+        try:
+            [data, rssi] = TELEM1.receive()
 
-        [data, rssi] = TELEM1.receive()
+            if len(data) != 0:
 
-        data = data[1:-1].split(',')
+                #Fake connectivity data; replace ifs with try/except when real data is available
+                GPS_bool = bool(random.getrandbits(1))
+                ADC_bool = bool(random.getrandbits(1))
+                Baro_bool = bool(random.getrandbits(1))
+                IMU_bool = bool(random.getrandbits(1))
+                Telem_bool = bool(random.getrandbits(1))
+                Cam_bool = bool(random.getrandbits(1))
 
-        if len(data) != 0:
+                stdscr.refresh()
+                curses.start_color()
 
-            #Fake connectivity data; replace ifs with try/except when real data is available
-            GPS_bool = bool(random.getrandbits(1))
-            ADC_bool = bool(random.getrandbits(1))
-            Baro_bool = bool(random.getrandbits(1))
-            IMU_bool = bool(random.getrandbits(1))
-            Telem_bool = bool(random.getrandbits(1))
-            Cam_bool = bool(random.getrandbits(1))
+                stdscr.addstr(0,45,str(random.randint(0,100))+"   ")
+                stdscr.addstr(1,45,str(random.randint(0,100))+"   ")
+                stdscr.addstr(2,45,str(random.randint(0,100))+"   ")
+                stdscr.addstr(3,45,str(random.randint(0,100))+"   ")
 
-            stdscr.refresh()
-            curses.start_color()
+                stdscr.addstr(5,45,str(data[2])+"   ")
+                stdscr.addstr(6,45,str(data[3])+"   ")
+                stdscr.addstr(7,45,str(data[4])+"   ")
+                stdscr.addstr(8,45,str(data[5])+"   ")
 
-            stdscr.addstr(0,45,str(random.randint(0,100))+"   ")
-            stdscr.addstr(1,45,str(random.randint(0,100))+"   ")
-            stdscr.addstr(2,45,str(random.randint(0,100))+"   ")
-            stdscr.addstr(3,45,str(random.randint(0,100))+"   ")
+                stdscr.addstr(10,45,str(data[6])+"   ")
+                stdscr.addstr(11,45,str(data[7])+"   ")
+                stdscr.addstr(12,45,str(data[8])+"   ")
 
-            stdscr.addstr(5,45,str(data[2])+"   ")
-            stdscr.addstr(6,45,str(data[3])+"   ")
-            stdscr.addstr(7,45,str(data[4])+"   ")
-            stdscr.addstr(8,45,str(data[5])+"   ")
+                stdscr.addstr(0,75,str(data[9])+"   ")
+                stdscr.addstr(1,75,str(data[10])+"   ")
+                stdscr.addstr(2,75,str(data[11])+"   ")
 
-            stdscr.addstr(10,45,str(random.randint(0,100))+"   ")
-            stdscr.addstr(11,45,str(random.randint(0,100))+"   ")
-            stdscr.addstr(12,45,str(random.randint(0,100))+"   ")
+                stdscr.addstr(4,75,str(data[13])+"   ")
+                stdscr.addstr(5,75,str(data[14])+"   ")
+                stdscr.addstr(6,75,str(data[15])+"   ")
+                stdscr.addstr(7,75,str(data[16])+"   ")
+                stdscr.addstr(8,75,str(data[17])+"   ")
+                stdscr.addstr(9,75,str(data[18])+"   ")
 
-            stdscr.addstr(0,75,str(random.randint(0,100))+"   ")
-            stdscr.addstr(1,75,str(random.randint(0,100))+"   ")
-            stdscr.addstr(2,75,str(random.randint(0,100))+"   ")
+                time.sleep(0.02)
 
-            stdscr.addstr(4,75,str(random.randint(0,100))+"   ")
-            stdscr.addstr(5,75,str(random.randint(0,100))+"   ")
-            stdscr.addstr(6,75,str(random.randint(0,100))+"   ")
-            stdscr.addstr(7,75,str(random.randint(0,100))+"   ")
-            stdscr.addstr(8,75,str(random.randint(0,100))+"   ")
-            stdscr.addstr(9,75,str(random.randint(0,100))+"   ")
+            else:
 
-            time.sleep(0.25)
+                stdscr.addstr(5,45,str(0)+"   ")
+                stdscr.addstr(6,45,str(0)+"   ")
+                stdscr.addstr(7,45,str(0)+"   ")
+                stdscr.addstr(8,45,str(0)+"   ")
 
-        else:
-
-            stdscr.addstr(5,45,str(0)+"   ")
-            stdscr.addstr(6,45,str(0)+"   ")
-            stdscr.addstr(7,45,str(0)+"   ")
-            stdscr.addstr(8,45,str(0)+"   ")
-
+        except:
+            pass
 
 def main():
     curses.wrapper(cursesTest)
