@@ -4,7 +4,7 @@ import H3LIS331
 import sys
 
 
-from H3LIS331DL import H3LIS331DL
+# from H3LIS331DL import H3LIS331DL
 h3lis331dl = H3LIS331DL()
 h3lis331dl.select_datarate()
 h3lis331dl.select_data_config()
