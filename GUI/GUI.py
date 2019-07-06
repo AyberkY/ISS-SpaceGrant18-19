@@ -62,7 +62,7 @@ def cursesTest(stdscr):
                 for i in range(len(data)):
                     dataStr += data[i]
 
-                data = dataStr[1:-1].split(' ,')
+                data = dataStr[1:-1].split(', ')
 
                 #Fake connectivity data; replace ifs with try/except when real data is available
                 GPS_bool = bool(random.getrandbits(1))
