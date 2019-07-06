@@ -88,9 +88,9 @@ def cursesTest(stdscr):
                 stdscr.addstr(4,55,str(data[17])+"   ")
                 stdscr.addstr(5,55,str(data[18])+"   ")
 
-                stdscr.addstr(0,95,str(data[18])+"   ")
-                stdscr.addstr(1,95,str(data[19])+"   ")
-                stdscr.addstr(2,95,str(data[20])+"   ")
+                stdscr.addstr(0,95,str(data[19])+"   ")
+                stdscr.addstr(1,95,str(data[20])+"   ")
+                stdscr.addstr(2,95,str(data[21])+"   ")
 
                 if data[1] == "0":
                     stdscr.addstr(15,25,"INITIALIZING",curses.color_pair(2) | curses.A_BOLD)
