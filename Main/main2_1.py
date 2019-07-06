@@ -232,14 +232,9 @@ except:
     filehandle.write('COULD NOT CONNECT TO CAMERA\n')
     Initialization_Error = True
 
-try:
-    MEMORY = W25Q64.spiflash()
-    MEMORY.erase_all()
-except:
-    print("COULD NOT CONNECT TO MEMORY")
-    filehandle.write('COULD NOT CONNECT TO MEMORY\n')
-    Initialization_Error = True
 
+MEMORY = W25Q64.spiflash()
+MEMORY.erase_all()
 
 print("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~INITIALIZATION COMPLETE~~~~~~~~~~~\n")
