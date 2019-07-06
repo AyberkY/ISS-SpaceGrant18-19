@@ -65,12 +65,12 @@ def cursesTest(stdscr):
     stdscr.addstr(15,45,"MAX_VELOCITY: ")
     stdscr.addstr(15,75,"MAX_ALTITUDE: ")
 
-    stdscr.addstr(17,15,"BOOST_DUR: ")
-    stdscr.addstr(17,45,"COAST_DUR: ")
+    stdscr.addstr(16,15,"BOOST_DUR: ")
+    stdscr.addstr(16,45,"COAST_DUR: ")
 
-    stdscr.addstr(19,15,"STATE: ",curses.A_BOLD)
-    stdscr.addstr(19,50,"SUCCESSFULL_CHARGE: ",curses.A_BOLD)
-    stdscr.addstr(19,100,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
+    stdscr.addstr(17,15,"STATE: ",curses.A_BOLD)
+    stdscr.addstr(17,50,"SUCCESSFULL_CHARGE: ",curses.A_BOLD)
+    stdscr.addstr(17,100,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
 
     while True:
         try:
@@ -118,32 +118,32 @@ def cursesTest(stdscr):
                 stdscr.addstr(15,60,str(max_velocity)+"   ")
                 stdscr.addstr(15,90,str(max_altitude)+"   ")
 
-                stdscr.addstr(17,30,str(boost_duration)+"   ")
-                stdscr.addstr(17,60,str(coast_duration)+"   ")
+                stdscr.addstr(16,30,str(boost_duration)+"   ")
+                stdscr.addstr(16,60,str(coast_duration)+"   ")
 
                 if data[1] == "0":
-                    stdscr.addstr(19,25,"INITIALIZING   ",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(17,25,"INITIALIZING   ",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "1":
-                    stdscr.addstr(19,25,"PAD / IDLE     ",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(17,25,"PAD / IDLE     ",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "2":
-                    stdscr.addstr(19,25,"BOOST          ",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(17,25,"BOOST          ",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "3":
-                    stdscr.addstr(19,25,"COAST          ",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(17,25,"COAST          ",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "4":
-                    stdscr.addstr(19,25,"APOGEE         ",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(17,25,"APOGEE         ",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "5":
-                    stdscr.addstr(19,25,"UNDER DROGUE   ",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(17,25,"UNDER DROGUE   ",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "6":
-                    stdscr.addstr(19,25,"UNDER MAIN     ",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(17,25,"UNDER MAIN     ",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "7":
-                    stdscr.addstr(19,25,"BALLISTIC BALLISTIC BALLISTIC",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(17,25,"BALLISTIC BALLISTIC BALLISTIC",curses.color_pair(2) | curses.A_BOLD)
 
                 if data[23] == 1:
-                    stdscr.addstr(19,70,"MAIN",curses.color_pair(1) | curses.A_BOLD)
+                    stdscr.addstr(17,70,"MAIN",curses.color_pair(1) | curses.A_BOLD)
                 elif data[23] == 2:
-                    stdscr.addstr(19,70,"BACKUP",curses.color_pair(1) | curses.A_BOLD)
+                    stdscr.addstr(17,70,"BACKUP",curses.color_pair(1) | curses.A_BOLD)
                 else:
-                    stdscr.addstr(19,70,"NONE",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(17,70,"NONE",curses.color_pair(2) | curses.A_BOLD)
 
 
                 if abs(data[13]) > max_accel:
