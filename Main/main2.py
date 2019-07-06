@@ -22,6 +22,8 @@ apogee_detect_hysteresis = 100      #Apogee detection hysteresis value in millis
 apogee_detect_threshold = 5         #Apogee detection threshold value in meters per second
 max_drogue_speed = 20               #Maximum descent speed to be considered under droge parachute
 max_main_speed = 5                  #Maximum main speed to be considered under main parachute
+sep_detect_threshold = 0.5
+sep_detect_hysteresis = 1
 
 h3_x_offset = 0                     #H3LIS331DL X axis offset value
 h3_y_offset = 0                     #H3LIS331DL Y axis offset value
@@ -75,7 +77,7 @@ States of flight computer:
 """
 state = 0
 
-dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 def gatherData():
 
@@ -330,6 +332,10 @@ coast_detect_possible = False
 apogee_detect_possible = False
 descent_detect_possible = False
 descent_detected = False
+sep_detect_possible = False
+sep_detected = False
+sep_detect_time = 0
+successfull_charge = 0
 
 prev_time = time.time()
 prev_altitude = dataArray[10]
@@ -413,6 +419,27 @@ try:
                 state = 5
             else:
                 state = 7
+
+        #########################################################
+        ############### SEPERATION CLASSIFICATION ###############
+        #########################################################
+
+        if state == 4 and not sep_detect_possible and abs(dataArray[13]) > sep_detect_threshold:
+            sep_detect_possible = Distributed
+            T0_2 = time.time() * 1000
+
+        if state == 4 and sep_detect_possible and abs(dataArray[13]) < sep_detect_threshold:
+            sep_detect_possible = False
+
+        if state == 4 and sep_detect_possible and abs(dataArray[13]) > sep_detect_threshold:
+            if ((time.time() * 1000) - T0_2) > sep_detect_hysteresis:
+                sep_detected = True
+                if vertical_speed < -5:
+                    dataArray[23] = 1
+                else:
+                    dataArray[23] = 2
+
+
 
         try:
             filehandle = open(filename,'a')

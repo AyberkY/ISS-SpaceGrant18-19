@@ -52,7 +52,8 @@ def cursesTest(stdscr):
     stdscr.addstr(3,90,"(H3LIS331)")
 
     stdscr.addstr(15,15,"STATE: ",curses.A_BOLD)
-    stdscr.addstr(15,80,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
+    stdscr.addstr(15,50,"SUCCESSFULL_CHARGE: ",curses.A_BOLD)
+    stdscr.addstr(15,100,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
 
     while True:
         try:
@@ -112,6 +113,14 @@ def cursesTest(stdscr):
                     stdscr.addstr(15,25,"UNDER MAIN     ",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "7":
                     stdscr.addstr(15,25,"BALLISTIC BALLISTIC BALLISTIC",curses.color_pair(2) | curses.A_BOLD)
+
+                if data[23] == 1:
+                    stdscr.addstr(15,70,"MAIN",curses.color_pair(1) | curses.A_BOLD)
+                elif data[23] == 2:
+                    stdscr.addstr(15,70,"BACKUP",curses.color_pair(1) | curses.A_BOLD)
+                else:
+                    stdscr.addstr(15,70,"BACKUP",curses.color_pair(2) | curses.A_BOLD)
+
 
                 filehandle.write(str(data))
 
