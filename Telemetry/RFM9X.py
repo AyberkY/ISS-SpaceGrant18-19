@@ -29,6 +29,6 @@ class RFM9X:
         if packet is None:
             return [[], 0]
         else:
-            data = str(packet, 'utf-8')
+            data = str(packet)
             rssi = self.rfm9x.rssi
             return [data, rssi]
