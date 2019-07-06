@@ -11,8 +11,6 @@ def cursesTest(stdscr):
 
     TELEM1 = RFM9X.RFM9X()
 
-    [data, rssi] = TELEM1.receive()
-
     curses.init_pair(1,curses.COLOR_GREEN,curses.COLOR_BLACK)
     curses.init_pair(2,curses.COLOR_RED,curses.COLOR_BLACK)
     curses.init_pair(3,curses.COLOR_MAGENTA,curses.COLOR_BLACK)
@@ -56,43 +54,48 @@ def cursesTest(stdscr):
     stdscr.addstr(12,60,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
 
     while True:
-        #Fake connectivity data; replace ifs with try/except when real data is available
-        GPS_bool = bool(random.getrandbits(1))
-        ADC_bool = bool(random.getrandbits(1))
-        Baro_bool = bool(random.getrandbits(1))
-        IMU_bool = bool(random.getrandbits(1))
-        Telem_bool = bool(random.getrandbits(1))
-        Cam_bool = bool(random.getrandbits(1))
 
-        stdscr.refresh()
-        curses.start_color()
+        [data, rssi] = TELEM1.receive()
 
-        stdscr.addstr(0,45,str(random.randint(0,100))+"   ")
-        stdscr.addstr(1,45,str(random.randint(0,100))+"   ")
-        stdscr.addstr(2,45,str(random.randint(0,100))+"   ")
-        stdscr.addstr(3,45,str(random.randint(0,100))+"   ")
+        if type(data) != None:
 
-        stdscr.addstr(5,45,str(data[2])+"   ")
-        stdscr.addstr(6,45,str(data[3])+"   ")
-        stdscr.addstr(7,45,str(data[4])+"   ")
-        stdscr.addstr(8,45,str(data[5])+"   ")
+            #Fake connectivity data; replace ifs with try/except when real data is available
+            GPS_bool = bool(random.getrandbits(1))
+            ADC_bool = bool(random.getrandbits(1))
+            Baro_bool = bool(random.getrandbits(1))
+            IMU_bool = bool(random.getrandbits(1))
+            Telem_bool = bool(random.getrandbits(1))
+            Cam_bool = bool(random.getrandbits(1))
 
-        stdscr.addstr(10,45,str(random.randint(0,100))+"   ")
-        stdscr.addstr(11,45,str(random.randint(0,100))+"   ")
-        stdscr.addstr(12,45,str(random.randint(0,100))+"   ")
+            stdscr.refresh()
+            curses.start_color()
 
-        stdscr.addstr(0,75,str(random.randint(0,100))+"   ")
-        stdscr.addstr(1,75,str(random.randint(0,100))+"   ")
-        stdscr.addstr(2,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(0,45,str(random.randint(0,100))+"   ")
+            stdscr.addstr(1,45,str(random.randint(0,100))+"   ")
+            stdscr.addstr(2,45,str(random.randint(0,100))+"   ")
+            stdscr.addstr(3,45,str(random.randint(0,100))+"   ")
 
-        stdscr.addstr(4,75,str(random.randint(0,100))+"   ")
-        stdscr.addstr(5,75,str(random.randint(0,100))+"   ")
-        stdscr.addstr(6,75,str(random.randint(0,100))+"   ")
-        stdscr.addstr(7,75,str(random.randint(0,100))+"   ")
-        stdscr.addstr(8,75,str(random.randint(0,100))+"   ")
-        stdscr.addstr(9,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(5,45,str(data[2])+"   ")
+            stdscr.addstr(6,45,str(data[3])+"   ")
+            stdscr.addstr(7,45,str(data[4])+"   ")
+            stdscr.addstr(8,45,str(data[5])+"   ")
 
-        time.sleep(0.25)
+            stdscr.addstr(10,45,str(random.randint(0,100))+"   ")
+            stdscr.addstr(11,45,str(random.randint(0,100))+"   ")
+            stdscr.addstr(12,45,str(random.randint(0,100))+"   ")
+
+            stdscr.addstr(0,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(1,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(2,75,str(random.randint(0,100))+"   ")
+
+            stdscr.addstr(4,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(5,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(6,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(7,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(8,75,str(random.randint(0,100))+"   ")
+            stdscr.addstr(9,75,str(random.randint(0,100))+"   ")
+
+            time.sleep(0.25)
 
 def main():
     curses.wrapper(cursesTest)
