@@ -87,21 +87,25 @@ def cursesTest(stdscr):
                 stdscr.addstr(4,55,str(data[17])+"   ")
                 stdscr.addstr(5,55,str(data[18])+"   ")
 
+                stdscr.addstr(0,95,str(data[18])+"   ")
+                stdscr.addstr(1,95,str(data[19])+"   ")
+                stdscr.addstr(2,95,str(data[20])+"   ")
+
                 if data[1] == "0":
                     stdscr.addstr(15,10,"INITIALIZING",curses.color_pair(2) | curses.A_BOLD)
-                elif data[1] == "1"
+                elif data[1] == "1":
                     stdscr.addstr(15,10,"PAD / IDLE",curses.color_pair(2) | curses.A_BOLD)
-                elif data[1] == "2"
+                elif data[1] == "2":
                     stdscr.addstr(15,10,"BOOST",curses.color_pair(2) | curses.A_BOLD)
-                elif data[1] == "3"
+                elif data[1] == "3":
                     stdscr.addstr(15,10,"COAST",curses.color_pair(2) | curses.A_BOLD)
-                elif data[1] == "4"
+                elif data[1] == "4":
                     stdscr.addstr(15,10,"APOGEE",curses.color_pair(2) | curses.A_BOLD)
-                elif data[1] == "5"
+                elif data[1] == "5":
                     stdscr.addstr(15,10,"UNDER DROGUE",curses.color_pair(2) | curses.A_BOLD)
-                elif data[1] == "6"
+                elif data[1] == "6":
                     stdscr.addstr(15,10,"UNDER MAIN",curses.color_pair(2) | curses.A_BOLD)
-                elif data[1] == "7"
+                elif data[1] == "7":
                     stdscr.addstr(15,10,"BALLISTIC BALLISTIC BALLISTIC",curses.color_pair(2) | curses.A_BOLD)
 
                 filehandle.write(str(data))
