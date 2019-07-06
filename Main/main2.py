@@ -423,9 +423,9 @@ try:
         #########################################################
         ############### SEPERATION CLASSIFICATION ###############
         #########################################################
-
+        
         if state == 4 and not sep_detect_possible and abs(dataArray[13]) > sep_detect_threshold:
-            sep_detect_possible = Distributed
+            sep_detect_possible = True
             T0_2 = time.time() * 1000
 
         if state == 4 and sep_detect_possible and abs(dataArray[13]) < sep_detect_threshold:
