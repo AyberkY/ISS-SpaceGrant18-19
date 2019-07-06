@@ -119,10 +119,10 @@ def cursesTest(stdscr):
                 stdscr.addstr(8,75,str(0)+"   ")
                 stdscr.addstr(9,75,str(0)+"   ")
 
-        except:
+        except KeyboardInterrupt:
             pass
 
-        except KeyboardInterrupt:
+        except:
             pass
 
 def main():
