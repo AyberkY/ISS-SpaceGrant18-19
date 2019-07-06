@@ -109,7 +109,7 @@ def cursesTest(stdscr):
                 stdscr.addstr(12,45,str(0)+"   ")
 
                 stdscr.addstr(0,75,str(0)+"   ")
-                stdscr.addstr(1,75,str(0])+"   ")
+                stdscr.addstr(1,75,str(0)+"   ")
                 stdscr.addstr(2,75,str(0)+"   ")
 
                 stdscr.addstr(4,75,str(0)+"   ")
