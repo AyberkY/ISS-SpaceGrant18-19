@@ -20,9 +20,9 @@ coast_detect_hysteresis = 5         #Coast detection hysteresis value in millise
 coast_detect_threshold = 0.5        #Coast detection threshold acceleration value in Gs
 apogee_detect_hysteresis = 100      #Apogee detection hysteresis value in milliseconds
 apogee_detect_threshold = 5         #Apogee detection threshold value in meters per second
-max_drogue_speed = 20               #Maximum descent speed to be considered under droge parachute
-max_main_speed = 5                  #Maximum main speed to be considered under main parachute
-sep_detect_threshold = 0.5
+max_drogue_speed = 28               #Maximum descent speed to be considered under droge parachute
+max_main_speed = 70                  #Maximum main speed to be considered under main parachute
+sep_detect_threshold = 1
 sep_detect_hysteresis = 1
 
 h3_x_offset = 0                     #H3LIS331DL X axis offset value
@@ -335,7 +335,6 @@ descent_detected = False
 sep_detect_possible = False
 sep_detected = False
 sep_detect_time = 0
-successfull_charge = 0
 
 prev_time = time.time()
 prev_altitude = dataArray[10]
@@ -423,7 +422,7 @@ try:
         #########################################################
         ############### SEPERATION CLASSIFICATION ###############
         #########################################################
-        
+
         if state == 4 and not sep_detect_possible and abs(dataArray[13]) > sep_detect_threshold:
             sep_detect_possible = True
             T0_2 = time.time() * 1000
