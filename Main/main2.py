@@ -425,7 +425,7 @@ try:
             pass
 
         try:
-            TELEM1.send(bytes(dataArray, "utf-8"))
+            TELEM1.send(bytes(str(dataArray), "utf-8"))
         except:
             pass
 

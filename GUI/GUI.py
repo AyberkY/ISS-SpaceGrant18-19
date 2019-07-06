@@ -58,6 +58,11 @@ def cursesTest(stdscr):
             [data, rssi] = TELEM1.receive()
 
             if len(data) != 0:
+                dataStr = ""
+                for i in range(len(data)):
+                    dataStr += data[i]
+
+                data = dataStr[1:-1].split(' ,')
 
                 #Fake connectivity data; replace ifs with try/except when real data is available
                 GPS_bool = bool(random.getrandbits(1))
