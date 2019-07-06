@@ -97,6 +97,14 @@ def cursesTest(stdscr):
 
             time.sleep(0.25)
 
+        else:
+
+        stdscr.addstr(5,45,str(0)+"   ")
+        stdscr.addstr(6,45,str(0)+"   ")
+        stdscr.addstr(7,45,str(0)+"   ")
+        stdscr.addstr(8,45,str(0)+"   ")
+
+
 def main():
     curses.wrapper(cursesTest)
 
