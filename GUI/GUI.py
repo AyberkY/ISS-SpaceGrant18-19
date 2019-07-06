@@ -11,6 +11,14 @@ import RFM9X
 filename = str(datetime.datetime.now()) + ".txt"
 filehandle = open(filename, 'w')
 
+max_accel = 0
+boost_duration = 0
+max_velocity = 0
+coast_duration = 0
+max_altitude = 0
+
+boost_detected = 0
+
 def cursesTest(stdscr):
 
     TELEM1 = RFM9X.RFM9X()
@@ -51,9 +59,16 @@ def cursesTest(stdscr):
     stdscr.addstr(2,80,"Accel z: ")
     stdscr.addstr(3,90,"(H3LIS331)")
 
-    stdscr.addstr(15,15,"STATE: ",curses.A_BOLD)
-    stdscr.addstr(15,50,"SUCCESSFULL_CHARGE: ",curses.A_BOLD)
-    stdscr.addstr(15,100,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
+    stdscr.addstr(15,15,"MAX_ACCEL: ")
+    stdscr.addstr(15,45,"MAX_VELOCITY: ")
+    stdscr.addstr(15,75,"MAX_ALTITUDE")
+
+    stdscr.addstr(17,15,"BOOST_DUR ")
+    stdscr.addstr(17,45,"COAST_DUR: ")
+
+    stdscr.addstr(19,15,"STATE: ",curses.A_BOLD)
+    stdscr.addstr(19,50,"SUCCESSFULL_CHARGE: ",curses.A_BOLD)
+    stdscr.addstr(19,100,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
 
     while True:
         try:
@@ -97,6 +112,13 @@ def cursesTest(stdscr):
                 stdscr.addstr(1,95,str(data[20])+"   ")
                 stdscr.addstr(2,95,str(data[21])+"   ")
 
+                stdscr.addstr(15,30,str(max_accel)+"   ")
+                stdscr.addstr(15,60,str(max_velocity)+"   ")
+                stdscr.addstr(15,90,str(max_altitude)+"   ")
+
+                stdscr.addstr(15,30,str(boost_duration)+"   ")
+                stdscr.addstr(15,60,str(coast_duration)+"   ")
+
                 if data[1] == "0":
                     stdscr.addstr(15,25,"INITIALIZING   ",curses.color_pair(2) | curses.A_BOLD)
                 elif data[1] == "1":
@@ -120,6 +142,23 @@ def cursesTest(stdscr):
                     stdscr.addstr(15,70,"BACKUP",curses.color_pair(1) | curses.A_BOLD)
                 else:
                     stdscr.addstr(15,70,"NONE",curses.color_pair(2) | curses.A_BOLD)
+
+
+                if abs(data[13]) > max_accel:
+                    max_accel = data[13]
+                if abs(data[22]) > max_velocity:
+                    max_velocity = data[22]
+                if abs(data[10]) > max_altitude:
+                    max_altitude = data[10]
+
+                if data[1] == "2":
+                    if not boost_detected:
+                        boost_detected = True
+                        boost_start = time.time()
+
+                if data[1] == "3":
+                    boost_end = time.time()
+                    boost_duration = boost_end - boost_start
 
 
                 filehandle.write(str(data))

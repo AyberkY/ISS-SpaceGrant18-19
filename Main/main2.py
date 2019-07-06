@@ -438,8 +438,6 @@ try:
                 else:
                     dataArray[23] = 2
 
-
-
         try:
             filehandle = open(filename,'a')
             filehandle.write(str(dataArray) + '\n')
