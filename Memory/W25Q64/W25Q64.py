@@ -203,20 +203,20 @@ def writeData(dataArr):
 
     #Data Array
     dataTime.append([dataFormat(dataArr[0])])
-    dataLat   += [dataFormat(dataArr[2])]
-    dataLot   += [dataFormat(dataArr[3])]
-    dataAlt   += [dataFormat(dataArr[4])]
-    dataSat   += [dataFormat_int(dataArr[5])]
-    dataBPres += [dataFormat(dataArr[9])]
-    dataBAlt  += [dataFormat(dataArr[10])]
-    dataCTemp += [dataFormat(dataArr[11])]
-    dataPPres += [dataFormat(dataArr[12])]
-    dataAcclX += [dataFormat(dataArr[13])]
-    dataAcclY += [dataFormat(dataArr[14])]
-    dataAcclZ += [dataFormat(dataArr[15])]
-    dataGyroX += [dataFormat(dataArr[16])]
-    dataGyroY += [dataFormat(dataArr[17])]
-    dataGyroZ += [dataFormat(dataArr[18])]
+    dataLat.append(dataFormat(dataArr[2]))
+    dataLot.append(dataFormat(dataArr[3]))
+    dataAlt.append(dataFormat(dataArr[4])])
+    dataSat.append(dataFormat_int(dataArr[5])])
+    dataBPres.append(dataFormat(dataArr[9])])
+    dataBAlt.append(dataFormat(dataArr[10])])
+    dataCTemp.append(dataFormat(dataArr[11])])
+    dataPPres.append(dataFormat(dataArr[12])])
+    dataAcclX.append(dataFormat(dataArr[13])])
+    dataAcclY.append(dataFormat(dataArr[14])])
+    dataAcclZ.append(dataFormat(dataArr[15])])
+    dataGyroX.append(dataFormat(dataArr[16])])
+    dataGyroY.append(dataFormat(dataArr[17])])
+    dataGyroZ.append(dataFormat(dataArr[18])])
 
     #Write a page
     if not (rangeLine < 16):
