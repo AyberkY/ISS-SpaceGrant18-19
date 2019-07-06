@@ -155,17 +155,17 @@ def gatherData():
 
 ###############__________IMU2__________###############
 #                    (H3LIS331DL)
-        try:
-            accelData = IMU2.read_accl()
+    # try:
+        accelData = IMU2.read_accl()
 
-            dataArray[19] = accelData['x'] - h3_x_offset
-            dataArray[20] = accelData['y'] - h3_y_offset
-            dataArray[21] = accelData['z'] - h3_z_offset
+        dataArray[19] = accelData['x'] - h3_x_offset
+        dataArray[20] = accelData['y'] - h3_y_offset
+        dataArray[21] = accelData['z'] - h3_z_offset
 
-        except:
-            dataArray[19] = 0
-            dataArray[20] = 0
-            dataArray[21] = 0
+    # except:
+        dataArray[19] = 0
+        dataArray[20] = 0
+        dataArray[21] = 0
 
     return dataArray
 
