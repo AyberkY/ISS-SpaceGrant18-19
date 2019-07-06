@@ -51,7 +51,7 @@ def cursesTest(stdscr):
                 for i in range(len(data)):
                     dataStr += data[i]
 
-                data = dataStr[1:-1].split(', ')
+                data = dataStr[13:-1].split(', ')
 
                 stdscr.refresh()
                 curses.start_color()
@@ -63,9 +63,9 @@ def cursesTest(stdscr):
                 stdscr.addstr(4,15,str(data[4])+"   ")
                 stdscr.addstr(5,15,str(data[5])+"   ")
 
-                stdscr.addstr(6,15,str(data[6])+"   ")
-                stdscr.addstr(7,15,str(data[7])+"   ")
-                stdscr.addstr(8,15,str(data[8])+"   ")
+                stdscr.addstr(7,15,str(data[6])+"   ")
+                stdscr.addstr(8,15,str(data[7])+"   ")
+                stdscr.addstr(9,15,str(data[8])+"   ")
 
                 stdscr.addstr(0,45,str(data[9])+"   ")
                 stdscr.addstr(1,45,str(data[10])+"   ")
