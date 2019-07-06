@@ -26,5 +26,5 @@ class RFM9X:
     def receive(self, timeout=0.5, keep_listening=True):
         data = self.rfm9x.receive(timeout, keep_listening)
         rssi = self.rfm9x.rssi
-        if type(data) != None:
-            return [data, rssi]
+
+        return [data, rssi]
