@@ -119,7 +119,7 @@ def cursesTest(stdscr):
                 elif data[23] == 2:
                     stdscr.addstr(15,70,"BACKUP",curses.color_pair(1) | curses.A_BOLD)
                 else:
-                    stdscr.addstr(15,70,"BACKUP",curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.addstr(15,70,"NONE",curses.color_pair(2) | curses.A_BOLD)
 
 
                 filehandle.write(str(data))
