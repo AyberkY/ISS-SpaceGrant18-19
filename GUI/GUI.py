@@ -59,7 +59,7 @@ def cursesTest(stdscr):
 
         print(data)
 
-        if type(data) != None:
+        if type(data[2]) != None:
 
             #Fake connectivity data; replace ifs with try/except when real data is available
             GPS_bool = bool(random.getrandbits(1))
