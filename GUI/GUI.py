@@ -62,8 +62,8 @@ def cursesTest(stdscr):
     stdscr.addstr(3,90,"(H3LIS331)")
 
     stdscr.addstr(5,80,"MAX_ACCEL: ")
-    stdscr.addstr(6,80,"MAX_VELO: ")
-    stdscr.addstr(7,80,"MAX_ALT: ")
+    stdscr.addstr(6,80,"BOOST_DUR: ")
+    stdscr.addstr(7,80,"MAX_VELO: ")
     stdscr.addstr(8,80,"COAST_DUR: ")
     stdscr.addstr(9,80,"MAX_ALT: ")
 
@@ -119,8 +119,8 @@ def cursesTest(stdscr):
                 stdscr.addstr(2,95,str(data[21])+"   ")
 
                 stdscr.addstr(5,95,str(max_accel)+"    ")
-                stdscr.addstr(6,95,str(max_velocity)+"    ")
-                stdscr.addstr(7,95,str(max_altitude)+"    ")
+                stdscr.addstr(6,95,str(boost_duration)+"    ")
+                stdscr.addstr(7,95,str(max_velocity)+"    ")
                 stdscr.addstr(8,95,str(coast_duration)+"    ")
                 stdscr.addstr(9,95,str(max_altitude)+"    ")
 
