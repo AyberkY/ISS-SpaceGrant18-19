@@ -57,7 +57,7 @@ def cursesTest(stdscr):
 
         [data, rssi] = TELEM1.receive()
 
-        print(data)
+        data = data[1:-1].split(',')
 
         if len(data) != 0:
 
