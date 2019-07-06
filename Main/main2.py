@@ -15,10 +15,10 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/LED')
 import ADS1x15, mpl3115a2, pitotSensor, GPS, mpu9250, H3LIS331, RFM9X, LED
 
 launch_detect_hysteresis = 5        #Launch detection hysteresis value in milliseconds
-launch_detect_threshold = 1.5       #Launch detection threshold acceleration value in Gs
+launch_detect_threshold = 1.2       #Launch detection threshold acceleration value in Gs
 coast_detect_hysteresis = 5         #Coast detection hysteresis value in milliseconds
 coast_detect_threshold = 0.5        #Coast detection threshold acceleration value in Gs
-apogee_detect_hysteresis = 500      #Apogee detection hysteresis value in milliseconds
+apogee_detect_hysteresis = 100      #Apogee detection hysteresis value in milliseconds
 apogee_detect_threshold = 5         #Apogee detection threshold value in meters per second
 max_drogue_speed = 20               #Maximum descent speed to be considered under droge parachute
 max_main_speed = 5                  #Maximum main speed to be considered under main parachute
@@ -173,12 +173,12 @@ def gatherData():
 print("\n~~~~~~~~~~~INITIALIZING SUB-SYSTEMS~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~INITIALIZING SUB-SYSTEMS~~~~~~~~~~~\n")
 
-# try:
+try:
 GPS1 = GPS.GPS()
-# except:
-#     print("COULD NOT CONNECT TO GPS")
-#     filehandle.write('COULD NOT CONNECT TO GPS\n')
-#     Initialization_Error = True
+except:
+    print("COULD NOT CONNECT TO GPS")
+    filehandle.write('COULD NOT CONNECT TO GPS\n')
+    Initialization_Error = True
 
 try:
     ADC1 = ADS1x15.ADS1115()
