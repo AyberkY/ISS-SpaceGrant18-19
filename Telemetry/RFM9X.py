@@ -24,7 +24,8 @@ class RFM9X:
         self.rfm9x.send(data)
 
     def receive(self, timeout=0.5, keep_listening=True):
-        data = self.rfm9x.receive(timeout, keep_listening)
+        packet = self.rfm9x.receive(timeout, keep_listening)
+        data = str(packet, 'ascii')
         rssi = self.rfm9x.rssi
 
         return [data, rssi]
