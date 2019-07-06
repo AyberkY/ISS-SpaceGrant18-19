@@ -123,7 +123,7 @@ def cursesTest(stdscr):
             pass
 
         except KeyboardInterrupt:
-            sys.exit()
+            pass
 
 def main():
     curses.wrapper(cursesTest)
