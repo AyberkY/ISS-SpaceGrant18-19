@@ -94,4 +94,8 @@ def cursesTest(stdscr):
 
         time.sleep(0.25)
 
-curses.wrapper(cursesTest)
+def main():
+    curses.wrapper(cursesTest)
+
+if __name__ == "__main__":
+    main()
