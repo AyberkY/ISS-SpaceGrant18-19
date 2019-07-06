@@ -114,7 +114,7 @@ def cursesTest(stdscr):
                 stdscr.addstr(1,95,str(data[20])+"   ")
                 stdscr.addstr(2,95,str(data[21])+"   ")
 
-                stdscr.addstr(15,30,str(max_accel)+"   ")
+                stdscr.addstr(15,30,str(max_accel).curses.color_pair(2))
                 stdscr.addstr(15,60,str(max_velocity)+"   ")
                 stdscr.addstr(15,90,str(max_altitude)+"   ")
 
