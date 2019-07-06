@@ -72,10 +72,10 @@ def cursesTest(stdscr):
         stdscr.addstr(2,45,str(random.randint(0,100))+"   ")
         stdscr.addstr(3,45,str(random.randint(0,100))+"   ")
 
-        stdscr.addstr(5,45,str(random.randint(0,100))+"   ")
-        stdscr.addstr(6,45,str(random.randint(0,100))+"   ")
-        stdscr.addstr(7,45,str(random.randint(0,100))+"   ")
-        stdscr.addstr(8,45,str(random.randint(0,100))+"   ")
+        stdscr.addstr(5,45,str(data[2])+"   ")
+        stdscr.addstr(6,45,str(data[3])+"   ")
+        stdscr.addstr(7,45,str(data[4])+"   ")
+        stdscr.addstr(8,45,str(data[5])+"   ")
 
         stdscr.addstr(10,45,str(random.randint(0,100))+"   ")
         stdscr.addstr(11,45,str(random.randint(0,100))+"   ")
