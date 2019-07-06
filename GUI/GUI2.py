@@ -59,18 +59,17 @@ def cursesTest(stdscr):
 
         if len(data) != 0:
 
-            stdscr.addstr(0,5,str(random.randint(0,100))+"   ")
-            stdscr.addstr(1,5,str(random.randint(0,100))+"   ")
-            stdscr.addstr(2,5,str(random.randint(0,100))+"   ")
-            stdscr.addstr(3,5,str(random.randint(0,100))+"   ")
-
-        else:
-
             stdscr.addstr(5,5,str(data[2])+"   ")
             stdscr.addstr(6,5,str(data[3])+"   ")
             stdscr.addstr(7,5,str(data[4])+"   ")
             stdscr.addstr(8,5,str(data[5])+"   ")
 
+        else:
+
+            stdscr.addstr(0,5,str(random.randint(0,100))+"   ")
+            stdscr.addstr(1,5,str(random.randint(0,100))+"   ")
+            stdscr.addstr(2,5,str(random.randint(0,100))+"   ")
+            stdscr.addstr(3,5,str(random.randint(0,100))+"   ")
 
 def main():
     curses.wrapper(cursesTest)
