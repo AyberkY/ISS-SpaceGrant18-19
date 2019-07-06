@@ -17,7 +17,9 @@ max_velocity = 0
 coast_duration = 0
 max_altitude = 0
 
-boost_detected = 0
+boost_detected = False
+coast_detected = False
+apogee_detected = False
 
 def cursesTest(stdscr):
 
@@ -157,8 +159,16 @@ def cursesTest(stdscr):
                         boost_start = time.time()
 
                 if data[1] == "3":
-                    boost_end = time.time()
-                    boost_duration = boost_end - boost_start
+                    if not coast_detected:
+                        coast_detected = True
+                        boost_end = time.time()
+                        boost_duration = boost_end - boost_start
+
+                if data[1] == "4":
+                    if not apogee_detected:
+                        apogee_detected = True
+                        coast_end = time.time()
+                        coast_duration = coast_end - boost_end
 
 
                 filehandle.write(str(data))
