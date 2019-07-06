@@ -44,6 +44,8 @@ def cursesTest(stdscr):
     stdscr.addstr(5,40,"Gyro z: ")
     stdscr.addstr(6,50,"(MPU9250)")
 
+    stdscr.addstr(9,40,"Vertical Speed: ")
+
     stdscr.addstr(0,80,"Accel x: ")
     stdscr.addstr(1,80,"Accel y: ")
     stdscr.addstr(2,80,"Accel z: ")
@@ -87,6 +89,8 @@ def cursesTest(stdscr):
                 stdscr.addstr(3,55,str(data[16])+"   ")
                 stdscr.addstr(4,55,str(data[17])+"   ")
                 stdscr.addstr(5,55,str(data[18])+"   ")
+
+                stdscr.addstr(9,55,str(data[22])+"   ")
 
                 stdscr.addstr(0,95,str(data[19])+"   ")
                 stdscr.addstr(1,95,str(data[20])+"   ")
