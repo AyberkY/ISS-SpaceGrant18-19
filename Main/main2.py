@@ -15,13 +15,15 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/LED')
 import ADS1x15, mpl3115a2, pitotSensor, GPS, mpu9250, H3LIS331, RFM9X, LED
 
 launch_detect_hysteresis = 5        #Launch detection hysteresis value in milliseconds
-launch_detect_threshold = 1.5       #Launch detection threshold acceleration value in Gs
+launch_detect_threshold = 1.2       #Launch detection threshold acceleration value in Gs
 coast_detect_hysteresis = 5         #Coast detection hysteresis value in milliseconds
 coast_detect_threshold = 0.5        #Coast detection threshold acceleration value in Gs
-apogee_detect_hysteresis = 500      #Apogee detection hysteresis value in milliseconds
+apogee_detect_hysteresis = 100      #Apogee detection hysteresis value in milliseconds
 apogee_detect_threshold = 5         #Apogee detection threshold value in meters per second
-max_drogue_speed = 20               #Maximum descent speed to be considered under droge parachute
-max_main_speed = 5                  #Maximum main speed to be considered under main parachute
+max_drogue_speed = 28               #Maximum descent speed to be considered under droge parachute
+max_main_speed = 70                  #Maximum main speed to be considered under main parachute
+sep_detect_threshold = 1
+sep_detect_hysteresis = 1
 
 h3_x_offset = 0                     #H3LIS331DL X axis offset value
 h3_y_offset = 0                     #H3LIS331DL Y axis offset value
@@ -33,7 +35,7 @@ filehandle = open(filename, 'w')
 OLED = LED.LED('orange')
 GLED = LED.LED('green')
 BLED = LED.LED('blue')
-BUZZER = LED.BUZZER(False)
+BUZZER = LED.BUZZER(True)
 OLED.setLow()
 GLED.setLow()
 BLED.setLow()
@@ -75,7 +77,7 @@ States of flight computer:
 """
 state = 0
 
-dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 def gatherData():
 
@@ -155,18 +157,17 @@ def gatherData():
 
 ###############__________IMU2__________###############
 #                    (H3LIS331DL)
-        try:
-            accelData = IMU2.readAccel()
-            gyroData = IMU2.readGyro()
+    # try:
+        accelData2 = IMU2.read_accl()
 
-            dataArray[19] = accelData['x'] - h3_x_offset
-            dataArray[20] = accelData['y'] - h3_y_offset
-            dataArray[21] = accelData['z'] - h3_z_offset
+        dataArray[19] = accelData['x'] - h3_x_offset
+        dataArray[20] = accelData['y'] - h3_y_offset
+        dataArray[21] = accelData['z'] - h3_z_offset
 
-        except:
-            dataArray[19] = 0
-            dataArray[20] = 0
-            dataArray[21] = 0
+    # except:
+        dataArray[19] = 0
+        dataArray[20] = 0
+        dataArray[21] = 0
 
     return dataArray
 
@@ -331,6 +332,9 @@ coast_detect_possible = False
 apogee_detect_possible = False
 descent_detect_possible = False
 descent_detected = False
+sep_detect_possible = False
+sep_detected = False
+sep_detect_time = 0
 
 prev_time = time.time()
 prev_altitude = dataArray[10]
@@ -414,6 +418,25 @@ try:
                 state = 5
             else:
                 state = 7
+
+        #########################################################
+        ############### SEPERATION CLASSIFICATION ###############
+        #########################################################
+
+        if state == 4 and not sep_detect_possible and abs(dataArray[13]) > sep_detect_threshold:
+            sep_detect_possible = True
+            T0_2 = time.time() * 1000
+
+        if state == 4 and sep_detect_possible and abs(dataArray[13]) < sep_detect_threshold:
+            sep_detect_possible = False
+
+        if state == 4 and sep_detect_possible and abs(dataArray[13]) > sep_detect_threshold:
+            if ((time.time() * 1000) - T0_2) > sep_detect_hysteresis:
+                sep_detected = True
+                if vertical_speed < -5:
+                    dataArray[23] = 1
+                else:
+                    dataArray[23] = 2
 
         try:
             filehandle = open(filename,'a')
