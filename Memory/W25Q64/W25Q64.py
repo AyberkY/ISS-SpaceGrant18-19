@@ -152,6 +152,10 @@ def readSPI():
             data.append(chip.read_page(i, j))
     return data
 
+def csvSPI(data):
+    
+    return csvData
+
 #SPI Connection
 chip = spiflash(bus = 0, cs = 0)
 
