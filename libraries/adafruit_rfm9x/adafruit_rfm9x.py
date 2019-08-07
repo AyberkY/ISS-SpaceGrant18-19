@@ -337,7 +337,7 @@ class RFM9x:
     #def __init__(self, spi, cs, reset, frequency, *, preamble_length=8,
                  #high_power=True, baudrate=5000000): #bare asterisk not supported by Python 2.7
     def __init__(self, spi, cs, reset, frequency, preamble_length=8,
-                 high_power=True, baudrate=5000000):
+                 high_power=True, baudrate=10000000):
         self.high_power = high_power
         # Device support SPI mode 0 (polarity & phase = 0) up to a max of 10mhz.
         # Set Default Baudrate to 5MHz to avoid problems

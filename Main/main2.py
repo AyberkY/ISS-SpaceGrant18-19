@@ -323,7 +323,7 @@ GLED.setHigh()
 
 filehandle.write("unix_timestamp,state,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,pitot,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z,h3_acc_x,h3_acc_y,h3_acc_z,vertical_speed\n")
 
-# filehandle.close()
+filehandle.close()
 
 dataArray = gatherData()
 
@@ -439,10 +439,10 @@ try:
                     dataArray[23] = 2
 
         try:
-            # filehandle = open(filename,'a')
+            filehandle = open(filename,'a')
             filehandle.write(str(dataArray) + '\n')
             filehandle.flush()
-            # filehandle.close()
+            filehandle.close()
 
         except:
             pass
