@@ -35,7 +35,7 @@ filehandle = open(filename, 'w')
 OLED = LED.LED('orange')
 GLED = LED.LED('green')
 BLED = LED.LED('blue')
-BUZZER = LED.BUZZER(True)
+BUZZER = LED.BUZZER(False)
 OLED.setLow()
 GLED.setLow()
 BLED.setLow()
@@ -439,7 +439,7 @@ try:
                 else:
                     dataArray[23] = 2
 
-        print("Duration for logic: " + str(time.time() - init_time) + " seconds")
+        # print("Duration for logic: " + str(time.time() - init_time) + " seconds")
 
         try:
             init_write_time = time.time()
@@ -447,14 +447,17 @@ try:
             filehandle.write(str(dataArray) + '\n')
             filehandle.flush()
             # filehandle.close()
-            print("Duration to write to file: " + str(time.time() - init_write_time) + " seconds")
+            # print("Duration to write to file: " + str(time.time() - init_write_time) + " seconds")
 
         except:
             pass
 
         try:
-            init_telem_time = time.time()
-            TELEM1.send(bytes(str(dataArray), "utf-8"))
+            init_conv_time = time.time()
+            toSend = bytes(str(dataArray), "utf-8")
+            print("Duration to convert data: " + str(time.time() - init_conv_time) + " seconds")
+            init_telem_time = time.time()          
+            TELEM1.send(toSend)
             print("Duration to transmit data: " + str(time.time() - init_telem_time) + " seconds")
         except:
             pass
