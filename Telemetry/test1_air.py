@@ -43,6 +43,7 @@ def fakeData():
 
 counter = 0
 while True:
+    init_time = time.time()
     counter = counter + 1 #remove once we have live data
     if counter > 1:
         break
@@ -57,10 +58,11 @@ while True:
     # call will wait for the previous one to finish before continuing.
     rfm9x.send(bytes("Time: {0} \nLatitude: {1} \nLongitude: {2} \nDistance: {3} \nRSSI: {4} \n\n".format(Time,Lat,Long,Dist,RSSI),"utf-8"))
     print('Sent data!')
+    print("Duration to send data: " + str(time.time() - init_time) + " seconds")
 
     # Wait to receive packets.  Note that this library can't receive data at a fast
     # rate, in fact it can only receive and process one 252 byte packet at a time.
     # This means you should only use this for low bandwidth scenarios, like sending
     # and receiving a single message at a time.
 
-    time.sleep(.1)
+    # time.sleep(.1)
