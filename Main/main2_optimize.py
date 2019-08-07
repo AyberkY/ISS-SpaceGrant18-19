@@ -453,7 +453,9 @@ try:
             pass
 
         try:
+            init_telem_time = time.time()
             TELEM1.send(bytes(str(dataArray), "utf-8"))
+            print("Duration to transmit data: " + str(time.time() - init_telem_time) + " seconds")
         except:
             pass
 
