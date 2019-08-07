@@ -567,7 +567,9 @@ class RFM9x:
         # Write payload and header length.
         self._write_u8(_RH_RF95_REG_22_PAYLOAD_LENGTH, len(data) + 4)
         # Turn on transmit mode to send out the packet.
+        init_transmit_time = time.time()
         self.transmit()
+        print("Duration to transmit in library: " + str(time.time() - init_transmit_time) + " seconds")
         # Wait for tx done interrupt with explicit polling (not ideal but
         # best that can be done right now without interrupts).
         start = time.monotonic()
