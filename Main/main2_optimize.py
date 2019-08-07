@@ -442,10 +442,12 @@ try:
         print("Duration for logic: " + str(time.time() - init_time) + " seconds")
 
         try:
+            init_write_time = time.time()
             # filehandle = open(filename,'a')
             filehandle.write(str(dataArray) + '\n')
             filehandle.flush()
             # filehandle.close()
+            print("Duration to write to file: " + str(time.time() - init_write_time) + " seconds")
 
         except:
             pass
