@@ -343,8 +343,7 @@ try:
     while True:
         init_time = time.time()
         dataArray = gatherData()
-        print("Duration to gather data: " + str(time.time() - init_time) + " seconds")
-        
+
         ########################################################
         ###############   ONBOARD CALCULATIONS   ###############
         ########################################################
@@ -439,6 +438,8 @@ try:
                     dataArray[23] = 1
                 else:
                     dataArray[23] = 2
+
+        print("Duration for logic: " + str(time.time() - init_time) + " seconds")
 
         try:
             # filehandle = open(filename,'a')
