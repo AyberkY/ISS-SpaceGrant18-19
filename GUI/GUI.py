@@ -46,7 +46,7 @@ def cursesTest(stdscr):
         while True:
             try:
                 [data, rssi] = TELEM1.receive()
-                
+
             except:
                 pass
 
@@ -86,8 +86,6 @@ def cursesTest(stdscr):
                 stdscr.addstr(17,15,str(rssi)+"   ")
 
                 filehandle.write(str(data))
-
-                data = []
 
             else:
                 pass
