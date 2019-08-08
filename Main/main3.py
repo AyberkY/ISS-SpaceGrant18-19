@@ -370,7 +370,8 @@ try:
         ########################################################
 
         roll += (dataArray[16] * (time.time() - prev_time))
-        print("Roll: " + str(roll))
+        dataArray[19] = roll
+        # print("Roll: " + str(roll))
 
         vertical_speed = round((dataArray[10] - prev_altitude) / (time.time() - prev_time), 4)
         prev_altitude = dataArray[10]
