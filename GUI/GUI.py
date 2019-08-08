@@ -54,7 +54,7 @@ def cursesTest(stdscr):
                 stdscr.refresh()
                 curses.start_color()
 
-                stdscr.addstr(0,15,str(datetime.datetime.now())
+                stdscr.addstr(0,15,str(datetime.datetime.now()))
 
                 stdscr.addstr(2,15,str(data[0])+"   ")
                 stdscr.addstr(3,15,str(data[1])+"   ")
