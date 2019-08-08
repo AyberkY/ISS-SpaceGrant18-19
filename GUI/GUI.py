@@ -13,6 +13,8 @@ filehandle = open(filename, 'w')
 
 def cursesTest(stdscr):
 
+    window = curses.initscr()
+
     TELEM1 = RFM9X.RFM9X()
 
     curses.init_pair(1,curses.COLOR_GREEN,curses.COLOR_BLACK)
@@ -43,6 +45,7 @@ def cursesTest(stdscr):
     stdscr.addstr(19,5,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
 
     while True:
+        window.clrtobot()
         try:
             [data, rssi] = TELEM1.receive()
 
