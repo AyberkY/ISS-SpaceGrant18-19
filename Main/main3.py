@@ -15,8 +15,8 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/LED')
 import ADS1x15, mpl3115a2, pitotSensor, GPS, mpu9250, H3LIS331, RFM9X, LED
 
 launch_detect_hysteresis = 15        #Launch detection hysteresis value in milliseconds
-launch_detect_threshold = 1.2       #Launch detection threshold acceleration value in Gs
-coast_detect_hysteresis = 15         #Coast detection hysteresis value in milliseconds
+launch_detect_threshold = 1.5       #Launch detection threshold acceleration value in Gs
+coast_detect_hysteresis = 30         #Coast detection hysteresis value in milliseconds
 coast_detect_threshold = 0.5        #Coast detection threshold acceleration value in Gs
 apogee_detect_hysteresis = 100      #Apogee detection hysteresis value in milliseconds
 apogee_detect_threshold = 5         #Apogee detection threshold value in meters per second
@@ -459,7 +459,7 @@ try:
         if state == 4 and sep_detect_possible and abs(dataArray[13]) > sep_detect_threshold:
             if ((time.time() * 1000) - T0_2) > sep_detect_hysteresis:
                 sep_detected = True
-                if vertical_speed < -5:
+                if abs(vertical_speed) < 5:
                     dataArray[23] = 1
                     successfull_charge = 1
                     print("SUCCESFULL PRIMARY CHARGE DETECTED")
