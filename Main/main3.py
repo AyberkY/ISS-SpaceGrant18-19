@@ -138,6 +138,7 @@ def gatherData():
     try:
         accelData = IMU1.readAccel()
         gyroData = IMU1.readGyro()
+        IMU1.timeElapsed()
         headingData = IMU1.curHeading()
 
         dataArray[13] = accelData['x']
