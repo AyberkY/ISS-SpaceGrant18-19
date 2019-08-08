@@ -23,8 +23,6 @@ def cursesTest(stdscr):
     while True:
 
         window = curses.initscr()
-        window.clear()
-        curses.endwin()
 
         stdscr.addstr(0,0,"Timestamp: ",curses.A_BOLD)
 
@@ -95,6 +93,9 @@ def cursesTest(stdscr):
 
         except:
             filehandle.close()
+
+        window.clear()
+        curses.endwin()
 
 def main():
     curses.wrapper(cursesTest)
