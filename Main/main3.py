@@ -138,8 +138,6 @@ def gatherData():
     try:
         accelData = IMU1.readAccel()
         gyroData = IMU1.readGyro()
-        IMU1.timeElapsed()
-        headingData = IMU1.curHeading()
 
         dataArray[13] = accelData['x']
         dataArray[14] = accelData['y']
@@ -147,7 +145,6 @@ def gatherData():
         dataArray[16] = gyroData['x']
         dataArray[17] = gyroData['y']
         dataArray[18] = gyroData['z']
-        dataArray[19] = headingData['roll']
 
     except:
         dataArray[13] = 0
@@ -156,7 +153,6 @@ def gatherData():
         dataArray[16] = 0
         dataArray[17] = 0
         dataArray[18] = 0
-        dataArray[19] = 0
 
 ###############__________IMU2__________###############
 #                    (H3LIS331DL)
@@ -355,6 +351,7 @@ main_descent_velocity = 0
 last_transmission_time = time.time()
 
 accel_velocity = 0
+roll = 0
 
 prev_time = time.time()
 prev_altitude = dataArray[10]
@@ -371,6 +368,9 @@ try:
         ########################################################
         ###############   ONBOARD CALCULATIONS   ###############
         ########################################################
+
+        roll += (dataArray[16] * (time.time() - prev_time))
+        print("Roll: " + str(roll))
 
         vertical_speed = round((dataArray[10] - prev_altitude) / (time.time() - prev_time), 4)
         prev_altitude = dataArray[10]
