@@ -35,7 +35,7 @@ filehandle = open(filename, 'w')
 OLED = LED.LED('orange')
 GLED = LED.LED('green')
 BLED = LED.LED('blue')
-BUZZER = LED.BUZZER(False)
+BUZZER = LED.BUZZER(True)
 OLED.setLow()
 GLED.setLow()
 BLED.setLow()
@@ -321,9 +321,9 @@ else:
 
 GLED.setHigh()
 
-filehandle.write("unix_timestamp,state,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,pitot,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z,h3_acc_x,h3_acc_y,h3_acc_z,vertical_speed\n")
+filehandle.write("unix_timestamp,state,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,pitot,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z,h3_acc_x,h3_acc_y,h3_acc_z,vertical_speed,sep_det\n")
 
-# filehandle.close()
+filehandle.close()
 
 dataArray = gatherData()
 
@@ -336,12 +336,26 @@ sep_detect_possible = False
 sep_detected = False
 sep_detect_time = 0
 
+boost_start_time = 0
+boost_duration = 0
+coast_start_time = 0
+coast_duration = 0
+
+max_acceleration = 0
+max_vertical_speed = 0
+max_altitude = 0
+successfull_charge = 0
+drogue_descent_velocity = 0
+main_deployment_altitude = 0
+main_descent_velocity = 0
+
+last_transmission_time = time.time()
+
 prev_time = time.time()
 prev_altitude = dataArray[10]
 
 try:
     while True:
-        init_time = time.time()
         dataArray = gatherData()
 
         ########################################################
@@ -366,6 +380,7 @@ try:
         if state == 1 and launch_detect_possible and abs(dataArray[13]) > launch_detect_threshold:
             if ((time.time() * 1000) - T0) > launch_detect_hysteresis:
                 state = 2
+                boost_start_time = time.time()
 
         ########################################################
         ###############      COAST DETECTION     ###############
@@ -381,6 +396,8 @@ try:
         if state == 2 and coast_detect_possible and abs(dataArray[13]) < coast_detect_threshold:
             if ((time.time() * 1000) - T0) > coast_detect_hysteresis:
                 state = 3
+                coast_start_time = time.time()
+                boost_duration = coast_start_time - boost_start_time
 
         ########################################################
         ###############     APOGEE DETECTION     ###############
@@ -396,6 +413,7 @@ try:
         if state == 3 and apogee_detect_possible and abs(vertical_speed) < apogee_detect_threshold:
             if ((time.time() * 1000) - T0) > apogee_detect_hysteresis:
                 state = 4
+                coast_duration = time.time() - coast_start_time
 
         ########################################################
         ###############  DESCENT CLASSIFICATION  ###############
@@ -415,6 +433,7 @@ try:
         if descent_detected:
             if abs(vertical_speed) < max_main_speed:
                 state = 6
+                main_deployment_altitude = dataArray[10]
             elif abs(vertical_speed) > max_main_speed and abs(vertical_speed) < max_drogue_speed:
                 state = 5
             else:
@@ -436,29 +455,43 @@ try:
                 sep_detected = True
                 if vertical_speed < -5:
                     dataArray[23] = 1
+                    successfull_charge = 1
                 else:
                     dataArray[23] = 2
+                    successfull_charge = 2
 
-        # print("Duration for logic: " + str(time.time() - init_time) + " seconds")
+        #########################################################
+        ####################### TELEMETRY #######################
+        #########################################################
+
+        if state == 2:
+            if vertical_speed > max_vertical_speed:
+                max_vertical_speed = vertical_speed
+
+            if dataArray[13] > max_acceleration:
+                max_acceleration = dataArray[13]
+
+        if state == 3 or state == 4:
+            if dataArray[10] > max_altitude:
+                max_altitude = dataArray[10]
+
+        if state == 5:
+            drogue_descent_velocity = vertical_speed
+
+        if state = 6:
+            main_descent_velocity = vertical_speed
+
+        if state == 5 or state == 6 or state == 7:
+            if (time.time() - last_transmission_time) > 1.0:
+                telemArray = [max_acceleration,boost_duration,max_vertical_speed,coast_duration,max_altitude,successfull_charge,drogue_descent_velocity,main_deployment_altitude,main_descent_velocity,dataArray[2],dataArray[3]]
+                TELEM1.send(bytes(str(telemArray), "utf-8"))
 
         try:
-            init_write_time = time.time()
-            # filehandle = open(filename,'a')
+            filehandle = open(filename,'a')
             filehandle.write(str(dataArray) + '\n')
             filehandle.flush()
-            # filehandle.close()
-            # print("Duration to write to file: " + str(time.time() - init_write_time) + " seconds")
+            filehandle.close()
 
-        except:
-            pass
-
-        try:
-            init_conv_time = time.time()
-            toSend = bytes(str(dataArray), "utf-8")
-            print("Duration to convert data: " + str(time.time() - init_conv_time) + " seconds")
-            init_telem_time = time.time()          
-            TELEM1.send(toSend)
-            print("Duration to transmit data: " + str(time.time() - init_telem_time) + " seconds")
         except:
             pass
 
