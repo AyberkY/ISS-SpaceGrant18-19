@@ -73,7 +73,7 @@ def cursesTest(stdscr):
                         stdscr.addstr(11,25,"PRIMARY")
                     elif data[5] == 2:
                         stdscr.addstr(11,25,"BACKUP")
-                    else:
+                    elif data[5] == 0:
                         stdscr.addstr(11,25,"NONE")
 
                     stdscr.addstr(13,15,str(data[9])+"   ")
