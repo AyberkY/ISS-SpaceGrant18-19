@@ -478,7 +478,7 @@ try:
         if state == 5:
             drogue_descent_velocity = vertical_speed
 
-        if state = 6:
+        if state == 6:
             main_descent_velocity = vertical_speed
 
         if state == 5 or state == 6 or state == 7:
