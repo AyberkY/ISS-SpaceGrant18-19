@@ -381,6 +381,7 @@ try:
             if ((time.time() * 1000) - T0) > launch_detect_hysteresis:
                 state = 2
                 boost_start_time = time.time()
+                print("BOOST DETECTED")
 
         ########################################################
         ###############      COAST DETECTION     ###############
@@ -398,6 +399,7 @@ try:
                 state = 3
                 coast_start_time = time.time()
                 boost_duration = coast_start_time - boost_start_time
+                print("COAST DETECTED")
 
         ########################################################
         ###############     APOGEE DETECTION     ###############
@@ -414,6 +416,7 @@ try:
             if ((time.time() * 1000) - T0) > apogee_detect_hysteresis:
                 state = 4
                 coast_duration = time.time() - coast_start_time
+                print("APOGEE DETECTED")
 
         ########################################################
         ###############  DESCENT CLASSIFICATION  ###############
@@ -434,10 +437,13 @@ try:
             if abs(vertical_speed) < max_main_speed:
                 state = 6
                 main_deployment_altitude = dataArray[10]
+                print("DESCENDING UNDER MAIN")
             elif abs(vertical_speed) > max_main_speed and abs(vertical_speed) < max_drogue_speed:
                 state = 5
+                print("DESCENDING UNDER DROGUE")
             else:
                 state = 7
+                print("BALLISTIC")
 
         #########################################################
         ############### SEPERATION CLASSIFICATION ###############
@@ -456,9 +462,11 @@ try:
                 if vertical_speed < -5:
                     dataArray[23] = 1
                     successfull_charge = 1
+                    print("SUCCESFULL PRIMARY CHARGE DETECTED")
                 else:
                     dataArray[23] = 2
                     successfull_charge = 2
+                    print("SUCCESSFUL SECONDARY CHARGE DETECTED")
 
         #########################################################
         ####################### TELEMETRY #######################
