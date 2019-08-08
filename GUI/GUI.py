@@ -24,7 +24,7 @@ def cursesTest(stdscr):
 
         window = curses.initscr()
         window.clear()
-        window.endwin()
+        curses.endwin()
 
         stdscr.addstr(0,0,"Timestamp: ",curses.A_BOLD)
 
