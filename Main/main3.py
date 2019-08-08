@@ -505,7 +505,7 @@ try:
             main_descent_velocity = vertical_speed
 
         # if state == 5 or state == 6 or state == 7:
-        if state == 3:
+        if state == 4:
             if (time.time() - last_transmission_time) > 2.0:
                 telemArray = [max_acceleration,boost_duration,max_vertical_speed,coast_duration,max_altitude,successfull_charge,drogue_descent_velocity,main_deployment_altitude,main_descent_velocity,dataArray[2],dataArray[3],dataArray[4]]
                 TELEM1.send(bytes(str(telemArray), "utf-8"))
