@@ -73,9 +73,9 @@ def cursesTest(stdscr):
                 else:
                     stdscr.addstr(11,15,"NONE")
 
-                stdscr.addstr(11,15,str(data[9])+"   ")
-                stdscr.addstr(12,15,str(data[10])+"   ")
-                stdscr.addstr(13,15,str(data[11])+"   ")
+                stdscr.addstr(13,15,str(data[9])+"   ")
+                stdscr.addstr(14,15,str(data[10])+"   ")
+                stdscr.addstr(15,15,str(data[11])+"   ")
 
                 filehandle.write(str(data))
 
