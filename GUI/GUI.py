@@ -47,47 +47,47 @@ def cursesTest(stdscr):
             try:
                 [data, rssi] = TELEM1.receive()
 
-            except:
-                pass
+                if len(data) != 0:
+                    dataStr = ""
+                    for i in range(len(data)):
+                        dataStr += data[i]
 
-            if len(data) != 0:
-                dataStr = ""
-                for i in range(len(data)):
-                    dataStr += data[i]
+                    data = dataStr[13:-1].split(', ')
 
-                data = dataStr[13:-1].split(', ')
+                    stdscr.refresh()
+                    curses.start_color()
 
-                stdscr.refresh()
-                curses.start_color()
+                    stdscr.addstr(0,15,str(datetime.datetime.now()))
 
-                stdscr.addstr(0,15,str(datetime.datetime.now()))
+                    stdscr.addstr(2,15,str(data[0])+"   ")
+                    stdscr.addstr(3,15,str(data[1])+"   ")
+                    stdscr.addstr(4,15,str(data[2])+"   ")
+                    stdscr.addstr(5,15,str(data[3])+"   ")
+                    stdscr.addstr(6,15,str(data[4])+"   ")
 
-                stdscr.addstr(2,15,str(data[0])+"   ")
-                stdscr.addstr(3,15,str(data[1])+"   ")
-                stdscr.addstr(4,15,str(data[2])+"   ")
-                stdscr.addstr(5,15,str(data[3])+"   ")
-                stdscr.addstr(6,15,str(data[4])+"   ")
+                    stdscr.addstr(8,25,str(data[6])+"   ")
+                    stdscr.addstr(9,25,str(data[7])+"   ")
+                    stdscr.addstr(10,25,str(data[8])+"   ")
 
-                stdscr.addstr(8,25,str(data[6])+"   ")
-                stdscr.addstr(9,25,str(data[7])+"   ")
-                stdscr.addstr(10,25,str(data[8])+"   ")
+                    if data[5] == 1:
+                        stdscr.addstr(11,25,"PRIMARY")
+                    elif data[5] == 2:
+                        stdscr.addstr(11,25,"BACKUP")
+                    else:
+                        stdscr.addstr(11,25,"NONE")
 
-                if data[5] == 1:
-                    stdscr.addstr(11,25,"PRIMARY")
-                elif data[5] == 2:
-                    stdscr.addstr(11,25,"BACKUP")
+                    stdscr.addstr(13,15,str(data[9])+"   ")
+                    stdscr.addstr(14,15,str(data[10])+"   ")
+                    stdscr.addstr(15,15,str(data[11])+"   ")
+
+                    stdscr.addstr(17,15,str(rssi)+"   ")
+
+                    filehandle.write(str(data))
+
                 else:
-                    stdscr.addstr(11,25,"NONE")
+                    pass
 
-                stdscr.addstr(13,15,str(data[9])+"   ")
-                stdscr.addstr(14,15,str(data[10])+"   ")
-                stdscr.addstr(15,15,str(data[11])+"   ")
-
-                stdscr.addstr(17,15,str(rssi)+"   ")
-
-                filehandle.write(str(data))
-
-            else:
+            except:
                 pass
 
     except KeyboardInterrupt:
