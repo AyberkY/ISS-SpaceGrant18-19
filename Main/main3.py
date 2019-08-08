@@ -358,7 +358,7 @@ accel_velocity = 0
 prev_time = time.time()
 prev_altitude = dataArray[10]
 
-dataArray = gatherData
+dataArray = gatherData()
 telemArray = [max_acceleration,boost_duration,max_vertical_speed,coast_duration,max_altitude,successfull_charge,drogue_descent_velocity,main_deployment_altitude,main_descent_velocity,dataArray[2],dataArray[3],dataArray[4],0]
 TELEM1.send(bytes(str(telemArray), "utf-8"))
 print("initial send")
