@@ -8,44 +8,45 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/Telemetry')
 
 import RFM9X
 
+TELEM1 = RFM9X.RFM9X()
+
 filename = str(datetime.datetime.now()) + ".txt"
 filehandle = open(filename, 'w')
 
 def cursesTest(stdscr):
-
-    window = curses.initscr()
-
-    TELEM1 = RFM9X.RFM9X()
 
     curses.init_pair(1,curses.COLOR_GREEN,curses.COLOR_BLACK)
     curses.init_pair(2,curses.COLOR_RED,curses.COLOR_BLACK)
     curses.init_pair(3,curses.COLOR_MAGENTA,curses.COLOR_BLACK)
     curses.init_pair(4,curses.COLOR_CYAN,curses.COLOR_BLACK)
 
-    #Column 2
-    stdscr.addstr(0,0,"Timestamp: ",curses.A_BOLD)
-
-    stdscr.addstr(2,0,"MAX_ACCEL: ",curses.A_BOLD)
-    stdscr.addstr(3,0,"BOOST_DUR: ",curses.A_BOLD)
-    stdscr.addstr(4,0,"MAX_VELO: ",curses.A_BOLD)
-    stdscr.addstr(5,0,"COAST_DUR: ",curses.A_BOLD)
-    stdscr.addstr(6,0,"MAX_ALT: ",curses.A_BOLD)
-
-    stdscr.addstr(8,0,"DROGUE_DESCENT_VEL: ",curses.A_BOLD)
-    stdscr.addstr(9,0,"MAIN_DEPLOYMENT_ALT: ",curses.A_BOLD)
-    stdscr.addstr(10,0,"MAIN_DESCENT_VEL: ",curses.A_BOLD)
-    stdscr.addstr(11,0,"SUCCESSFULL_CHARGE: ",curses.A_BOLD)
-
-    stdscr.addstr(13,0,"Latitude: ",curses.A_BOLD)
-    stdscr.addstr(14,0,"Longitude: ",curses.A_BOLD)
-    stdscr.addstr(15,0,"Altitude: ",curses.A_BOLD)
-
-    stdscr.addstr(17,0,"RSSI: ",curses.A_BOLD)
-
-    stdscr.addstr(19,5,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
-
     while True:
-        window.clrtobot()
+
+        window = curses.initscr()
+        window.clear()
+        window.endwin()
+
+        stdscr.addstr(0,0,"Timestamp: ",curses.A_BOLD)
+
+        stdscr.addstr(2,0,"MAX_ACCEL: ",curses.A_BOLD)
+        stdscr.addstr(3,0,"BOOST_DUR: ",curses.A_BOLD)
+        stdscr.addstr(4,0,"MAX_VELO: ",curses.A_BOLD)
+        stdscr.addstr(5,0,"COAST_DUR: ",curses.A_BOLD)
+        stdscr.addstr(6,0,"MAX_ALT: ",curses.A_BOLD)
+
+        stdscr.addstr(8,0,"DROGUE_DESCENT_VEL: ",curses.A_BOLD)
+        stdscr.addstr(9,0,"MAIN_DEPLOYMENT_ALT: ",curses.A_BOLD)
+        stdscr.addstr(10,0,"MAIN_DESCENT_VEL: ",curses.A_BOLD)
+        stdscr.addstr(11,0,"SUCCESSFULL_CHARGE: ",curses.A_BOLD)
+
+        stdscr.addstr(13,0,"Latitude: ",curses.A_BOLD)
+        stdscr.addstr(14,0,"Longitude: ",curses.A_BOLD)
+        stdscr.addstr(15,0,"Altitude: ",curses.A_BOLD)
+
+        stdscr.addstr(17,0,"RSSI: ",curses.A_BOLD)
+
+        stdscr.addstr(19,5,"MORE SENSORS.",curses.color_pair(4) | curses.A_BOLD)
+
         try:
             [data, rssi] = TELEM1.receive()
 
