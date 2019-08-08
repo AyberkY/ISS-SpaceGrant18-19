@@ -351,6 +351,8 @@ main_descent_velocity = 0
 
 last_transmission_time = time.time()
 
+accel_velocity = 0
+
 prev_time = time.time()
 prev_altitude = dataArray[10]
 
