@@ -77,12 +77,11 @@ States of flight computer:
 """
 state = 0
 
-dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+dataArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 def gatherData():
 
     dataArray[0] = time.time()
-    dataArray[1] = state
 
 ###############__________GPS1__________###############
 
@@ -139,6 +138,7 @@ def gatherData():
     try:
         accelData = IMU1.readAccel()
         gyroData = IMU1.readGyro()
+        headingData = IMU1.curHeading()
 
         dataArray[13] = accelData['x']
         dataArray[14] = accelData['y']
@@ -146,6 +146,7 @@ def gatherData():
         dataArray[16] = gyroData['x']
         dataArray[17] = gyroData['y']
         dataArray[18] = gyroData['z']
+        dataArray[19] = headingData['roll']
 
     except:
         dataArray[13] = 0
@@ -154,20 +155,21 @@ def gatherData():
         dataArray[16] = 0
         dataArray[17] = 0
         dataArray[18] = 0
+        dataArray[19] = 0
 
 ###############__________IMU2__________###############
 #                    (H3LIS331DL)
     # try:
         accelData2 = IMU2.read_accl()
 
-        dataArray[19] = accelData['x'] - h3_x_offset
-        dataArray[20] = accelData['y'] - h3_y_offset
-        dataArray[21] = accelData['z'] - h3_z_offset
+        dataArray[20] = accelData['x'] - h3_x_offset
+        dataArray[21] = accelData['y'] - h3_y_offset
+        dataArray[22] = accelData['z'] - h3_z_offset
 
     # except:
-        dataArray[19] = 0
         dataArray[20] = 0
         dataArray[21] = 0
+        dataArray[22] = 0
 
     return dataArray
 
@@ -321,7 +323,7 @@ else:
 
 GLED.setHigh()
 
-filehandle.write("unix_timestamp,state,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,pitot,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z,h3_acc_x,h3_acc_y,h3_acc_z,vertical_speed,sep_det\n")
+filehandle.write("unix_timestamp,state,latitude,longitude,altitude,satellites,bat1,bat2,bat3,baro_pressure,baro_altitude,cTemp,pitot,mpu_acc_x,mpu_acc_y,mpu_acc_z,mpu_gyr_x,mpu_gyr_y,mpu_gyr_z,mpu_roll,h3_acc_x,h3_acc_y,h3_acc_z,vertical_speed,sep_det\n")
 
 filehandle.close()
 
@@ -366,11 +368,11 @@ try:
 
         vertical_speed = round((dataArray[10] - prev_altitude) / (time.time() - prev_time), 4)
         prev_altitude = dataArray[10]
-        dataArray[22] = vertical_speed
-        print("Vertical Speed: " + str(vertical_speed) + "m/s")
+        dataArray[23] = vertical_speed
+        # print("Vertical Speed: " + str(vertical_speed) + "m/s")
 
-        accel_velocity += round((dataArray[13] * (time.time() - prev_time)), 4)
-        print("\t\t\t\t\tAccel Speed: " + str(accel_velocity) + "m/s")
+        # accel_velocity += round((dataArray[13] * (time.time() - prev_time)), 4)
+        # print("\t\t\t\t\tAccel Speed: " + str(accel_velocity) + "m/s")
 
         prev_time = time.time()
 
@@ -468,11 +470,11 @@ try:
             if ((time.time() * 1000) - T0_2) > sep_detect_hysteresis:
                 sep_detected = True
                 if abs(vertical_speed) < 5:
-                    dataArray[23] = 1
+                    dataArray[24] = 1
                     successfull_charge = 1
                     print("SUCCESFULL PRIMARY CHARGE DETECTED")
                 else:
-                    dataArray[23] = 2
+                    dataArray[24] = 2
                     successfull_charge = 2
                     print("SUCCESSFUL SECONDARY CHARGE DETECTED")
 
@@ -497,10 +499,13 @@ try:
         if state == 6:
             main_descent_velocity = vertical_speed
 
-        if state == 5 or state == 6 or state == 7:
+        # if state == 5 or state == 6 or state == 7:
+        if True:
             if (time.time() - last_transmission_time) > 2.0:
-                telemArray = [max_acceleration,boost_duration,max_vertical_speed,coast_duration,max_altitude,successfull_charge,drogue_descent_velocity,main_deployment_altitude,main_descent_velocity,dataArray[2],dataArray[3]]
+                telemArray = [max_acceleration,boost_duration,max_vertical_speed,coast_duration,max_altitude,successfull_charge,drogue_descent_velocity,main_deployment_altitude,main_descent_velocity,dataArray[2],dataArray[3],dataArray[4]]
                 TELEM1.send(bytes(str(telemArray), "utf-8"))
+
+        dataArray[1] = state
 
         try:
             filehandle = open(filename,'a')
