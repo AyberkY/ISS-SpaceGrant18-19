@@ -369,7 +369,7 @@ try:
         dataArray[22] = vertical_speed
         print("Vertical Speed: " + str(vertical_speed) + "m/s")
 
-        accel_velocity += round((dataArray[13] * time.time() - prev_time), 4)
+        accel_velocity += round((dataArray[13] * (time.time() - prev_time)), 4)
         print("\t\t\t\t\tAccel Speed: " + str(accel_velocity) + "m/s")
 
         prev_time = time.time()
