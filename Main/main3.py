@@ -23,7 +23,7 @@ apogee_detect_threshold = 5         #Apogee detection threshold value in meters 
 max_drogue_speed = 28               #Maximum descent speed to be considered under droge parachute
 max_main_speed = 70                  #Maximum main speed to be considered under main parachute
 sep_detect_threshold = 1
-sep_detect_hysteresis = 1
+sep_detect_hysteresis = 5
 
 h3_x_offset = 0                     #H3LIS331DL X axis offset value
 h3_y_offset = 0                     #H3LIS331DL Y axis offset value
@@ -364,7 +364,7 @@ try:
 
         vertical_speed = round((dataArray[10] - prev_altitude) / (time.time() - prev_time), 4)
         dataArray[22] = vertical_speed
-        # print("Vertical Speed: " + str(vertical_speed) + "m/s")
+        print("Vertical Speed: " + str(vertical_speed) + "m/s")
 
         ########################################################
         ###############     LAUNCH DETECTION     ###############
@@ -490,7 +490,7 @@ try:
             main_descent_velocity = vertical_speed
 
         if state == 5 or state == 6 or state == 7:
-            if (time.time() - last_transmission_time) > 1.0:
+            if (time.time() - last_transmission_time) > 2.0:
                 telemArray = [max_acceleration,boost_duration,max_vertical_speed,coast_duration,max_altitude,successfull_charge,drogue_descent_velocity,main_deployment_altitude,main_descent_velocity,dataArray[2],dataArray[3]]
                 TELEM1.send(bytes(str(telemArray), "utf-8"))
 
