@@ -139,8 +139,8 @@ def gatherData():
         accelData = IMU1.readAccel()
         gyroData = IMU1.readGyro()
 
-        dataArray[13] = accelData['x']
-        dataArray[14] = accelData['y']
+        dataArray[13] = -accelData['x']
+        dataArray[14] = -accelData['y']
         dataArray[15] = accelData['z']
         dataArray[16] = gyroData['x']
         dataArray[17] = gyroData['y']
@@ -159,9 +159,9 @@ def gatherData():
     try:
         accelData2 = IMU2.read_accl()
 
-        dataArray[20] = round((accelData2['x'] - h3_x_offset), 4)
-        dataArray[21] = round((accelData2['y'] - h3_y_offset), 4)
-        dataArray[22] = round((accelData2['z'] - h3_z_offset), 4)
+        dataArray[20] = round(((accelData2['x'] - h3_x_offset) * 9.81), 4)
+        dataArray[21] = round(((accelData2['y'] - h3_y_offset) * 9,81), 4)
+        dataArray[22] = round(((accelData2['z'] - h3_z_offset) * 9,81), 4)
 
         print(str(dataArray[13]) + "\t" + str(dataArray[14]) + "\t" + str(dataArray[15]) + "\t" + str(dataArray[20]) + "\t" + str(dataArray[21]) + "\t" + str(dataArray[22]))
 
