@@ -15,19 +15,19 @@ sys.path.insert(0, '/home/pi/ISS-SpaceGrant18-19/LED')
 import ADS1x15, mpl3115a2, pitotSensor, GPS, mpu9250, H3LIS331, RFM9X, LED
 
 launch_detect_hysteresis = 15        #Launch detection hysteresis value in milliseconds
-launch_detect_threshold = 1.5       #Launch detection threshold acceleration value in Gs
+launch_detect_threshold = 1.5        #Launch detection threshold acceleration value in Gs
 coast_detect_hysteresis = 30         #Coast detection hysteresis value in milliseconds
-coast_detect_threshold = 0.5        #Coast detection threshold acceleration value in Gs
-apogee_detect_hysteresis = 100      #Apogee detection hysteresis value in milliseconds
-apogee_detect_threshold = 5         #Apogee detection threshold value in meters per second
-max_drogue_speed = 28               #Maximum descent speed to be considered under droge parachute
+coast_detect_threshold = 0.5         #Coast detection threshold acceleration value in Gs
+apogee_detect_hysteresis = 100       #Apogee detection hysteresis value in milliseconds
+apogee_detect_threshold = 5          #Apogee detection threshold value in meters per second
+max_drogue_speed = 28                #Maximum descent speed to be considered under droge parachute
 max_main_speed = 70                  #Maximum main speed to be considered under main parachute
 sep_detect_threshold = 1
 sep_detect_hysteresis = 5
 
-h3_x_offset = 0                     #H3LIS331DL X axis offset value
-h3_y_offset = 0                     #H3LIS331DL Y axis offset value
-h3_z_offset = 0                     #H3LIS331DL Z axis offset value
+h3_x_offset = 0.100180059205895       #H3LIS331DL X axis offset value
+h3_y_offset = -0.8908169804986723     #H3LIS331DL Y axis offset value
+h3_z_offset = 0.6617206335642285      #H3LIS331DL Z axis offset value
 
 filename = str(datetime.datetime.now()) + ".txt"
 filehandle = open(filename, 'w')
@@ -262,20 +262,6 @@ filehandle.write("\tGX_OFFSET:" + str(gyroOffsets[0]) + "\n")
 filehandle.write("\tGY_OFFSET:" + str(gyroOffsets[1]) + "\n")
 filehandle.write("\tGZ_OFFSET:" + str(gyroOffsets[2]) + "\n\n")
 BLED.setLow()
-
-print("\n~~~~~~~~~~~CALIBRATING IMU2~~~~~~~~~~~\n")
-filehandle.write("\n~~~~~~~~~~~CALIBRATING IMU2~~~~~~~~~~~\n")
-
-for i in range(1000):
-    accelData1 = IMU1.readAccel()
-    accelData2 = IMU2.read_accl()
-    h3_x_offset += (accelData1['x'] - accelData2['x'])
-    h3_y_offset += (accelData1['y'] - accelData2['y'])
-    h3_z_offset += (accelData1['z'] - accelData2['z'])
-
-h3_x_offset /= 1000
-h3_y_offset /= 1000
-h3_z_offset /= 1000
 
 print("\n~~~~~~~~~~~CALIBRATING PITOT SENSOR~~~~~~~~~~~\n")
 filehandle.write("\n~~~~~~~~~~~CALIBRATING PITOT SENSOR~~~~~~~~~~~\n")
