@@ -210,6 +210,8 @@ except:
 
 try:
     IMU2 = H3LIS331.H3LIS331DL()
+    IMU2.select_datarate()
+    IMU2.select_data_config()
 except:
     print("COULD NOT CONNECT TO H3LIS331DL")
     filehandle.write('COULD NOT CONNECT TO H3LIS331DL\n')
