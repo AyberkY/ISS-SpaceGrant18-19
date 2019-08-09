@@ -163,7 +163,7 @@ def gatherData():
         dataArray[21] = round((accelData2['y'] - h3_y_offset), 4)
         dataArray[22] = round((accelData2['z'] - h3_z_offset), 4)
 
-        print(str(dataArray[20]) + "\t" + str(dataArray[21]) + "\t" + str(dataArray[22]))
+        print(str(dataArray[20]) + "\t" + str(dataArray[21]) + "\t" + str(dataArray[22]) + "\t" + str(accelData2['x']) + "\t" + str(accelData2['y']) + "\t" + str(accelData2['z']))
 
     except:
         dataArray[20] = 0
