@@ -356,8 +356,7 @@ print("initial send")
 
 try:
     while True:
-        dataArray = gatherData()    dataArray = gatherData()
-
+        dataArray = gatherData()
 
         ########################################################
         ###############   ONBOARD CALCULATIONS   ###############
