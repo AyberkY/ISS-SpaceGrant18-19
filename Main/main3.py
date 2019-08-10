@@ -366,7 +366,7 @@ try:
         dataArray[19] = round(roll, 4)
         # print("Roll: " + str(roll))
 
-        vertical_speed = round((dataArray[10] - prev_altitude) / (time.time() - prev_time), 4)
+        vertical_speed = (dataArray[10] - prev_altitude) / (time.time() - prev_time)
         prev_altitude = dataArray[10]
         dataArray[23] = vertical_speed
         # print("Vertical Speed: " + str(vertical_speed) + "\t" + "Altitude" + str(dataArray[10]))
