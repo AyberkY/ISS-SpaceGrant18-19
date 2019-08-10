@@ -447,7 +447,7 @@ try:
         #     if ((time.time() * 1000) - T0) > apogee_detect_hysteresis:
         #         descent_detected = True
 
-        if (state == 4 and dataArray[10] >= 22) or dataArray[10] >= 30:
+        if (state == 4 and dataArray[10] >= 22) or (state > 1 and dataArray[10] >= 30):
             descent_detected = True
             print("DESCENT DETECTED")
 
