@@ -22,8 +22,10 @@ apogee_detect_hysteresis = 100       #Apogee detection hysteresis value in milli
 apogee_detect_threshold = 5          #Apogee detection threshold value in meters per second
 max_drogue_speed = 28                #Maximum descent speed to be considered under droge parachute
 max_main_speed = 70                  #Maximum main speed to be considered under main parachute
-sep_detect_threshold = 1
-sep_detect_hysteresis = 5
+sep_detect_threshold = 1             #Seperation detection threshold acceleration value in Gs
+sep_detect_hysteresis = 5            #Seperation detection hysteresis value in milliseconds
+
+apogee_lockout = 10                  #Seconds after launch that apogee can be detected
 
 h3_x_offset = 0.100180059205895       #H3LIS331DL X axis offset value
 h3_y_offset = -0.8908169804986723     #H3LIS331DL Y axis offset value
@@ -346,13 +348,16 @@ prev_time = time.time()
 prev_altitude = dataArray[10]
 
 dataArray = gatherData()
-telemArray = [max_acceleration,boost_duration,max_vertical_speed,coast_duration,max_altitude,successfull_charge,drogue_descent_velocity,main_deployment_altitude,main_descent_velocity,dataArray[2],dataArray[3],dataArray[4],0]
-TELEM1.send(bytes(str(telemArray), "utf-8"))
+for i in range(5):
+    dataArray = gatherData()
+    telemArray = [max_acceleration,boost_duration,max_vertical_speed,coast_duration,max_altitude,successfull_charge,drogue_descent_velocity,main_deployment_altitude,main_descent_velocity,dataArray[2],dataArray[3],dataArray[4],0]
+    TELEM1.send(bytes(str(telemArray), "utf-8"))
 print("initial send")
 
 try:
     while True:
-        dataArray = gatherData()
+        dataArray = gatherData()    dataArray = gatherData()
+
 
         ########################################################
         ###############   ONBOARD CALCULATIONS   ###############
@@ -370,6 +375,9 @@ try:
         # accel_velocity += round((dataArray[13] * (time.time() - prev_time)), 4)
         # print("\t\t\t\t\tAccel Speed: " + str(accel_velocity) + "m/s")
 
+        if state >= 1:
+            dataArray[0] -= boost_start_time
+
         prev_time = time.time()
 
         ########################################################
@@ -386,7 +394,8 @@ try:
         if state == 1 and launch_detect_possible and abs(dataArray[13]) > launch_detect_threshold:
             if ((time.time() * 1000) - T0) > launch_detect_hysteresis:
                 state = 2
-                boost_start_time = time.time()
+                boost_start_time = dataArray[0]
+                dataArray[0] = 0.0
                 print("BOOST DETECTED")
 
         ########################################################
@@ -411,7 +420,7 @@ try:
         ###############     APOGEE DETECTION     ###############
         ########################################################
 
-        if state == 3 and not apogee_detect_possible and abs(vertical_speed) < apogee_detect_threshold:
+        if state == 3 and not apogee_detect_possible and abs(vertical_speed) < apogee_detect_threshold and dataArray[0] > apogee_lockout:
             apogee_detect_possible = True
             T0 = time.time() * 1000
 
