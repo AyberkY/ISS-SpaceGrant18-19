@@ -366,9 +366,10 @@ try:
         dataArray[19] = round(roll, 4)
         # print("Roll: " + str(roll))
 
-        vertical_speed = (dataArray[10] - prev_altitude) / (time.time() - prev_time)
+        vertical_speed = round((dataArray[10] - prev_altitude) / (time.time() - prev_time), 4)
         prev_altitude = dataArray[10]
-        dataArray[23] = vertical_speed
+        if state > 1 and vertical_speed != 0.0:
+            dataArray[23] = vertical_speed
         print("Vertical Speed: " + str(vertical_speed) + "\t" + "Altitude" + str(dataArray[10]))
 
         # accel_velocity += round((dataArray[13] * (time.time() - prev_time)), 4)
@@ -419,14 +420,14 @@ try:
         ###############     APOGEE DETECTION     ###############
         ########################################################
 
-        if state == 3 and not apogee_detect_possible and abs(vertical_speed) < apogee_detect_threshold and dataArray[0] > apogee_lockout:
+        if state == 3 and not apogee_detect_possible and abs(dataArray[23]) < apogee_detect_threshold and dataArray[0] > apogee_lockout:
             apogee_detect_possible = True
             T0 = time.time() * 1000
 
-        if state == 3 and apogee_detect_possible and abs(vertical_speed) > apogee_detect_threshold:
+        if state == 3 and apogee_detect_possible and abs(dataArray[23]) > apogee_detect_threshold:
             apogee_detect_possible = False
 
-        if state == 3 and apogee_detect_possible and abs(vertical_speed) < apogee_detect_threshold:
+        if state == 3 and apogee_detect_possible and abs(dataArray[23]) < apogee_detect_threshold:
             if ((time.time() * 1000) - T0) > apogee_detect_hysteresis:
                 state = 4
                 coast_duration = time.time() - coast_start_time
@@ -452,11 +453,11 @@ try:
             print("DESCENT DETECTED")
 
         if descent_detected:
-            if abs(vertical_speed) < max_main_speed:
+            if abs(dataArray[23]) < max_main_speed:
                 state = 6
                 main_deployment_altitude = dataArray[10]
                 print("DESCENDING UNDER MAIN")
-            elif abs(vertical_speed) > max_main_speed and abs(vertical_speed) < max_drogue_speed:
+            elif abs(dataArray[23]) > max_main_speed and abs(dataArray[23]) < max_drogue_speed:
                 state = 5
                 print("DESCENDING UNDER DROGUE")
             else:
@@ -477,7 +478,7 @@ try:
         if state == 4 and sep_detect_possible and abs(dataArray[13]) > sep_detect_threshold:
             if ((time.time() * 1000) - T0_2) > sep_detect_hysteresis:
                 sep_detected = True
-                if abs(vertical_speed) < 5:
+                if abs(dataArray[23]) < 5:
                     dataArray[24] = 1
                     successfull_charge = 1
                     print("SUCCESFULL PRIMARY CHARGE DETECTED")
@@ -491,8 +492,8 @@ try:
         #########################################################
 
         if state == 2:
-            if vertical_speed > max_vertical_speed:
-                max_vertical_speed = vertical_speed
+            if dataArray[23] > max_vertical_speed:
+                max_vertical_speed = dataArray[23]
 
             if dataArray[13] > max_acceleration:
                 max_acceleration = dataArray[13]
@@ -502,10 +503,10 @@ try:
                 max_altitude = dataArray[10]
 
         if state == 5:
-            drogue_descent_velocity = vertical_speed
+            drogue_descent_velocity = dataArray[23]
 
         if state == 6:
-            main_descent_velocity = vertical_speed
+            main_descent_velocity = dataArray[23]
 
         if state == 5 or state == 6 or state == 7:
         # if state == 4:
