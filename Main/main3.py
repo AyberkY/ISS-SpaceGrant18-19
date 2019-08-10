@@ -369,7 +369,7 @@ try:
         vertical_speed = round((dataArray[10] - prev_altitude) / (time.time() - prev_time), 4)
         prev_altitude = dataArray[10]
         dataArray[23] = vertical_speed
-        print("Vertical Speed: " + str(vertical_speed) + "\t" + "Altitude" + str(dataArray[10]))
+        # print("Vertical Speed: " + str(vertical_speed) + "\t" + "Altitude" + str(dataArray[10]))
 
         # accel_velocity += round((dataArray[13] * (time.time() - prev_time)), 4)
         # print("\t\t\t\t\tAccel Speed: " + str(accel_velocity) + "m/s")
@@ -436,16 +436,20 @@ try:
         ###############  DESCENT CLASSIFICATION  ###############
         ########################################################
 
-        if state == 4 and not descent_detect_possible and abs(vertical_speed) > apogee_detect_threshold:
-            descent_detect_possible = True
-            T0 = time.time() * 1000
+        # if state == 4 and not descent_detect_possible and abs(vertical_speed) > apogee_detect_threshold:
+        #     descent_detect_possible = True
+        #     T0 = time.time() * 1000
+        #
+        # if state == 4 and descent_detect_possible and abs(vertical_speed) < apogee_detect_threshold:
+        #     descent_detect_possible = False
+        #
+        # if state == 4 and apogee_detect_possible and abs(vertical_speed) > apogee_detect_threshold:
+        #     if ((time.time() * 1000) - T0) > apogee_detect_hysteresis:
+        #         descent_detected = True
 
-        if state == 4 and descent_detect_possible and abs(vertical_speed) < apogee_detect_threshold:
-            descent_detect_possible = False
-
-        if state == 4 and apogee_detect_possible and abs(vertical_speed) > apogee_detect_threshold:
-            if ((time.time() * 1000) - T0) > apogee_detect_hysteresis:
-                descent_detected = True
+        if (state == 4 and dataArray[10] >= 22) or dataArray[10] >= 30:
+            descent_detected = True
+            print("DESCENT DETECTED")
 
         if descent_detected:
             if abs(vertical_speed) < max_main_speed:
