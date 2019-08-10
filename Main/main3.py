@@ -370,7 +370,7 @@ try:
         prev_altitude = dataArray[10]
         if state > 1 and vertical_speed != 0.0:
             dataArray[23] = vertical_speed
-        print("Vertical Speed: " + str(dataArray[23]) + "\t" + "Altitude" + str(dataArray[10]))
+        # print("Vertical Speed: " + str(dataArray[23]) + "\t" + "Altitude" + str(dataArray[10]))
 
         # accel_velocity += round((dataArray[13] * (time.time() - prev_time)), 4)
         # print("\t\t\t\t\tAccel Speed: " + str(accel_velocity) + "m/s")
