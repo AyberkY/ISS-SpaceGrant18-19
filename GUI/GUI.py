@@ -82,7 +82,10 @@ def cursesTest(stdscr):
 
                     stdscr.addstr(17,15,str(rssi)+"   ")
 
+                    filehandle = open(filename, "w")
                     filehandle.write(str(data) + "\n")
+                    filehandle.flush()
+                    filehandle.close()
 
                 else:
                     pass
