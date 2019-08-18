@@ -67,6 +67,26 @@ def smoothData(points, factor=0.8):
             smoothedData.append(previousPoint * factor + point * (1 - factor))
     return smoothedData
 
+def baroSmoother(inputPoints):
+    newPoints = []
+    plateauPoints = []
+    for point in inputPoints:
+        if not newPoints:
+            newPoints.append(point)
+        else:
+            if point == newPoints[-1]:
+                plateauPoints.append(point)
+            else:
+                for i in range(len(plateauPoints)):
+                    newPoints.append(plateauPoints[0] + ((i + 1) * ((point - plateauPoints[0]) / (len(plateauPoints) + 1))))
+                newPoints.append(point)
+                plateauPoints = []
+
+    newPoints += plateauPoints
+
+    return newPoints
+
+
 dataDict = readData(filename)
 telemDict = readTelemData(telemFilename)
 
