@@ -5,7 +5,7 @@ filename1 = "./flight1/2019-08-10_10_45_46.441775.txt"
 telemFilename1 = './flight1/2019-08-10-serial-5013-flight-0003.csv'
 telemFilename2 = './flight2/2019-08-10-serial-5013-flight-0004.csv'
 
-def readData(filename, read_start_line=7082, read_end_line=8130):
+def readData(filename, read_start_line=7082, read_end_line=8130, read_start_time=-5, read_end_time=1000):
 
     filehandle = open(filename, 'r')
 
@@ -25,9 +25,13 @@ def readData(filename, read_start_line=7082, read_end_line=8130):
             dataArray = dataString.split(", ")
             for index, data in enumerate(dataType_array):
                 try:
-                    dataDict[data].append(float(dataArray[index]))
-                except ValueError:
-                    dataDict[data].append(0.0)
+                    if float(dataArray[0]) >= read_start_time and float(dataArray[0]) <= read_end_time:
+                        try:
+                            dataDict[data].append(float(dataArray[index]))
+                        except ValueError:
+                            dataDict[data].append(0.0)
+                except:
+                    pass
 
     return dataDict
 
@@ -96,61 +100,52 @@ def baroSmoother(inputPoints):
 
     return newPoints
 
+def findPeak(array):
+    peakVal = 0
+    peakIndex = 0
+    for i, val in enumerate(array):
+        if val > peakVal:
+            peakVal = val
+            peakIndex = i
 
-dataDict = readData(filename1)
-telemDict = readTelemData(telemFilename2, read_end_time=6)
+    return peakIndex, peakVal
 
-machIndex = 0
-for i, vel in enumerate(telemDict['accel_speed']):
-    if vel >= 343:
-        machIndex = i
-        break
+def integrate(timeSteps, dataArray):
+    sum = 0
+    outputArray = []
+    for i in range(len(timeSteps)):
+        sum += dataArray[i] * (timeSteps[i] - timeSteps[i - 1])
+        outputArray.append(sum)
+    return outputArray
 
-peakVelIndex = 0
-peakVel = 0
-for i, vel in enumerate(telemDict['accel_speed']):
-    if vel > peakVel:
-        peakVel = vel
-        peakVelIndex = i
+def integrateRoll(timeSteps, dataArray):
+    sum = 0
+    outputArray = []
+    for i in range(len(timeSteps)):
+        sum += dataArray[i] * (timeSteps[i] - timeSteps[i - 1])
+        if sum > 720:
+            sum -= 720
+        elif sum < 0:
+            sum += 720
+        outputArray.append(sum)
+    return outputArray
 
-peakAccelIndex = 0
-peakAccel = 0
-for i, accel in enumerate(telemDict['acceleration']):
-    if accel > peakAccel:
-        peakAccel = accel
-        peakAccelIndex = i
+dataDict = readData(filename1, read_end_time=20)
 
-fig, ax = plt.subplots()
-
-ax.plot(telemDict['time'], telemDict['accel_speed'], color='r', label="TM Accel Speed")
-plt.xlabel("Time [s]")
-plt.ylabel("Vertical Speed [m/s]")
+# plt.subplot(211)
+plt.plot(dataDict['unix_timestamp'], dataDict['mpu_gyr_x'], label="Roll Rate about Rocket Axis")
+peakRollIndex, peakRollRate = findPeak(dataDict['mpu_gyr_x'])
+plt.axvline(dataDict['unix_timestamp'][peakRollIndex], color='orange', label="Peak Roll Rate")
+plt.scatter(dataDict['unix_timestamp'][peakRollIndex], dataDict['mpu_gyr_x'][peakRollIndex], marker='.', color='orange')
+plt.text(dataDict['unix_timestamp'][peakRollIndex] + 0.05, dataDict['mpu_gyr_x'][peakRollIndex], str(dataDict['mpu_gyr_x'][peakRollIndex]), fontsize=9)
 plt.grid()
-# ax.plot(telemDict['time'], telemDict['acceleration'], label="TM_acceleration")
-
-ax.axvline(telemDict['time'][machIndex], color='b', label='Mach')
-ax.scatter(telemDict['time'][machIndex], telemDict['accel_speed'][machIndex], marker='.', color='b')
-ax.text(telemDict['time'][machIndex] + 0.03, telemDict['accel_speed'][machIndex] - 5, str(telemDict['accel_speed'][machIndex]), fontsize=9)
-
-ax.axvline(telemDict['time'][peakVelIndex], color='orange', label='Peak Speed')
-ax.scatter(telemDict['time'][peakVelIndex], telemDict['accel_speed'][peakVelIndex], marker='.', color='orange')
-ax.text(telemDict['time'][peakVelIndex] + 0.05, telemDict['accel_speed'][peakVelIndex], str(telemDict['accel_speed'][peakVelIndex]), fontsize=9)
-
-xt = range(7)
-xt = np.append(xt, telemDict['time'][machIndex])
-xt = np.append(xt, telemDict['time'][peakVelIndex])
-xtl=xt.tolist()
-xtl[-1]=str(telemDict['time'][peakVelIndex])
-xtl[-2]=str(telemDict['time'][machIndex])
-ax.set_xticks(xt)
-ax.set_xticklabels(xtl)
-
-
-# secax = ax.secondary_yaxis('right')
-# ax.axvline(telemDict['time'][peakAccelIndex], color='g', linewidth = 0.75, label='Peak Acceleration')
-# ax.scatter(telemDict['time'][peakAccelIndex], telemDict['acceleration'][peakAccelIndex], marker='.', color='r')
-# ax.text(telemDict['time'][peakAccelIndex] + 0.05, telemDict['acceleration'][peakAccelIndex] + 3, str(telemDict['acceleration'][peakAccelIndex]), fontsize=8)
-
-# plt.plot(dataDict['unix_timestamp'], processData(dataDict['pitot'], -0.26, -8188), label="pitot_scaled")
+plt.xlabel("Time [s]")
+plt.ylabel("Roll Rate [$^{\circ}/s$]")
+plt.title("Roll Rate During Flight 1")
 plt.legend()
+
+# plt.subplot(212)
+# plt.plot(dataDict['unix_timestamp'], integrate(dataDict['unix_timestamp'], dataDict['mpu_gyr_x']), linestyle=':', label="Cumulative Roll about Rocket Axis")
+# plt.grid()
+
 plt.show()

@@ -145,12 +145,6 @@ xtl[-2]=str(telemDict['time'][machIndex])
 ax.set_xticks(xt)
 ax.set_xticklabels(xtl)
 
-
-# secax = ax.secondary_yaxis('right')
-# ax.axvline(telemDict['time'][peakAccelIndex], color='g', linewidth = 0.75, label='Peak Acceleration')
-# ax.scatter(telemDict['time'][peakAccelIndex], telemDict['acceleration'][peakAccelIndex], marker='.', color='r')
-# ax.text(telemDict['time'][peakAccelIndex] + 0.05, telemDict['acceleration'][peakAccelIndex] + 3, str(telemDict['acceleration'][peakAccelIndex]), fontsize=8)
-
 # plt.plot(dataDict['unix_timestamp'], processData(dataDict['pitot'], -0.26, -8188), label="pitot_scaled")
 plt.legend()
 plt.show()
