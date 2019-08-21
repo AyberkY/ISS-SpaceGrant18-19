@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 
-filename = "./flight1/2019-08-10_10_45_46.441775.txt"
-telemFilename = './flight1/2019-08-10-serial-5013-flight-0003.csv'
+filename1 = "./flight1/2019-08-10_10_45_46.441775.txt"
+telemFilename1 = './flight1/2019-08-10-serial-5013-flight-0003.csv'
+telemFilename2 = './flight2/2019-08-10-serial-5013-flight-0004.csv'
 
 def readData(filename, read_start_line=7082, read_end_line=8130):
 
@@ -29,7 +30,7 @@ def readData(filename, read_start_line=7082, read_end_line=8130):
 
     return dataDict
 
-def readTelemData(filename, read_start_line=0, read_end_line=5000):
+def readTelemData(filename, read_start_line=0, read_end_line=5000, read_start_time=-5, read_end_time=1000):
     filehandle = open(filename, 'r')
     dataType_array = filehandle.readline()[1:-1].split(',')
 
@@ -44,11 +45,19 @@ def readTelemData(filename, read_start_line=0, read_end_line=5000):
         if lineNumber >= read_start_line and lineNumber < read_end_line:
             dataString = filehandle.readline()[:-1]
             dataArray = dataString.split(',')
+            # print(dataArray)
             for index, data in enumerate(dataType_array):
                 try:
-                    dataDict[data].append(float(dataArray[index]))
-                except ValueError:
-                    dataDict[data].append(dataArray[index])
+                    if float(dataArray[4]) >= read_start_time and float(dataArray[4]) <= read_end_time:
+                        try:
+                            # print(dataArray)
+                            dataDict[data].append(float(dataArray[index]))
+                        except ValueError:
+                            dataDict[data].append(dataArray[index])
+                        except:
+                            pass
+                except:
+                    pass
     return dataDict
 
 def processData(points, scale=1.0, offset=0.0):
@@ -87,10 +96,36 @@ def baroSmoother(inputPoints):
     return newPoints
 
 
-dataDict = readData(filename)
-telemDict = readTelemData(telemFilename)
+dataDict = readData(filename1)
+telemDict = readTelemData(telemFilename1, read_end_time=10)
 
-plt.plot(telemDict['time'], telemDict['accel_speed'], label="TM_accel_speed")
-plt.plot(dataDict['unix_timestamp'], processData(dataDict['pitot'], -0.26, -8188), label="pitot_scaled")
+machIndex = 0
+for i, vel in enumerate(telemDict['accel_speed']):
+    if vel >= 343:
+        machIndex = i
+        break
+
+peakAccelIndex = 0
+peakAccel = 0
+for i, accel in enumerate(telemDict['acceleration']):
+    if accel > peakAccel:
+        peakAccel = accel
+        peakAccelIndex = i
+
+fig, ax = plt.subplots()
+
+ax.plot(telemDict['time'], telemDict['accel_speed'], label="TM_accel_speed")
+ax.plot(telemDict['time'], telemDict['acceleration'], label="TM_acceleration")
+
+ax.axvline(telemDict['time'][machIndex], color='r', linewidth = 0.75, label='Mach')
+ax.scatter(telemDict['time'][machIndex], telemDict['accel_speed'][machIndex], marker='.', color='r')
+ax.text(telemDict['time'][machIndex] + 0.05, telemDict['accel_speed'][machIndex], str(telemDict['accel_speed'][machIndex]), fontsize=8)
+
+secax = ax.secondary_yaxis('right')
+ax.axvline(telemDict['time'][peakAccelIndex], color='g', linewidth = 0.75, label='Peak Acceleration')
+ax.scatter(telemDict['time'][peakAccelIndex], telemDict['acceleration'][peakAccelIndex], marker='.', color='r')
+ax.text(telemDict['time'][peakAccelIndex] + 0.05, telemDict['acceleration'][peakAccelIndex] + 3, str(telemDict['acceleration'][peakAccelIndex]), fontsize=8)
+
+# plt.plot(dataDict['unix_timestamp'], processData(dataDict['pitot'], -0.26, -8188), label="pitot_scaled")
 plt.legend()
 plt.show()
