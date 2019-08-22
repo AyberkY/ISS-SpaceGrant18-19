@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 filename1 = "./flight1/2019-08-10_10_45_46.441775.txt"
+stratFilename1 = "./flight1/strat_flight_1.pf2"
+stratFilename2 = "./flight2/strat_flight_2.pf2"
 telemFilename1 = './flight1/2019-08-10-serial-5013-flight-0003.csv'
 telemFilename2 = './flight2/2019-08-10-serial-5013-flight-0004.csv'
 
@@ -61,6 +63,36 @@ def readTelemData(filename, read_start_line=0, read_end_line=5000, read_start_ti
                     pass
     return dataDict
 
+def readStratData(filename, read_start_line=18, read_end_line=5000, read_start_time=-5, read_end_time=1000):
+    filehandle = open(filename, 'r')
+    dataType_array = ["time", "altitude", "velocity", "temperature", "voltage"]
+
+    dataDict = {}
+
+    for key in dataType_array:
+        dataDict[key] = []
+
+    lineNumber = 0
+    for line in filehandle:
+        lineNumber += 1
+        if lineNumber >= read_start_line and lineNumber < read_end_line:
+            dataString = filehandle.readline()[:-1]
+            dataArray = dataString.split(',')
+            # print(dataArray)
+            for index, data in enumerate(dataType_array):
+                try:
+                    if float(dataArray[0]) >= read_start_time and float(dataArray[0]) <= read_end_time:
+                        try:
+                            # print(dataArray)
+                            dataDict[data].append(float(dataArray[index]))
+                        except ValueError:
+                            dataDict[data].append(dataArray[index])
+                        except:
+                            pass
+                except:
+                    pass
+    return dataDict
+
 def processData(points, scale=1.0, offset=0.0):
     newPoints = []
     for point in points:
@@ -96,9 +128,39 @@ def baroSmoother(inputPoints):
 
     return newPoints
 
+def findPeak(array):
+    peakVal = 0
+    peakIndex = 0
+    for i, val in enumerate(array):
+        if val > peakVal:
+            peakVal = val
+            peakIndex = i
+
+    return peakIndex, peakVal
+
+def integrate(timeSteps, dataArray):
+    sum = 0
+    outputArray = []
+    for i in range(len(timeSteps)):
+        sum += dataArray[i] * (timeSteps[i] - timeSteps[i - 1])
+        outputArray.append(sum)
+    return outputArray
+
+def integrateRoll(timeSteps, dataArray):
+    sum = 0
+    outputArray = []
+    for i in range(len(timeSteps)):
+        sum += dataArray[i] * (timeSteps[i] - timeSteps[i - 1])
+        if sum > 720:
+            sum -= 720
+        elif sum < 0:
+            sum += 720
+        outputArray.append(sum)
+    return outputArray
 
 dataDict = readData(filename1)
 telemDict = readTelemData(telemFilename2, read_end_time=6)
+stratDict = readStratData(stratFilename2, read_start_time = 0.6, read_end_time=7)
 
 machIndex = 0
 for i, vel in enumerate(telemDict['accel_speed']):
@@ -106,35 +168,23 @@ for i, vel in enumerate(telemDict['accel_speed']):
         machIndex = i
         break
 
-peakVelIndex = 0
-peakVel = 0
-for i, vel in enumerate(telemDict['accel_speed']):
-    if vel > peakVel:
-        peakVel = vel
-        peakVelIndex = i
-
-peakAccelIndex = 0
-peakAccel = 0
-for i, accel in enumerate(telemDict['acceleration']):
-    if accel > peakAccel:
-        peakAccel = accel
-        peakAccelIndex = i
-
 fig, ax = plt.subplots()
 
 ax.plot(telemDict['time'], telemDict['accel_speed'], color='r', label="TM Accel Speed")
+ax.plot(processData(stratDict['time'], offset=-0.9), processData(stratDict['velocity'], scale=0.3048), color='g', label="SL Baro Speed")
+# ax.plot(processData(stratDict['time'], offset=-0.9), processData(stratDict['altitude'], scale=0.3048), color='violet', label="SL Baro Altitude")
 plt.xlabel("Time [s]")
 plt.ylabel("Vertical Speed [m/s]")
-plt.grid()
 # ax.plot(telemDict['time'], telemDict['acceleration'], label="TM_acceleration")
 
 ax.axvline(telemDict['time'][machIndex], color='b', label='Mach')
 ax.scatter(telemDict['time'][machIndex], telemDict['accel_speed'][machIndex], marker='.', color='b')
-ax.text(telemDict['time'][machIndex] + 0.03, telemDict['accel_speed'][machIndex] - 5, str(telemDict['accel_speed'][machIndex]), fontsize=9)
+# ax.text(telemDict['time'][machIndex] + 0.03, telemDict['accel_speed'][machIndex] - 15, str(telemDict['accel_speed'][machIndex]), fontsize=9)
 
+peakVelIndex, peakVel = findPeak(telemDict['accel_speed'])
 ax.axvline(telemDict['time'][peakVelIndex], color='orange', label='Peak Speed')
 ax.scatter(telemDict['time'][peakVelIndex], telemDict['accel_speed'][peakVelIndex], marker='.', color='orange')
-ax.text(telemDict['time'][peakVelIndex] + 0.05, telemDict['accel_speed'][peakVelIndex], str(telemDict['accel_speed'][peakVelIndex]), fontsize=9)
+# ax.text(telemDict['time'][peakVelIndex] + 0.05, telemDict['accel_speed'][peakVelIndex], str(telemDict['accel_speed'][peakVelIndex]), fontsize=9)
 
 xt = range(7)
 xt = np.append(xt, telemDict['time'][machIndex])
