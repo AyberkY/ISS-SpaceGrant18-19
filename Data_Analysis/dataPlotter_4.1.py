@@ -170,21 +170,21 @@ for i, vel in enumerate(telemDict['accel_speed']):
 
 fig, ax = plt.subplots()
 
-ax.plot(telemDict['time'], telemDict['accel_speed'], color='r', label="TM Accel Speed")
-ax.plot(processData(stratDict['time'], offset=-0.9), processData(stratDict['velocity'], scale=0.3048), color='g', label="SL Baro Speed")
+ax.plot(telemDict['time'], processData(telemDict['accel_speed'], scale=(1/0.3048)), color='r', label="TM Accel Speed")
+# ax.plot(processData(stratDict['time'], offset=-0.9), processData(stratDict['velocity'], scale=0.3048), color='g', label="SL Baro Speed")
 # ax.plot(processData(stratDict['time'], offset=-0.9), processData(stratDict['altitude'], scale=0.3048), color='violet', label="SL Baro Altitude")
 plt.xlabel("Time [s]")
-plt.ylabel("Vertical Speed [m/s]")
+plt.ylabel("Vertical Speed [$ft/s$]")
 # ax.plot(telemDict['time'], telemDict['acceleration'], label="TM_acceleration")
 
 ax.axvline(telemDict['time'][machIndex], color='b', label='Mach')
-ax.scatter(telemDict['time'][machIndex], telemDict['accel_speed'][machIndex], marker='.', color='b')
-# ax.text(telemDict['time'][machIndex] + 0.03, telemDict['accel_speed'][machIndex] - 15, str(telemDict['accel_speed'][machIndex]), fontsize=9)
+ax.scatter(telemDict['time'][machIndex], processData(telemDict['accel_speed'], scale=(1/0.3048))[machIndex], marker='.', color='b')
+ax.text(telemDict['time'][machIndex] + 0.03, processData(telemDict['accel_speed'], scale=(1/0.3048))[machIndex] - 15, str(round(processData(telemDict['accel_speed'], scale=(1/0.3048))[machIndex], 2)), fontsize=9)
 
 peakVelIndex, peakVel = findPeak(telemDict['accel_speed'])
 ax.axvline(telemDict['time'][peakVelIndex], color='orange', label='Peak Speed')
-ax.scatter(telemDict['time'][peakVelIndex], telemDict['accel_speed'][peakVelIndex], marker='.', color='orange')
-# ax.text(telemDict['time'][peakVelIndex] + 0.05, telemDict['accel_speed'][peakVelIndex], str(telemDict['accel_speed'][peakVelIndex]), fontsize=9)
+ax.scatter(telemDict['time'][peakVelIndex], processData(telemDict['accel_speed'], scale=(1/0.3048))[peakVelIndex], marker='.', color='orange')
+ax.text(telemDict['time'][peakVelIndex] + 0.05, processData(telemDict['accel_speed'], scale=(1/0.3048))[peakVelIndex], str(round(processData(telemDict['accel_speed'], scale=(1/0.3048))[peakVelIndex], 2)), fontsize=9)
 
 xt = range(7)
 xt = np.append(xt, telemDict['time'][machIndex])
@@ -196,5 +196,6 @@ ax.set_xticks(xt)
 ax.set_xticklabels(xtl)
 
 # plt.plot(dataDict['unix_timestamp'], processData(dataDict['pitot'], -0.26, -8188), label="pitot_scaled")
+plt.grid()
 plt.legend()
 plt.show()
