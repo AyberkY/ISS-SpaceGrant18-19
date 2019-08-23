@@ -6,6 +6,8 @@ stratFilename1 = "./flight1/strat_flight_1.pf2"
 stratFilename2 = "./flight2/strat_flight_2.pf2"
 telemFilename1 = './flight1/2019-08-10-serial-5013-flight-0003.csv'
 telemFilename2 = './flight2/2019-08-10-serial-5013-flight-0004.csv'
+simFilename1 = './flight1/sim1.csv'
+simFilename2 = './flight2/sim2.csv'
 
 def readData(filename, read_start_line=7082, read_end_line=8130, read_start_time=-5, read_end_time=1000):
 
@@ -97,6 +99,36 @@ def readStratData(filename, read_start_line=18, read_end_line=5000, read_start_t
                     pass
     return dataDict
 
+def readSimData(filename, read_start_line=9, read_end_line=5000, read_start_time=-5, read_end_time=1000):
+    filehandle = open(filename, 'r')
+    dataType_array = ["time", "altitude", "velocity", "acceleration"]
+
+    dataDict = {}
+
+    for key in dataType_array:
+        dataDict[key] = []
+
+    lineNumber = 0
+    for line in filehandle:
+        lineNumber += 1
+        if line[0] != '#':
+            if lineNumber >= read_start_line and lineNumber < read_end_line:
+                dataString = filehandle.readline()[:-1]
+                dataArray = dataString.split(',')
+                # print(dataArray)
+                for index, data in enumerate(dataType_array):
+                    try:
+                        if float(dataArray[0]) >= read_start_time and float(dataArray[0]) <= read_end_time:
+                            try:
+                                # print(dataArray)
+                                dataDict[data].append(float(dataArray[index]))
+                            except ValueError:
+                                dataDict[data].append(dataArray[index])
+                            except:
+                                pass
+                    except:
+                        pass
+    return dataDict
 
 def processData(points, scale=1.0, offset=0.0):
     newPoints = []
@@ -165,6 +197,7 @@ def integrateRoll(timeSteps, dataArray):
 
 dataDict = readData(filename1, read_end_time=6)
 telemDict = readTelemData(telemFilename1, read_end_time=6)
+simDict = readSimData(simFilename1, read_end_time=6)
 
 machIndex = 0
 for i, vel in enumerate(telemDict['accel_speed']):

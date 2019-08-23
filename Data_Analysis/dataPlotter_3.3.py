@@ -2,10 +2,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 filename1 = "./flight1/2019-08-10_10_45_46.441775.txt"
+
+stratFilename1 = "./flight1/strat_flight_1.pf2"
+stratFilename2 = "./flight2/strat_flight_2.pf2"
 telemFilename1 = './flight1/2019-08-10-serial-5013-flight-0003.csv'
 telemFilename2 = './flight2/2019-08-10-serial-5013-flight-0004.csv'
+simFilename1 = './flight1/sim1.csv'
+simFilename2 = './flight2/sim2.csv'
 
-def readData(filename, read_start_line=7082, read_end_line=8130, read_start_time=-5, read_end_time=1000):
+def readData(filename, read_start_line=7078, read_end_line=8130, read_start_time=-5, read_end_time=1000):
 
     filehandle = open(filename, 'r')
 
@@ -65,6 +70,67 @@ def readTelemData(filename, read_start_line=0, read_end_line=5000, read_start_ti
                     pass
     return dataDict
 
+def readStratData(filename, read_start_line=18, read_end_line=5000, read_start_time=-5, read_end_time=1000):
+    filehandle = open(filename, 'r')
+    dataType_array = ["time", "altitude", "velocity", "temperature", "voltage"]
+
+    dataDict = {}
+
+    for key in dataType_array:
+        dataDict[key] = []
+
+    lineNumber = 0
+    for line in filehandle:
+        lineNumber += 1
+        if lineNumber >= read_start_line and lineNumber < read_end_line:
+            dataString = filehandle.readline()[:-1]
+            dataArray = dataString.split(',')
+            # print(dataArray)
+            for index, data in enumerate(dataType_array):
+                try:
+                    if float(dataArray[4]) >= read_start_time and float(dataArray[4]) <= read_end_time:
+                        try:
+                            # print(dataArray)
+                            dataDict[data].append(float(dataArray[index]))
+                        except ValueError:
+                            dataDict[data].append(dataArray[index])
+                        except:
+                            pass
+                except:
+                    pass
+    return dataDict
+
+def readSimData(filename, read_start_line=9, read_end_line=5000, read_start_time=-5, read_end_time=1000):
+    filehandle = open(filename, 'r')
+    dataType_array = ["time", "altitude", "velocity", "acceleration"]
+
+    dataDict = {}
+
+    for key in dataType_array:
+        dataDict[key] = []
+
+    lineNumber = 0
+    for line in filehandle:
+        lineNumber += 1
+        if line[0] != '#':
+            if lineNumber >= read_start_line and lineNumber < read_end_line:
+                dataString = filehandle.readline()[:-1]
+                dataArray = dataString.split(',')
+                # print(dataArray)
+                for index, data in enumerate(dataType_array):
+                    try:
+                        if float(dataArray[0]) >= read_start_time and float(dataArray[0]) <= read_end_time:
+                            try:
+                                # print(dataArray)
+                                dataDict[data].append(float(dataArray[index]))
+                            except ValueError:
+                                dataDict[data].append(dataArray[index])
+                            except:
+                                pass
+                    except:
+                        pass
+    return dataDict
+
 def processData(points, scale=1.0, offset=0.0):
     newPoints = []
     for point in points:
@@ -110,24 +176,72 @@ def findPeak(array):
 
     return peakIndex, peakVal
 
-dataDict = readData(filename1, read_end_time=6)
-telemDict1 = readTelemData(telemFilename1, read_start_time=-0.1, read_end_time=6)
-telemDict2 = readTelemData(telemFilename2, read_start_time=-0.1, read_end_time=6)
+def integrate(timeSteps, dataArray):
+    sum = 0
+    outputArray = []
+    for i in range(len(timeSteps)):
+        sum += dataArray[i] * (timeSteps[i] - timeSteps[i - 1])
+        outputArray.append(sum)
+    return outputArray
+
+def integrateRoll(timeSteps, dataArray):
+    sum = 0
+    outputArray = []
+    for i in range(len(timeSteps)):
+        sum += dataArray[i] * (timeSteps[i] - timeSteps[i - 1])
+        if sum > 720:
+            sum -= 720
+        elif sum < 0:
+            sum += 720
+        outputArray.append(sum)
+    return outputArray
+
+dataDict1 = readData(filename1, read_end_time=6)
+telemDict1 = readTelemData(telemFilename1, read_end_time=6)
+simDict1 = readSimData(simFilename1, read_end_time=6)
 
 plt.subplot(211)
-plt.plot(dataDict['unix_timestamp'], processData(dataDict['pitot'], -0.26, -8188), label="Non-Commercial Pitot Sensor Speed")
-plt.plot(dataDict['unix_timestamp'], processData(dataDict['h3_acc_x'], 9.81), label="Non-Commercial Vertical Acceleration")
-plt.plot(telemDict1['time'], telemDict1['accel_speed'], label="TM Accel Speed")
-plt.plot(telemDict1['time'], telemDict1['acceleration'], label="TM Acceleration")
-plt.legend()
+
+plt.title("FLIGHT #1 (SUBSONIC)", fontsize=15)
+
+plt.plot(telemDict1['time'], telemDict1['acceleration'], color='orange', label="TM Acceleration")
+plt.plot(dataDict1['unix_timestamp'], processData(dataDict1['h3_acc_x'], scale=9.81, offset=-0.8764), color='b', label="Non-Commercial Acceleration")
+plt.plot(simDict1['time'], processData(simDict1['acceleration'], scale=0.3048), color='r', label="Simulated Acceleration")
+plt.ylabel("Vertical Acceleration [$^m/s^2$]", fontsize=14)
 plt.grid()
-plt.title("FLIGHT 1")
+plt.legend()
 
 plt.subplot(212)
-plt.plot(telemDict2['time'], telemDict2['accel_speed'], label="TM Accel Speed")
-plt.plot(telemDict2['time'], telemDict2['acceleration'], label="TM Acceleration")
+plt.plot(telemDict1['time'], telemDict1['accel_speed'], color='orange', label="TM Accel_Speed")
+plt.plot(dataDict1['unix_timestamp'], integrate(dataDict1['unix_timestamp'], processData(dataDict1['h3_acc_x'], scale=9.81, offset=-0.8764)), color='b', label="Non-Commercial Accel_Speed")
+scaleFactor = (8175 - 8182) / 31.7398
+plt.plot(dataDict1['unix_timestamp'], processData(dataDict1['pitot'], scaleFactor, -8188), color='g', label="Non-Comm Pitot Measurement")
+plt.plot(simDict1['time'], processData(simDict1['velocity'], scale=0.3048), color='r', label="Simulated Speed")
+plt.ylabel("Vertical Speed [$^m/s$]", fontsize=14)
 plt.legend()
+plt.xlabel("Time [s]", fontsize=14)
 plt.grid()
-plt.title("FLIGHT 2")
+plt.show()
 
+
+telemDict2 = readTelemData(telemFilename2, read_end_time=6)
+simDict2 = readSimData(simFilename2, read_end_time=6)
+
+plt.subplot(211)
+
+plt.title("FLIGHT #2 (SUPERSONIC)", fontsize=15)
+
+plt.plot(telemDict2['time'], telemDict2['acceleration'], color='orange', label="TM Acceleration")
+plt.plot(simDict2['time'], processData(simDict2['acceleration'], scale=0.3048), color='b', label="Simulated Acceleration")
+plt.ylabel("Vertical Acceleration [$^m/s^2$]", fontsize=14)
+plt.grid()
+plt.legend()
+
+plt.subplot(212)
+plt.plot(telemDict2['time'], telemDict2['accel_speed'], color='orange', label="TM Accel_Speed")
+plt.plot(simDict2['time'], processData(simDict2['velocity'], scale=0.3048), color='b', label="Simulated Speed")
+plt.ylabel("Vertical Speed [$^m/s$]", fontsize=14)
+plt.legend()
+plt.xlabel("Time [s]", fontsize=14)
+plt.grid()
 plt.show()
