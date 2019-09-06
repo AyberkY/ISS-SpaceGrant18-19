@@ -196,6 +196,16 @@ def integrateRoll(timeSteps, dataArray):
         outputArray.append(sum)
     return outputArray
 
+def differentiate(timeSteps, data):
+    outputArray = [0]
+    for i in range(len(timeSteps) - 1):
+        delta = data[i + 1] - data[i]
+        timeDelta = timeSteps[i + 1] - timeSteps[i]
+        if timeDelta == 0.0:
+            timeDelta = 0.0001
+        outputArray.append(delta/timeDelta)
+    return outputArray
+
 dataDict1 = readData(filename1, read_end_time=6)
 telemDict1 = readTelemData(telemFilename1, read_end_time=6)
 simDict1 = readSimData(simFilename1, read_end_time=6)
@@ -204,21 +214,21 @@ plt.subplot(211)
 
 plt.title("FLIGHT #1 (SUBSONIC)", fontsize=15)
 
-plt.plot(telemDict1['time'], processData(telemDict1['acceleration'], scale=(1/0.3048)), color='orange', label="TM Acceleration")
+plt.plot(telemDict1['time'], processData(telemDict1['acceleration'], scale=(1/0.3048)), color='orange', label="Telemetrum Acceleration")
 plt.plot(dataDict1['unix_timestamp'], processData(processData(dataDict1['h3_acc_x'], scale=9.81, offset=-0.8764), scale=(1/0.3408)), color='b', label="Non-Commercial Acceleration")
 plt.plot(simDict1['time'], simDict1['acceleration'], color='r', label="Simulated Acceleration")
 plt.ylabel("Vertical Acceleration [$ft/s^2$]", fontsize=14)
 plt.grid()
-plt.legend()
+plt.legend(prop={'size':15})
 
 plt.subplot(212)
-plt.plot(telemDict1['time'], processData(telemDict1['accel_speed'], scale=(1/0.3048)), color='orange', label="TM Accel_Speed")
-plt.plot(dataDict1['unix_timestamp'], integrate(dataDict1['unix_timestamp'], processData(processData(dataDict1['h3_acc_x'], scale=9.81, offset=-0.8764), scale=(1/0.3048))), color='b', label="Non-Commercial Accel_Speed")
+plt.plot(telemDict1['time'], processData(telemDict1['accel_speed'], scale=(1/0.3048)), color='orange', label="Telemetrum Acceleration Speed")
+plt.plot(dataDict1['unix_timestamp'], integrate(dataDict1['unix_timestamp'], processData(processData(dataDict1['h3_acc_x'], scale=9.81, offset=-0.8764), scale=(1/0.3048))), color='b', label="Non-Commercial Acceleration Speed")
 scaleFactor = (8175 - 8182) / 31.7398
-plt.plot(dataDict1['unix_timestamp'], processData(processData(dataDict1['pitot'], scaleFactor, -8188), scale=(1/0.3048)), color='g', label="Non-Comm Pitot Measurement")
+plt.plot(dataDict1['unix_timestamp'], processData(processData(dataDict1['pitot'], scaleFactor, -8188), scale=(1/0.3048)), color='g', label="Non-Commercial Pitot Measurement")
 plt.plot(simDict1['time'], simDict1['velocity'], color='r', label="Simulated Speed")
 plt.ylabel("Vertical Speed [$ft/s$]", fontsize=14)
-plt.legend()
+plt.legend(prop={'size':15})
 plt.xlabel("Time [s]", fontsize=14)
 plt.grid()
 plt.show()
@@ -231,17 +241,18 @@ plt.subplot(211)
 
 plt.title("FLIGHT #2 (SUPERSONIC)", fontsize=15)
 
-plt.plot(telemDict2['time'], processData(telemDict2['acceleration'], scale=(1/0.3048)), color='orange', label="TM Acceleration")
+plt.plot(telemDict2['time'], processData(telemDict2['acceleration'], scale=(1/0.3048)), color='orange', label="Telemetrum Acceleration")
 plt.plot(simDict2['time'], simDict2['acceleration'], color='b', label="Simulated Acceleration")
 plt.ylabel("Vertical Acceleration [$ft/s^2$]", fontsize=14)
 plt.grid()
-plt.legend()
+plt.legend(prop={'size':15})
 
 plt.subplot(212)
-plt.plot(telemDict2['time'], processData(telemDict2['accel_speed'], scale=(1/0.3048)), color='orange', label="TM Accel_Speed")
+plt.plot(telemDict2['time'], processData(telemDict2['accel_speed'], scale=(1/0.3048)), color='orange', label="Telemetrum Acceleration Speed")
+# plt.plot(telemDict2['time'], differentiate(telemDict2['time'], processData(telemDict2['gps_altitude'], scale=(1/0.3048))), color='g', label="Telemetrum GPS Speed")
 plt.plot(simDict2['time'], simDict2['velocity'], color='b', label="Simulated Speed")
 plt.ylabel("Vertical Speed [$ft/s$]", fontsize=14)
-plt.legend()
+plt.legend(prop={'size':15})
 plt.xlabel("Time [s]", fontsize=14)
 plt.grid()
 plt.show()

@@ -170,11 +170,11 @@ for i, vel in enumerate(telemDict['accel_speed']):
 
 fig, ax = plt.subplots()
 
-ax.plot(telemDict['time'], processData(telemDict['accel_speed'], scale=(1/0.3048)), color='r', label="TM Accel Speed")
+ax.plot(telemDict['time'], processData(telemDict['accel_speed'], scale=(1/0.3048)), color='r', label="Telemetrum Acceleration Speed")
 # ax.plot(processData(stratDict['time'], offset=-0.9), processData(stratDict['velocity'], scale=0.3048), color='g', label="SL Baro Speed")
 # ax.plot(processData(stratDict['time'], offset=-0.9), processData(stratDict['altitude'], scale=0.3048), color='violet', label="SL Baro Altitude")
-plt.xlabel("Time [s]")
-plt.ylabel("Vertical Speed [$ft/s$]")
+plt.xlabel("Time [s]", fontsize=14)
+plt.ylabel("Vertical Speed [$ft/s$]", fontsize=14)
 # ax.plot(telemDict['time'], telemDict['acceleration'], label="TM_acceleration")
 
 ax.axvline(telemDict['time'][machIndex], color='b', label='Mach')
@@ -197,5 +197,5 @@ ax.set_xticklabels(xtl)
 
 # plt.plot(dataDict['unix_timestamp'], processData(dataDict['pitot'], -0.26, -8188), label="pitot_scaled")
 plt.grid()
-plt.legend()
+plt.legend(prop={'size':15})
 plt.show()
